@@ -9,19 +9,19 @@ import com.sonat.blog.domain.User;
 import com.sonat.blog.domain.repository.UserRepository;
 
 @Repository
-public class InMemoryUserRepository implements UserRepository {
-	List<User> userList=new ArrayList<User>(); 
+public class UserRepositoryImpl implements UserRepository {
+//	List<User> userList=new ArrayList<User>(); 
 	private int nextUserId;
 	
-	public InMemoryUserRepository(){
-		User user1=new User("user1");
-		user1.setID(1);
-		User user2=new User("user2");
-		user2.setID(2);
-		
-		userList.add(user1);
-		userList.add(user2);
-		
+	public UserRepositoryImpl(){
+//		User user1=new User("user1");
+//		user1.setID(1);
+//		User user2=new User("user2");
+//		user2.setID(2);
+//		
+//		userList.add(user1);
+//		userList.add(user2);
+//		
 	}	
 	public User getUserById(int ID) {
 		User userById=null;
