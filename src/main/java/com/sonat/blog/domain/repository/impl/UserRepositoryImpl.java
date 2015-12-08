@@ -2,16 +2,20 @@ package com.sonat.blog.domain.repository.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
 import com.sonat.blog.domain.Post;
 import com.sonat.blog.domain.User;
 import com.sonat.blog.domain.repository.UserRepository;
+import com.sonat.blog.util.HibernateUtil;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository {
 //	List<User> userList=new ArrayList<User>(); 
-	private int nextUserId;
+//	private int nextUserId;
 	
 	public UserRepositoryImpl(){
 //		User user1=new User("user1");
@@ -24,17 +28,15 @@ public class UserRepositoryImpl implements UserRepository {
 //		
 	}	
 	public User getUserById(int ID) {
-		User userById=null;
-		for(User user:userList){
-			if(ID==user.getID()) userById=user;
-		}
-		return userById;
+		Session session=HibernateUtil.getSessionFactory().openSession();
+		Query query=session.createQuery("FROM User WHERE USER_ID =:userID");
+		query.setParameter("userID",ID);
+		return (User)query.uniqueResult();
 	}
+	@SuppressWarnings("unchecked")
 	public List<User> getAll(){
-		return userList;
-	}
-	private synchronized int getNextUserId(){
-		return nextUserId++;
-	}
-	
+		Session session=HibernateUtil.getSessionFactory().openSession();
+		Query query=session.createQuery("FROM User");
+		return query.list();
+	}	
 }

@@ -4,11 +4,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.sonat.blog.domain.Post;
 import com.sonat.blog.domain.User;
@@ -39,7 +43,7 @@ public class PostController {
 	@RequestMapping("/{id}")
 	public String getPostById(Model model,@PathVariable("id")int id){
 		Post post=postService.getPostById(id);
-		String userName=userService.getUserById(post.getUserID()).getName();
+		String userName=userService.getUserById(post.getUser().getID()).getName();
 		
 		model.addAttribute("post",post);
 		model.addAttribute("user",userName);
@@ -55,4 +59,17 @@ public class PostController {
 		model.addAttribute("user",userName);
 		return "user";
 	}
+
+	@RequestMapping(value="/post/add", method=RequestMethod.GET)
+    public String addPost(Model model){
+		return "addPost";
+	}
+	
+	@RequestMapping(value="/post/add", method=RequestMethod.POST)
+    public void addPost(@ModelAttribute("post") Post post, BindingResult result, Model model)
+    {
+        if( ! result.hasErrors() ){
+             
+        } 
+    }   
 }

@@ -43,20 +43,20 @@ public class PostRepositoryImpl implements PostRepository{
 	@SuppressWarnings("unchecked")
 	public List<Post> getAll() {
 		Session session=HibernateUtil.getSessionFactory().openSession();
-		Query query=session.createQuery("FROM post");
+		Query query=session.createQuery("FROM Post");
 		return query.list();		
 	}
 
 	public Post getPostById(int ID) {
 		Session session=HibernateUtil.getSessionFactory().openSession();
-		Query query=session.createQuery("FROM post P WHERE P.POST_ID="+ID);
+		Query query=session.createQuery("FROM Post P WHERE P.POST_ID="+ID);
 		return (Post)query.list().get(0);
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<Post> getPostsByUserID(int userID) {
 		Session session=HibernateUtil.getSessionFactory().openSession();
-		Query query=session.createQuery("FROM post P WHERE P.USER_ID="+userID);
+		Query query=session.createQuery("FROM Post P WHERE P.USER_ID="+userID);
 		return query.list();
 	}
 
@@ -71,7 +71,7 @@ public class PostRepositoryImpl implements PostRepository{
 
 	public void deletePost(int ID) {
 		Session session=HibernateUtil.getSessionFactory().openSession();
-		Query query=session.createQuery("delete post where POST_ID= :postID");
+		Query query=session.createQuery("delete Post where POST_ID= :postID");
 		query.setParameter("postID", ID);
 		
 		query.executeUpdate();

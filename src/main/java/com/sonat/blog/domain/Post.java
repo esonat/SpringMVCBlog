@@ -12,7 +12,7 @@ import javax.persistence.UniqueConstraint;
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
-@Table(name="POST",catalog="blogDB",
+@Table(name="post",catalog="blogDB",
 uniqueConstraints={@UniqueConstraint(columnNames="TEXT")})
 public class Post {
 	private int ID;

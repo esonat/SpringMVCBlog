@@ -38,7 +38,7 @@ public class User {
 		this.ID = ID;
 	}
 	
-	@Column(name="USER_NAME",unique=true,nullable=false)
+	@Column(name="NAME",unique=true,nullable=false)
 	public String getName() {
 		return Name;
 	}
