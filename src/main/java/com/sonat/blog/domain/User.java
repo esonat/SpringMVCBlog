@@ -49,9 +49,7 @@ public class User {
 		this.userRole = userRole;
 	}
 	
-	@Id
-	@GeneratedValue(strategy=IDENTITY)
-	@Column(name="USER_ID",unique=true,nullable=false)
+	
 	public int getID() {
 		return ID;
 	}
@@ -59,7 +57,6 @@ public class User {
 		this.ID = ID;
 	}
 	
-	@Column(name="NAME",unique=true,nullable=false)
 	public String getName() {
 		return Name;
 	}
@@ -74,24 +71,33 @@ public class User {
 	public void setPosts(Set<Post> posts) {
 		this.posts = posts;
 	}
+	
+	@Id
+	@Column(name="username",unique=true,nullable=false)
 	public String getUsername() {
 		return username;
 	}
 	public void setUsername(String username) {
 		this.username = username;
 	}
+	
+	@Column(name="password",nullable=false)
 	public String getPassword() {
 		return password;
 	}
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	@Column(name="password",nullable=false)
 	public boolean isEnabled() {
 		return enabled;
 	}
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
+	
+	@OneToMany(fetch=FetchType.LAZY,mappedBy="user")
 	public Set<UserRole> getUserRole() {
 		return userRole;
 	}
