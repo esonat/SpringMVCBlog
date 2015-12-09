@@ -10,6 +10,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<h1>Logged User: ${loggedUser}</h1>
 <c:forEach items="${map}" var="entry">
     <p>User: ${entry.key}</p>
     <p>

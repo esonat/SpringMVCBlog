@@ -28,10 +28,10 @@ public class UserRepositoryImpl implements UserRepository {
 //		userList.add(user2);
 //		
 	}	
-	public User getUserById(int ID) {
+	public User getUserByUsername(String username) {
 		Session session=HibernateUtil.getSessionFactory().openSession();
-		Query query=session.createQuery("FROM User WHERE USER_ID =:userID");
-		query.setParameter("userID",ID);
+		Query query=session.createQuery("FROM User WHERE username =:username");
+		query.setParameter("username",username);
 		return (User)query.uniqueResult();
 	}
 	@SuppressWarnings("unchecked")

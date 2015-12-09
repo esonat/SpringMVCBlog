@@ -2,6 +2,10 @@ package com.sonat.blog.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.hibernate.Query;
+import org.hibernate.Session;
+
 import com.sonat.blog.util.HibernateUtil;
 import com.sonat.blog.domain.User;
 
@@ -13,9 +17,13 @@ public class UserDaoImpl implements UserDao {
 	public User findByUserName(String username) {
 
 		List<User> users = new ArrayList<User>();
-
-		users = HibernateUtil.getSessionFactory().getCurrentSession().createQuery("from User where username=?")
-				.setParameter(0, username).list();
+		Session session=HibernateUtil.getSessionFactory().openSession();
+		Query query=session.createQuery("FROM User where username= :username");
+		query.setParameter("username",username);
+		
+		users=query.list();
+	//	users = HibernateUtil.getSessionFactory().getCurrentSession().createQuery("FROM User where username= :username");
+	//.setParameter(0, username).list();
 
 		if (users.size() > 0) {
 			return users.get(0);

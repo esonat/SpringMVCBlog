@@ -5,7 +5,7 @@ import java.util.List;
 import com.sonat.blog.domain.User;
 
 public interface UserService {
-	User getUserById(int ID);
+	User getUserByUsername(String username);
 	List<User> getAll();
 	void addUser(User user);
 }

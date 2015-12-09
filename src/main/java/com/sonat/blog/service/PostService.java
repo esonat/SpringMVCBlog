@@ -6,7 +6,7 @@ import com.sonat.blog.domain.Post;
 public interface PostService {
 	List<Post> 	getAll();
 	Post 		getPostById(int ID);
-	List<Post> 	getPostsByUserID(int userID); 
+	List<Post> 	getPostsByUsername(String username); 
 	void 		addPost(Post post);
 	void 		deletePost(int ID);
 }

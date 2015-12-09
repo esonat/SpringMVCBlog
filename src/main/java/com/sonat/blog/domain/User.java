@@ -21,7 +21,6 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Table(name="user",catalog="blogDB",uniqueConstraints={
 @UniqueConstraint(columnNames="NAME")})
 public class User {
-	private int ID;
 	private String Name;
 	private Set<Post> posts=new HashSet<Post>(0);
 	private String username;
@@ -49,12 +48,12 @@ public class User {
 		this.userRole = userRole;
 	}
 	
-	public int getID() {
-		return ID;
-	}
-	public void setID(int ID) {
-		this.ID = ID;
-	}
+//	public int getID() {
+//		return ID;
+//	}
+//	public void setID(int ID) {
+//		this.ID = ID;
+//	}
 	@Column(name="name",unique=true,nullable=false)
 	public String getName() {
 		return Name;

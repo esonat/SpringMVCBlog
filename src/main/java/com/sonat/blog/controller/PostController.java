@@ -41,11 +41,10 @@ public class PostController {
 		Map<String,List<Post>> map=new HashMap<String, List<Post>>();
 		
 		for(User user:userService.getAll()){
-			int userId		=	user.getID();
-			String userName	=	user.getName();
-			List<Post> userPosts=postService.getPostsByUserID(userId);
+			String username	=	user.getName();
+			List<Post> userPosts=postService.getPostsByUsername(username);
 			
-			if(!map.containsKey(userName))map.put(userName,userPosts);
+			if(!map.containsKey(username))map.put(username,userPosts);
 		}		
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -58,20 +57,20 @@ public class PostController {
 	@RequestMapping("/post/{id}")
 	public String getPostById(Model model,@PathVariable("id")int id){
 		Post post=postService.getPostById(id);
-		String userName=userService.getUserById(post.getUser().getID()).getName();
+		//String userName=userService.getUserById(post.getUser().getID()).getName();
 		
 		model.addAttribute("post",post);
-		model.addAttribute("user",userName);
+		//model.addAttribute("user",userName);
 		
 		return "post";
 	}	
-	@RequestMapping("/post/user/{userId}")
-	public String getPostByUserId(Model model,@PathVariable("userId")int userId){
-		List<Post> list=postService.getPostsByUserID(userId); 
-		String userName=userService.getUserById(userId).getName();
+	@RequestMapping("/post/user/{username}")
+	public String getPostByUsername(Model model,@PathVariable("username")String username){
+		List<Post> list=postService.getPostsByUsername(username); 
+		//String userName=userService.getUserById(userId).getName();
 		
 		model.addAttribute("post",list);
-		model.addAttribute("user",userName);
+		model.addAttribute("user",username);
 		return "user";
 	}
 
@@ -81,11 +80,20 @@ public class PostController {
 	}
 	
 	@RequestMapping(value="/post/add", method=RequestMethod.POST)
-    public void addPost(@ModelAttribute("post") Post post, BindingResult result, Model model)
+    public String addPost(@ModelAttribute("post") Post post, BindingResult result, Model model)
     {
         if( ! result.hasErrors() ){
-             
+        	//User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    	    String username = auth.getName(); 
+    		User user=userService.getUserByUsername(username);
+    		
+        	post.setUser(user);
+            postService.addPost(post);
+            
+            return "redirect:/post";
         } 
+        return "addPost";
     }   
 	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -103,12 +111,7 @@ public class PostController {
 		model.setViewName("login");
 		return model;
 	}
-	
-	
-	@RequestMapping(value="/postlogin",method=RequestMethod.POST)
-	public void postLogin(@ModelAttribute("user") User user, BindingResult result, Model model){
-	}
-	
+		
 	
 	private String getErrorMessage(HttpServletRequest request, String key) {
 
@@ -152,12 +155,12 @@ public class PostController {
 	}
 	
 	@RequestMapping(value="/user/add", method=RequestMethod.POST)
-    public String addPost(@ModelAttribute("user") User user, BindingResult result, Model model)
+    public String addUser(@ModelAttribute("user") User user, BindingResult result, Model model)
     {
         if( ! result.hasErrors() ){
              userService.addUser(user);
              return "redirect:/post";
         }
-        return "redirect:/www.google.com";
+        return "addUser";
     }   
 }

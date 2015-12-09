@@ -26,8 +26,8 @@ public class PostServiceImpl implements PostService{
 		return postRepository.getPostById(ID);
 	}
 
-	public List<Post> getPostsByUserID(int userID) {
-		return postRepository.getPostsByUserID(userID);
+	public List<Post> getPostsByUsername(String username) {
+		return postRepository.getPostsByUsername(username);
 	}
 
 	public void addPost(Post post) {

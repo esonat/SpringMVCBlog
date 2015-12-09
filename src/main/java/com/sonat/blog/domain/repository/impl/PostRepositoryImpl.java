@@ -55,10 +55,10 @@ public class PostRepositoryImpl implements PostRepository{
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Post> getPostsByUserID(int userID) {
+	public List<Post> getPostsByUsername(String username) {
 		Session session=HibernateUtil.getSessionFactory().openSession();
-		Query query=session.createQuery("FROM Post P WHERE P.user.ID= :userID");
-		query.setParameter("userID",userID);
+		Query query=session.createQuery("FROM Post P WHERE P.user.username= :username");
+		query.setParameter("username",username);
 		return query.list();
 	}
 
