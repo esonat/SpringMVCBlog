@@ -47,7 +47,12 @@ public class PostController {
 			
 			if(!map.containsKey(userName))map.put(userName,userPosts);
 		}		
-		model.addAttribute("map",map);
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    String name = auth.getName(); 
+		
+	    model.addAttribute("map",map);
+	    model.addAttribute("loggedUser",name);
 		return "posts";
 	}
 	@RequestMapping("/post/{id}")
@@ -60,7 +65,7 @@ public class PostController {
 		
 		return "post";
 	}	
-	@RequestMapping("/user/{userId}")
+	@RequestMapping("/post/user/{userId}")
 	public String getPostByUserId(Model model,@PathVariable("userId")int userId){
 		List<Post> list=postService.getPostsByUserID(userId); 
 		String userName=userService.getUserById(userId).getName();
@@ -97,6 +102,11 @@ public class PostController {
 		}
 		model.setViewName("login");
 		return model;
+	}
+	
+	
+	@RequestMapping(value="/postlogin",method=RequestMethod.POST)
+	public void postLogin(@ModelAttribute("user") User user, BindingResult result, Model model){
 	}
 	
 	
@@ -142,10 +152,12 @@ public class PostController {
 	}
 	
 	@RequestMapping(value="/user/add", method=RequestMethod.POST)
-    public void addPost(@ModelAttribute("user") User user, BindingResult result, Model model)
+    public String addPost(@ModelAttribute("user") User user, BindingResult result, Model model)
     {
-        //if( ! result.hasErrors() ){
+        if( ! result.hasErrors() ){
              userService.addUser(user);
-        //} 
+             return "redirect:/post";
+        }
+        return "redirect:/www.google.com";
     }   
 }

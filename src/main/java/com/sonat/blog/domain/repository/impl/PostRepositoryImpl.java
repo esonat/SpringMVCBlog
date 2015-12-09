@@ -49,14 +49,16 @@ public class PostRepositoryImpl implements PostRepository{
 
 	public Post getPostById(int ID) {
 		Session session=HibernateUtil.getSessionFactory().openSession();
-		Query query=session.createQuery("FROM Post P WHERE P.POST_ID="+ID);
+		Query query=session.createQuery("FROM Post P WHERE P.POST_ID= :postID");
+		query.setParameter("postID",ID);
 		return (Post)query.list().get(0);
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<Post> getPostsByUserID(int userID) {
 		Session session=HibernateUtil.getSessionFactory().openSession();
-		Query query=session.createQuery("FROM Post P WHERE P.USER_ID="+userID);
+		Query query=session.createQuery("FROM Post P WHERE P.user.ID= :userID");
+		query.setParameter("userID",userID);
 		return query.list();
 	}
 

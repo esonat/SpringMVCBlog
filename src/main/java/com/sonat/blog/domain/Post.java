@@ -18,6 +18,7 @@ public class Post {
 	private int ID;
 	private String text;
 	private User user;
+	//private int UserID;
 	
 	public Post(){
 		super();
@@ -43,6 +44,7 @@ public class Post {
 	public void setText(String text) {
 		this.text = text;
 	}
+	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="USER_ID",nullable=false)
 	public User getUser() {
@@ -51,7 +53,12 @@ public class Post {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
-	
-	
+//	
+//	
+//	public int getUserID(){
+//		return UserID;
+//	}
+//	public void setUserID(int UserID){
+//		this.UserID=UserID;
+//	}	
 }

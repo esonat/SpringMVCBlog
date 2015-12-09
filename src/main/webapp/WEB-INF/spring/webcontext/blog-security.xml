@@ -5,9 +5,10 @@
 	http://www.springframework.org/schema/security
 	http://www.springframework.org/schema/security/spring-security-4.0.xsd">
 
-	
+	<!-- <intercept-url pattern="/post/add*" access="hasRole('ROLE_USER')"/>-->
+		
+		    <!--login-processing-url="/blog/postlogin"-->
 	<http auto-config="true" use-expressions="true">
-		<intercept-url pattern="/post/add*" access="hasRole('ROLE_USER')"/>
 		<access-denied-handler error-page="/403"/>
 		<form-login 
 		    login-page="/login" 
@@ -17,7 +18,7 @@
 			password-parameter="password" />
 		<logout logout-success-url="/login?logout" />
 		<!-- enable csrf protection -->
-		<!--  <csrf />-->
+	 <csrf />
 	</http>
 	<authentication-manager>
 		<authentication-provider user-service-ref="myUserDetailsService"/>
