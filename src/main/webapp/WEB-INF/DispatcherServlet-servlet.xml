@@ -20,9 +20,4 @@
 <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
 	<property name="basename" value="messages"/>
 </bean>
-<bean id="userDao" class="com.sonat.blog.dao.UserDaoImpl"/>
-
-<bean id="myUserDetailsService" class="com.sonat.blog.users.service.MyUserDetailsService">
-	<property name="userDao" ref="userDao" />
-</bean>
 </beans>

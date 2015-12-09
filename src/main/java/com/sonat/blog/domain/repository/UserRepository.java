@@ -9,4 +9,5 @@ import com.sonat.blog.domain.User;
 public interface UserRepository {
 	User getUserById(int ID);
 	List<User> getAll(); 
+	void addUser(User user);
 }

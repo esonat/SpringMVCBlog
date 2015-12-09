@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.sonat.blog.domain.Post;
 import com.sonat.blog.domain.User;
+import com.sonat.blog.domain.UserRole;
 import com.sonat.blog.domain.repository.UserRepository;
 import com.sonat.blog.util.HibernateUtil;
 
@@ -39,4 +40,18 @@ public class UserRepositoryImpl implements UserRepository {
 		Query query=session.createQuery("FROM User");
 		return query.list();
 	}	
+	public void addUser(User user){
+		Session session=HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
+		
+		session.save(user);
+		
+		UserRole userRole=new UserRole(user,"ROLE_USER");
+		session.save(userRole);
+		
+		userRole.setUser(user);
+		user.getUserRole().add(userRole);
+		
+		session.getTransaction().commit();
+	}
 }

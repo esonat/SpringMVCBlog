@@ -20,4 +20,7 @@ public class UserServiceImpl implements UserService {
 	public List<User> getAll(){
 		return userRepository.getAll();
 	}	
+	public void addUser(User user){
+		userRepository.addUser(user);
+	}
 }
