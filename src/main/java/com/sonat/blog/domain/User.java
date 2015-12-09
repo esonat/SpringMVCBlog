@@ -49,14 +49,13 @@ public class User {
 		this.userRole = userRole;
 	}
 	
-	
 	public int getID() {
 		return ID;
 	}
 	public void setID(int ID) {
 		this.ID = ID;
 	}
-	
+	@Column(name="name",unique=true,nullable=false)
 	public String getName() {
 		return Name;
 	}
@@ -89,7 +88,7 @@ public class User {
 		this.password = password;
 	}
 	
-	@Column(name="password",nullable=false)
+	@Column(name="enabled",nullable=false)
 	public boolean isEnabled() {
 		return enabled;
 	}

@@ -14,5 +14,6 @@
 		<property name="hbm2ddl.auto">create</property>
 		<mapping class="com.sonat.blog.domain.Post"/>
 		<mapping class="com.sonat.blog.domain.User"/>
+		<mapping class="com.sonat.blog.domain.UserRole"/>
 	</session-factory>
 </hibernate-configuration>
