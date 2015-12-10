@@ -3,7 +3,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
- <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
  <t:genericpage>
     <jsp:attribute name="header">
        <li><a href="#">Logged User: ${loggedUser}</a></li>
@@ -15,11 +14,6 @@
    <div class="form-group">
    		<p>${post.text}</p>
 	    <small>${username} - <span class="glyphicon glyphicon-time"></span> ${post.date}</small>
-	    <sec:authorize access="hasRole('ROLE_ADMIN')">
-				<form method="POST" action="/blog/post/delete/${post.ID}">
-					<input type="submit" value="Delete" class="btn btn-primary"/>
-				</form>
-		</sec:authorize>
 	    <hr></hr>
 	</div>
     </jsp:body>

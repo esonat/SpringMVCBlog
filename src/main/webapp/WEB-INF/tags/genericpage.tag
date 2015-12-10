@@ -39,15 +39,18 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="/blog/post">Posts</a>
-                    </li>
-                    <li>
                         <a href="/blog/login">Login</a>
                     </li>
                     <li>
-                    <li>
-                    	<a href="#"><jsp:invoke fragment="header"/></a>
+                        <a href="/blog/post">Posts</a>
                     </li>
+                    <li>
+                        <a href="/blog/post/add">Add Post</a>
+                    </li>
+                    <li>
+                        <a href="/blog/user/add">Register</a>
+                    </li>
+                    <jsp:invoke fragment="header"/>                    
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

@@ -59,7 +59,7 @@ public class PostRepositoryImpl implements PostRepository{
 
 	public Post getPostById(int ID) {
 		Session session=HibernateUtil.getSessionFactory().openSession();
-		Query query=session.createQuery("FROM Post P WHERE P.POST_ID= :postID");
+		Query query=session.createQuery("FROM Post P WHERE P.ID= :postID");
 		query.setParameter("postID",ID);
 		return (Post)query.list().get(0);
 	}
@@ -91,7 +91,7 @@ public class PostRepositoryImpl implements PostRepository{
 
 	public void deletePost(int ID) {
 		Session session=HibernateUtil.getSessionFactory().openSession();
-		Query query=session.createQuery("delete Post where POST_ID= :postID");
+		Query query=session.createQuery("delete Post where ID= :postID");
 		query.setParameter("postID", ID);
 		
 		query.executeUpdate();

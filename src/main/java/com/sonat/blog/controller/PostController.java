@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.omg.CORBA.Request;
 import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -15,6 +17,7 @@ import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,6 +39,16 @@ public class PostController {
 	private PostService postService;
 	@Autowired
 	private UserService userService;
+	
+	@RequestMapping(value="/admin",method=RequestMethod.GET)
+	public String admin(Model model){
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    String name = auth.getName();
+	    
+	
+		model.addAttribute("loggedUser",name);
+		return "admin";
+	}
 	
 	@RequestMapping("/post")
 	public String listAll(Model model){
@@ -59,25 +72,45 @@ public class PostController {
 	public String getPostById(Model model,@PathVariable("id")int id){
 		Post post=postService.getPostById(id);
 		//String userName=userService.getUserById(post.getUser().getID()).getName();
+		String username=post.getUser().getName();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    String name = auth.getName(); 
 		
 		model.addAttribute("post",post);
+		model.addAttribute("username",username);
+		model.addAttribute("loggedUser",name);
 		//model.addAttribute("user",userName);
 		
 		return "post";
 	}	
+	
+	
+	@RequestMapping(value="/post/delete/{id}",method=RequestMethod.POST)
+	public String deletePostById(@PathVariable("id")int id){
+		postService.deletePost(id);
+		return "redirect:/admin";
+	}	
+	
 	@RequestMapping("/post/user/{username}")
 	public String getPostByUsername(Model model,@PathVariable("username")String username){
 		List<Post> list=postService.getPostsByUsername(username); 
 		//String userName=userService.getUserById(userId).getName();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    String name = auth.getName(); 
 		
 		model.addAttribute("post",list);
 		model.addAttribute("user",username);
+		model.addAttribute("loggedUser",name);
 		return "user";
 	}
 
 	@RequestMapping(value="/post/add", method=RequestMethod.GET)
-    public String addPost(@ModelAttribute("post") Post post){
-		return "addPost";
+    public String addPost(Model model,@ModelAttribute("post") Post post){
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    String name = auth.getName();
+	    model.addAttribute("loggedUser",name);
+		
+	    return "addPost";
 	}
 	
 	@RequestMapping(value="/post/add", method=RequestMethod.POST)
@@ -103,8 +136,23 @@ public class PostController {
 		if (logout != null) {
 			model.addObject("msg", "You've been logged out successfully.");
 		}
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    String name = auth.getName();
+	    
 		model.setViewName("login");
+		model.addObject("loggedUser",name);
+		
 		return model;
+	}
+	
+	@RequestMapping(value="/logout", method = RequestMethod.GET)
+	public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
+	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    if (auth != null){    
+	        new SecurityContextLogoutHandler().logout(request, response, auth);
+	    }
+	    return "redirect:/login?logout";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
 	}
 		
 	
@@ -145,7 +193,12 @@ public class PostController {
 	}
 	
 	@RequestMapping(value="/user/add",method=RequestMethod.GET)
-	public String addUser(@ModelAttribute("user") User user){
+	public String addUser(Model model,@ModelAttribute("user") User user){
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    String name = auth.getName();
+	    model.addAttribute("loggedUser",name);
+	    
 		return "addUser";
 	}
 	
