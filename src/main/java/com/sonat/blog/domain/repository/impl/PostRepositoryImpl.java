@@ -16,6 +16,7 @@ import org.springframework.cglib.util.ParallelSorter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.servlet.RequestToViewNameTranslator;
 
 import com.sonat.blog.domain.Post;
 import com.sonat.blog.domain.User;
@@ -61,6 +62,9 @@ public class PostRepositoryImpl implements PostRepository{
 		Session session=HibernateUtil.getSessionFactory().openSession();
 		Query query=session.createQuery("FROM Post P WHERE P.ID= :postID");
 		query.setParameter("postID",ID);
+		
+		if(query.list().size()==0) return null;
+		
 		return (Post)query.list().get(0);
 	}
 

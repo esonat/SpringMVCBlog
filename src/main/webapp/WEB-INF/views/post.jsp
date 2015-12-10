@@ -15,11 +15,13 @@
    <div class="form-group">
    		<p>${post.text}</p>
 	    <small>${username} - <span class="glyphicon glyphicon-time"></span> ${post.date}</small>
-	    <sec:authorize access="hasRole('ROLE_ADMIN')">
-				<form method="POST" action="/blog/post/delete/${post.ID}">
-					<input type="submit" value="Delete" class="btn btn-primary"/>
+	    	<sec:authorize access="hasRole('ROLE_ADMIN')">
+			  	<spring:url value="/post/${post.ID}/delete" var="deleteUrl" />
+			  	<form action="${deleteUrl}" method="POST">
+					<button class="btn btn-danger">Delete</button>
+					<input type="hidden" name="${_csrf.parameterName}"   value="${_csrf.token}" />
 				</form>
-		</sec:authorize>
+			</sec:authorize>
 	    <hr></hr>
 	</div>
     </jsp:body>

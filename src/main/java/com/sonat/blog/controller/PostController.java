@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.QueryHint;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -11,6 +12,7 @@ import javax.validation.Valid;
 import org.omg.CORBA.Request;
 import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.method.P;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.LockedException;
@@ -27,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sonat.blog.domain.Post;
 import com.sonat.blog.domain.User;
@@ -71,7 +74,9 @@ public class PostController {
 	@RequestMapping("/post/{id}")
 	public String getPostById(Model model,@PathVariable("id")int id){
 		Post post=postService.getPostById(id);
-		//String userName=userService.getUserById(post.getUser().getID()).getName();
+		
+		if(post==null) return "redirect:/post";
+		
 		String username=post.getUser().getName();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	    String name = auth.getName(); 
@@ -79,22 +84,20 @@ public class PostController {
 		model.addAttribute("post",post);
 		model.addAttribute("username",username);
 		model.addAttribute("loggedUser",name);
-		//model.addAttribute("user",userName);
 		
 		return "post";
-	}	
+	}		
 	
-	
-	@RequestMapping(value="/post/delete/{id}",method=RequestMethod.POST)
-	public String deletePostById(@PathVariable("id")int id){
+	@RequestMapping(value = "/post/{id}/delete", method = RequestMethod.POST)
+	public String deletePost(@PathVariable("id") int id, final RedirectAttributes redirectAttributes) {
 		postService.deletePost(id);
-		return "redirect:/admin";
-	}	
+		return "redirect:/post";		
+	}
 	
 	@RequestMapping("/post/user/{username}")
 	public String getPostByUsername(Model model,@PathVariable("username")String username){
 		List<Post> list=postService.getPostsByUsername(username); 
-		//String userName=userService.getUserById(userId).getName();
+		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	    String name = auth.getName(); 
 		
