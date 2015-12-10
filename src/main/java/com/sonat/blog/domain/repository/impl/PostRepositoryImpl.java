@@ -6,19 +6,24 @@ import java.util.List;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.util.ParallelSorter;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
 import com.sonat.blog.domain.Post;
 import com.sonat.blog.domain.User;
 import com.sonat.blog.domain.repository.PostRepository;
+import com.sonat.blog.service.UserService;
 import com.sonat.blog.util.HibernateUtil;
 
 @Repository
 public class PostRepositoryImpl implements PostRepository{
 	//List<Post> postList=new ArrayList<Post>(); 
 	//private int nextPostId;
-	
+	@Autowired 
+	UserService userService;
 	public PostRepositoryImpl(){
 //		Post post1=new Post("post1",1);
 //		post1.setID(1);
@@ -65,8 +70,13 @@ public class PostRepositoryImpl implements PostRepository{
 	public void addPost(Post post) {
 		Session session=HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
-		session.save(post);
-				
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    String username = auth.getName(); 
+		User user=userService.getUserByUsername(username);
+		
+		post.setUser(user);
+		session.save(post);				
 		post.getUser().getPosts().add(post);
 		session.getTransaction().commit();
 	}

@@ -68,7 +68,7 @@ public class User {
 		Name = name;
 	}
 	
-	@OneToMany(fetch=FetchType.LAZY,mappedBy="user")
+	@OneToMany(fetch=FetchType.EAGER,mappedBy="user")
 	public Set<Post> getPosts() {
 		return posts;
 	}

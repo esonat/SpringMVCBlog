@@ -9,13 +9,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import static javax.persistence.GenerationType.IDENTITY;
+import javax.validation.constraints.Size;
 
+import static javax.persistence.GenerationType.IDENTITY;
+//uniqueConstraints={@UniqueConstraint(columnNames="TEXT")})
+//@Size(min=5,max=500,message="{Size.Post.text.validation}"
 @Entity
-@Table(name="post",catalog="blogDB",
-uniqueConstraints={@UniqueConstraint(columnNames="TEXT")})
+@Table(name="post",catalog="blogDB")
 public class Post {
 	private int ID;
+	@Size(min=5,max=500,message="{Size.Post.text.validation}")
 	private String text;
 	private User user;
 	//private int UserID;
@@ -37,7 +40,7 @@ public class Post {
 	public void setID(int iD) {
 		ID = iD;
 	}
-	@Column(name="TEXT",unique=true,nullable=false)
+	@Column(name="TEXT",nullable=false)
 	public String getText() {
 		return text;
 	}
@@ -45,7 +48,7 @@ public class Post {
 		this.text = text;
 	}
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="USER_ID",nullable=false)
 	public User getUser() {
 		return user;

@@ -40,7 +40,7 @@ public class PostController {
 	@RequestMapping("/post")
 	public String listAll(Model model){
 		Map<String,List<Post>> map=new HashMap<String, List<Post>>();
-		
+				
 		for(User user:userService.getAll()){
 			String username	=	user.getName();
 			List<Post> userPosts=postService.getPostsByUsername(username);
@@ -76,22 +76,16 @@ public class PostController {
 	}
 
 	@RequestMapping(value="/post/add", method=RequestMethod.GET)
-    public String addPost(Model model){
+    public String addPost(@ModelAttribute("post") Post post){
 		return "addPost";
 	}
 	
 	@RequestMapping(value="/post/add", method=RequestMethod.POST)
-    public String addPost(@ModelAttribute("post") Post post, BindingResult result, Model model)
+    public String addPost(@ModelAttribute("post")@Valid Post post, BindingResult result, Model model)
     {
         if( ! result.hasErrors() ){
         	//User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    	    String username = auth.getName(); 
-    		User user=userService.getUserByUsername(username);
-    		
-        	post.setUser(user);
             postService.addPost(post);
-            
             return "redirect:/post";
         } 
         return "addPost";

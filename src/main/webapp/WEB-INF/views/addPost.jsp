@@ -9,10 +9,12 @@
     <jsp:attribute name="footer">
     </jsp:attribute>
     <jsp:body>
-       <form:form action="/blog/post/add" modelAttribute="Post">
-			<textarea rows="10" cols="100" name="text">
-			</textarea>
-		<input type="submit" value="Submit"/>
+       <form:form action="/blog/post/add" modelAttribute="post" method="POST">
+       <form:errors path="*" cssClass="alert alert-danger" element="div"/>
+       <div class="form-group">
+			<form:textarea id="text" path="text" rows="10" cols="100" name="text" class="form-control"/>
+		</div>
+		<input type="submit" value="Submit" class="btn btn-primary"/>
 	 </form:form>	 
     </jsp:body>
 </t:genericpage>
