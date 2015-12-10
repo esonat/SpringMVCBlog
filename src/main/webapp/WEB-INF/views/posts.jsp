@@ -15,10 +15,10 @@
     </jsp:attribute>
     <jsp:body>
    <div class="form-group">
-    	<c:forEach items="${map}" var="entry">
-	    	<c:forEach items="${entry.value}" var="post">
-	    		<p>${post.text}</p>
-	    		<small>${entry.key} - <span class="glyphicon glyphicon-time"></span> ${post.date}</small>
+   		<c:forEach items="${postsMap}" var="mapItem">
+   			<c:forEach items="${mapItem.value}" var="post">
+   				<p>${post.text}</p>
+	    		<small>${mapItem.key} - <span class="glyphicon glyphicon-time"></span> ${post.date}</small>
 	    		
 				<sec:authorize access="hasRole('ROLE_ADMIN')">
 				  	<spring:url value="/post/${post.ID}/delete" var="deleteUrl" />
@@ -28,8 +28,8 @@
 					</form>
 				</sec:authorize>
 	    		<hr></hr>
-	   	 	</c:forEach>	   	 	
-		</c:forEach>
+	    	</c:forEach>
+   		</c:forEach>
 	</div>
     </jsp:body>
 </t:genericpage>

@@ -11,28 +11,42 @@ import com.sonat.blog.domain.Post;
 import com.sonat.blog.domain.User;
 import com.sonat.blog.domain.UserRole;
 import com.sonat.blog.domain.repository.UserRepository;
+import com.sonat.blog.exception.UserNotFoundException;
+import com.sonat.blog.service.UserService;
 import com.sonat.blog.util.HibernateUtil;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository {
-//	List<User> userList=new ArrayList<User>(); 
-//	private int nextUserId;
 	
 	public UserRepositoryImpl(){
-//		User user1=new User("user1");
-//		user1.setID(1);
-//		User user2=new User("user2");
-//		user2.setID(2);
-//		
-//		userList.add(user1);
-//		userList.add(user2);
-//		
 	}	
+	
+	public User getUserByName(String name){
+		User user=null;
+		Session session=HibernateUtil.getSessionFactory().openSession();
+		Query query=session.createQuery("FROM User WHERE Name =:name");
+		query.setParameter("name",name);
+		user=(User)query.uniqueResult();
+		
+		if(user==null) {	
+			throw new UserNotFoundException("No user found with the name: "+ name);
+		}		
+		return user;
+	}
+	
 	public User getUserByUsername(String username) {
+		User user=null;
+		
 		Session session=HibernateUtil.getSessionFactory().openSession();
 		Query query=session.createQuery("FROM User WHERE username =:username");
 		query.setParameter("username",username);
-		return (User)query.uniqueResult();
+		user=(User)query.uniqueResult();
+		
+		if(user==null) {	
+			throw new UserNotFoundException("No user found with the username: "+ username);
+		}
+		
+		return user;
 	}
 	@SuppressWarnings("unchecked")
 	public List<User> getAll(){

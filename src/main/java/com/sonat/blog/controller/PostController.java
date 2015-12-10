@@ -55,20 +55,20 @@ public class PostController {
 	
 	@RequestMapping("/post")
 	public String listAll(Model model){
-		Map<String,List<Post>> map=new HashMap<String, List<Post>>();
-				
-		for(User user:userService.getAll()){
-			String username	=	user.getName();
-			List<Post> userPosts=postService.getPostsByUsername(username);
-			
-			if(!map.containsKey(username))map.put(username,userPosts);
-		}		
+		Map<String,List<Post>> postsMap=new HashMap<String, List<Post>>();
 		
+		for(User user:userService.getAll()){
+			String 		username	=	user.getUsername();
+			List<Post> 	postList 	=	postService.getPostsByUsername(username);
+			
+			if(!postsMap.containsKey(username))postsMap.put(username,postList);
+		}				
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	    String name = auth.getName(); 
 		
-	    model.addAttribute("map",map);
+	    model.addAttribute("postsMap",	postsMap);
 	    model.addAttribute("loggedUser",name);
+	    
 		return "posts";
 	}
 	@RequestMapping("/post/{id}")

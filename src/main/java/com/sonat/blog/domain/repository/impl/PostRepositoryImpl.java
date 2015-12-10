@@ -26,29 +26,9 @@ import com.sonat.blog.util.HibernateUtil;
 
 @Repository
 public class PostRepositoryImpl implements PostRepository{
-	//List<Post> postList=new ArrayList<Post>(); 
-	//private int nextPostId;
 	@Autowired 
 	UserService userService;
 	public PostRepositoryImpl(){
-//		Post post1=new Post("post1",1);
-//		post1.setID(1);
-//		Post post2=new Post("post2",2);
-//		post2.setID(2);
-//		Post post3=new Post("post3",1);
-//		post3.setID(3);
-//		Post post4=new Post("post4",2);
-//		post4.setID(4);
-//		Post post5=new Post("post5",1);
-//		post5.setID(5);
-//		
-//		postList.add(post1);
-//		postList.add(post2);
-//		postList.add(post3);
-//		postList.add(post4);
-//		postList.add(post5);
-//		
-//		nextPostId=6;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -81,8 +61,8 @@ public class PostRepositoryImpl implements PostRepository{
 		session.beginTransaction();
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	    String username = auth.getName(); 
-		User user=userService.getUserByUsername(username);
+	    String username = 		auth.getName(); 
+		User user		=		userService.getUserByUsername(username);
 		
 		post.setUser(user);
 		Date date = new Date();

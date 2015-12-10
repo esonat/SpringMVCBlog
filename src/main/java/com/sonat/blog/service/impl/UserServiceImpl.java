@@ -13,7 +13,10 @@ import com.sonat.blog.service.UserService;
 public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserRepository userRepository;
-
+	
+	public User getUserByName(String name){
+		return userRepository.getUserByName(name);
+	}
 	public User getUserByUsername(String username) {
 		return userRepository.getUserByUsername(username);
 	}	

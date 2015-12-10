@@ -8,17 +8,17 @@ import com.sonat.blog.domain.User;
 import com.sonat.blog.exception.UserNotFoundException;
 import com.sonat.blog.service.UserService;
 
-public class UsernameValidator implements ConstraintValidator<Username,String>{
+public class NameValidator implements ConstraintValidator<Name,String>{
 	@Autowired
 	private UserService userService;
 	
-	public void initialize(Username constraintAnnotation){
+	public void initialize(Name constraintAnnotation){
 	}
 	
 	public boolean isValid(String value,ConstraintValidatorContext context){
 		User user=null;
 		try{
-			user=userService.getUserByUsername(value);
+			user=userService.getUserByName(value);
 		}catch(Exception e){
 			return true;
 		}
