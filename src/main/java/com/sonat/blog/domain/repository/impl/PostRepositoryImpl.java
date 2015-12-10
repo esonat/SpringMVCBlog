@@ -1,7 +1,12 @@
 package com.sonat.blog.domain.repository.impl;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import javax.print.attribute.standard.DateTimeAtCompleted;
 
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
@@ -76,6 +81,9 @@ public class PostRepositoryImpl implements PostRepository{
 		User user=userService.getUserByUsername(username);
 		
 		post.setUser(user);
+		Date date = new Date();
+		post.setDate(date);
+		
 		session.save(post);				
 		post.getUser().getPosts().add(post);
 		session.getTransaction().commit();

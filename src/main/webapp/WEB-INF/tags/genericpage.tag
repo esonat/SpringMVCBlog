@@ -44,13 +44,16 @@
                     <li>
                         <a href="/blog/login">Login</a>
                     </li>
+                    <li>
+                    <li>
+                    	<a href="#"><jsp:invoke fragment="header"/></a>
+                    </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container -->
     </nav>
-      <jsp:invoke fragment="header"/>
     </div>
     <div id="body">
      <jsp:doBody/>

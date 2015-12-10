@@ -8,10 +8,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Size;
 
 import static javax.persistence.GenerationType.IDENTITY;
+
+import java.util.Date;
 //uniqueConstraints={@UniqueConstraint(columnNames="TEXT")})
 //@Size(min=5,max=500,message="{Size.Post.text.validation}"
 @Entity
@@ -20,6 +24,7 @@ public class Post {
 	private int ID;
 	@Size(min=5,max=500,message="{Size.Post.text.validation}")
 	private String text;
+	private Date date;
 	private User user;
 	//private int UserID;
 	
@@ -56,6 +61,16 @@ public class Post {
 	public void setUser(User user) {
 		this.user = user;
 	}
+	
+	@Column(name="DATE",nullable=false)
+	@Temporal(TemporalType.DATE)
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
+	}
+	
 //	
 //	
 //	public int getUserID(){
