@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import com.sonat.blog.domain.*;
 import static javax.persistence.GenerationType.IDENTITY;
@@ -21,9 +23,13 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Table(name="user",catalog="blogDB",uniqueConstraints={
 @UniqueConstraint(columnNames="NAME")})
 public class User {
+	@Pattern(regexp="[a-zA-Z]+",message="{Pattern.User.Name.validation}")
 	private String Name;
 	private Set<Post> posts=new HashSet<Post>(0);
+	@Pattern(regexp="[a-zA-Z]+",message="{Pattern.User.username.validation}")
 	private String username;
+	@Pattern(regexp="^[A-Za-z0-9_.]+$",message="{Pattern.User.password.validation}")	
+	@Size(min=5,max=50,message="{Size.User.password.validation}")
 	private String password;
 	private boolean enabled;
 	private Set<UserRole> userRole = new HashSet<UserRole>(0);

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -150,15 +151,15 @@ public class PostController {
 	}
 	
 	@RequestMapping(value="/user/add",method=RequestMethod.GET)
-	public String addUser(Model model){
+	public String addUser(@ModelAttribute("user") User user){
 		return "addUser";
 	}
 	
 	@RequestMapping(value="/user/add", method=RequestMethod.POST)
-    public String addUser(@ModelAttribute("user") User user, BindingResult result, Model model)
+    public String addUser(@ModelAttribute("user") @Valid User userToBeAdded, BindingResult result, Model model)
     {
         if( ! result.hasErrors() ){
-             userService.addUser(user);
+             userService.addUser(userToBeAdded);
              return "redirect:/post";
         }
         return "addUser";

@@ -9,7 +9,7 @@
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
 		http://www.springframework.org/schema/webflow-config http://www.springframework.org/schema/webflow-config/spring-webflow-config-2.3.xsd">
 
-<mvc:annotation-driven enable-matrix-variables="true"/>
+<mvc:annotation-driven enable-matrix-variables="true" validator="validator"/>
 <!-- <mvc:resources location="/resources/" mapping="/resource/**"/>-->
 <context:component-scan base-package="com.sonat.blog"/>
 
@@ -23,4 +23,8 @@
 <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
 	<property name="basename" value="messages"/>
 </bean>
+<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+	<property name="validationMessageSource" ref="messageSource"/>
+</bean>
+
 </beans>
