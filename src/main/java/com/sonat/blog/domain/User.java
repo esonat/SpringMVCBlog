@@ -16,6 +16,8 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import com.sonat.blog.domain.*;
+import com.sonat.blog.validator.Username;
+
 import static javax.persistence.GenerationType.IDENTITY;
 
 
@@ -27,6 +29,7 @@ public class User {
 	private String Name;
 	private Set<Post> posts=new HashSet<Post>(0);
 	@Pattern(regexp="[a-zA-Z]+",message="{Pattern.User.username.validation}")
+	@Username
 	private String username;
 	@Pattern(regexp="^[A-Za-z0-9_.]+$",message="{Pattern.User.password.validation}")	
 	@Size(min=5,max=50,message="{Size.User.password.validation}")

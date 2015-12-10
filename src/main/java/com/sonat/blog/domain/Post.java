@@ -22,7 +22,7 @@ import java.util.Date;
 @Table(name="post",catalog="blogDB")
 public class Post {
 	private int ID;
-	@Size(min=5,max=500,message="{Size.Post.text.validation}")
+	@Size(min=5,max=10000,message="{Size.Post.text.validation}")
 	private String text;
 	private Date date;
 	private User user;
