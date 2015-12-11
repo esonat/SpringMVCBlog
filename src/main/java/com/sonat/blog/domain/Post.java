@@ -53,7 +53,7 @@ public class Post {
 		this.text = text;
 	}
 	
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="USER_ID",nullable=false)
 	public User getUser() {
 		return user;
@@ -62,8 +62,8 @@ public class Post {
 		this.user = user;
 	}
 	
-	@Column(name="DATE",nullable=false)
-	@Temporal(TemporalType.DATE)
+	@Column(name = "DATE", columnDefinition="DATETIME",nullable=false)
+	@Temporal(TemporalType.TIMESTAMP)
 	public Date getDate() {
 		return date;
 	}

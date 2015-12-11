@@ -13,6 +13,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.util.ParallelSorter;
+import org.springframework.jdbc.core.metadata.PostgresCallMetaDataProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
@@ -74,10 +75,12 @@ public class PostRepositoryImpl implements PostRepository{
 	}
 
 	public void deletePost(int ID) {
-		Session session=HibernateUtil.getSessionFactory().openSession();
+		Session session=HibernateUtil.getSessionFactory().openSession();		
 		Query query=session.createQuery("delete Post where ID= :postID");
 		query.setParameter("postID", ID);
-		
+		session.beginTransaction();
 		query.executeUpdate();
+		session.getTransaction().commit();
+//		
 	}
 }
