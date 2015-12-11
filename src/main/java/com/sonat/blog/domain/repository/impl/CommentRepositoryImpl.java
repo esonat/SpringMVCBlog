@@ -54,6 +54,7 @@ public class CommentRepositoryImpl implements CommentRepository {
 		
 		comment.setDatetime(date);
 		comment.setPost(post);
+		comment.setDepth(0);
 		
 		post.getComments().add(comment);
 		session.save(comment);

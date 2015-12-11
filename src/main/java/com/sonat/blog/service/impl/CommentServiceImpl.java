@@ -1,10 +1,8 @@
 package com.sonat.blog.service.impl;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.Post;
 import com.sonat.blog.domain.repository.CommentRepository;
@@ -26,7 +24,7 @@ public class CommentServiceImpl implements CommentService {
 		return commentRepository.getPostComments(postID);
 	}
 
-	public Comment getPostCommentById(int postID, int commentID) {
+	public Comment getPostCommentById(int postID,int commentID) {
 		Post post=postService.getPostById(postID);
 		if(post==null) return null;
 		

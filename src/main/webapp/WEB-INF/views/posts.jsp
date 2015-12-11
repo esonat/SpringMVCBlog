@@ -20,33 +20,24 @@
    				<p>${post.text}</p>
 	    		<small>${mapItem.key} - <span class="glyphicon glyphicon-time"></span> ${post.date}</small>
 	    		
-				<sec:authorize access="hasRole('ROLE_ADMIN')">
+	    		<sec:authorize access="hasRole('ROLE_ADMIN')">
 				  	<spring:url value="/post/${post.ID}/delete" var="deleteUrl" />
 				  	<form action="${deleteUrl}" method="POST">
 						<button class="btn btn-danger">Delete</button>
 						<input type="hidden" name="${_csrf.parameterName}"   value="${_csrf.token}" />
 					</form>
 				</sec:authorize>
+	    			    			
+   		       <form:form action="/blog/post/${post.ID}/comment/add" modelAttribute="comment" method="POST">
+			       <form:errors path="*" cssClass="alert alert-danger" element="div"/>
+			       <div class="form-group">
+						<form:textarea id="text" path="text" rows="2" cols="50" name="text" class="form-control"/>
+					</div>
+					<input type="submit" value="Comment" class="btn btn-primary"/>
+				</form:form>	 			    		
 	    		<hr></hr>
 	    	</c:forEach>
    		</c:forEach>
 	</div>
     </jsp:body>
 </t:genericpage>
-
-
-<%-- <%@ page language="java" contentType="text/html; charset=UTF-8" --%>
-<%--     pageEncoding="UTF-8"%> --%>
-<%--  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> --%>
-<%-- <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%> --%>
-    
-<!-- <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> -->
-<!-- <html> -->
-<!-- <head> -->
-<!-- <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> -->
-<%-- <title>Insert title here</title> --%>
-<!-- </head> -->
-<!-- <body> -->
-
-<!-- </body> -->
-<!-- </html> -->

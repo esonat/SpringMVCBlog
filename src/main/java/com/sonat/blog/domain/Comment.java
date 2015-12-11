@@ -27,6 +27,7 @@ public class Comment {
 	private int parentId;
 	private Set<Comment> children;
 	private Post post;
+	private int depth;
 	
 	public Comment(){
 		super();
@@ -114,7 +115,12 @@ public class Comment {
 		this.post = post;
 	}
 	
-	
-	
+	@Column(name="DEPTH",nullable=false)
+	public int getDepth() {
+		return depth;
+	}
+	public void setDepth(int depth) {
+		this.depth = depth;
+	}
 	
 }

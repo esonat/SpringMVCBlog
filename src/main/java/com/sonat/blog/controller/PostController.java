@@ -31,8 +31,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.Post;
 import com.sonat.blog.domain.User;
+import com.sonat.blog.service.CommentService;
 import com.sonat.blog.service.PostService;
 import com.sonat.blog.service.UserService;
 import com.sonat.blog.util.SecurityUtil;
@@ -43,13 +45,17 @@ public class PostController {
 	@Autowired
 	private PostService postService;
 	@Autowired
+	private CommentService commentService;
+	@Autowired
 	private UserService userService;
 		
 	@RequestMapping
-	public String getAllPosts(Model model){
+	public String getAllPosts(Model model,
+							  @ModelAttribute("comment") Comment comment){
 		Map<String,List<Post>> postsMap=new HashMap<String, List<Post>>();
 		
-		for(User user:userService.getAll()){
+		for(User user:userService.getAll())
+		{
 			String 		username	=	user.getUsername();
 			List<Post> 	postList 	=	postService.getPostsByUsername(username);
 			
@@ -91,17 +97,18 @@ public class PostController {
 	}
 
 	@RequestMapping(value="/add", method=RequestMethod.GET)
-    public String addPost(Model model,
-    					  @ModelAttribute("post") Post post){
+    public String getAddPostForm(@ModelAttribute("post") Post post,
+    							 Model model,
+    							 BindingResult result){
 		
 	    model.addAttribute("loggedUser",SecurityUtil.getCurrentUsername());
 	    return "addPost";
 	}
 	
 	@RequestMapping(value="/add", method=RequestMethod.POST)
-    public String addPost(Model model,
-    					  BindingResult result,
-    					  @ModelAttribute("post")@Valid Post post){
+    public String addPost(@ModelAttribute("post")@Valid Post post,
+    					  Model model,
+    					  BindingResult result){
         if(result.hasErrors()) return "addPost";
                	
     	postService.addPost(post);
