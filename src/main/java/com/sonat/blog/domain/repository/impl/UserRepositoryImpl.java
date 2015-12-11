@@ -24,7 +24,7 @@ public class UserRepositoryImpl implements UserRepository {
 	public User getUserByName(String name){
 		User user=null;
 		Session session=HibernateUtil.getSessionFactory().openSession();
-		Query query=session.createQuery("FROM User WHERE Name =:name");
+		Query query=session.createQuery("FROM User WHERE name =:name");
 		query.setParameter("name",name);
 		user=(User)query.uniqueResult();
 		

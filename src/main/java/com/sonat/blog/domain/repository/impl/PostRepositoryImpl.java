@@ -7,10 +7,13 @@ import java.util.Date;
 import java.util.List;
 
 import javax.print.attribute.standard.DateTimeAtCompleted;
+import javax.servlet.http.Cookie;
 
+import org.apache.taglibs.standard.lang.jstl.test.beans.PublicInterface2;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.hql.ast.tree.SessionFactoryAwareNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.util.ParallelSorter;
 import org.springframework.jdbc.core.metadata.PostgresCallMetaDataProvider;
@@ -19,6 +22,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.servlet.RequestToViewNameTranslator;
 
+import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.Post;
 import com.sonat.blog.domain.User;
 import com.sonat.blog.domain.repository.PostRepository;
@@ -81,6 +85,37 @@ public class PostRepositoryImpl implements PostRepository{
 		session.beginTransaction();
 		query.executeUpdate();
 		session.getTransaction().commit();
-//		
+
+	}
+	
+	public void addPostComment(int postID, Comment comment) 
+	{
+		Session session=HibernateUtil.getSessionFactory().openSession();		
+		Post post=getPostById(postID);
+		
+		if(post==null) return;
+		
+		session.beginTransaction();
+		
+		Date date = new Date();	
+		
+		comment.setDatetime(date);
+		comment.setPost(post);
+		
+		post.getComments().add(comment);
+		session.save(comment);
+		
+		session.getTransaction().commit();
+	}
+	
+	public Comment getPostCommentById(int postID, int commentID){
+		Session session=HibernateUtil.getSessionFactory().openSession();		
+		Query query=session.createQuery("From Comment where ID= :commentID and POST_ID= :postID");
+		query.setParameter("commentID",commentID);
+		query.setParameter("postID",postID);
+	
+		if(query.list().size()==0) return null;
+		
+		return (Comment)query.list().get(0);		
 	}
 }

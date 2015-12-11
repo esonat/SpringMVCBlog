@@ -20,9 +20,9 @@
 	 <form:form action="/blog/user/add" modelAttribute="user" role="form">
 		<form:errors path="*" cssClass="alert alert-danger" element="div"/>
 			<div class="input-group input-sm">
-					<label class="input-group-addon" for="username"><i class="fa fa-user">Name</i></label>
-					<form:input id="Name" path="Name" type="text" name="Name" class="form-control"/>
-					<form:errors path="Name" cssClass="text-danger"/>
+					<label class="input-group-addon" for="name"><i class="fa fa-user">Name</i></label>
+					<form:input id="name" path="name" type="text" name="name" class="form-control"/>
+					<form:errors path="name" cssClass="text-danger"/>
 			</div>
 			<div class="input-group input-sm">
 					<label class="input-group-addon" for="username"><i class="fa fa-user">Username</i></label>
@@ -30,12 +30,12 @@
 					<form:errors path="username" cssClass="text-danger"/>
 			</div>
 			<div class="input-group input-sm">
-					<label class="input-group-addon" for="username"><i class="fa fa-user">Password</i></label>
+					<label class="input-group-addon" for="password"><i class="fa fa-user">Password</i></label>
 					<form:input id="password" path="password" type="password" name="password" class="form-control"/>
 					<form:errors path="password" cssClass="text-danger"/>
 			</div>
 			<div class="input-group input-sm">
-					<label class="input-group-addon" for="username"><i class="fa fa-user">Enabled</i></label>
+					<label class="input-group-addon" for="enabled"><i class="fa fa-user">Enabled</i></label>
 					<input type="checkbox" name="enabled" class="form-control"/>
 			</div>
 			<div class="input-group input-sm">

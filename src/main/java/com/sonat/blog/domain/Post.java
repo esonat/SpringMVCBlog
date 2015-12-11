@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -16,6 +17,7 @@ import javax.validation.constraints.Size;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.util.Date;
+import java.util.Set;
 //uniqueConstraints={@UniqueConstraint(columnNames="TEXT")})
 //@Size(min=5,max=500,message="{Size.Post.text.validation}"
 @Entity
@@ -26,6 +28,7 @@ public class Post {
 	private String text;
 	private Date date;
 	private User user;
+	private Set<Comment> comments;
 	//private int UserID;
 	
 	public Post(){
@@ -70,6 +73,16 @@ public class Post {
 	public void setDate(Date date) {
 		this.date = date;
 	}
+	
+	@OneToMany(fetch=FetchType.LAZY,mappedBy="post")
+	public Set<Comment> getComments() {
+		return comments;
+	}
+	public void setComments(Set<Comment> comments) {
+		this.comments = comments;
+	}
+
+	
 	
 //	
 //	

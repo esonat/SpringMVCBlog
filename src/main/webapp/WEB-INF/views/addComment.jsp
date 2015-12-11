@@ -11,7 +11,7 @@
     <jsp:attribute name="footer">
     </jsp:attribute>
     <jsp:body>
-       <form:form action="/blog/post/add" modelAttribute="post" method="POST">
+       <form:form action="/blog/post/${postID}/comment/add" modelAttribute="postComment" method="POST">
        <form:errors path="*" cssClass="alert alert-danger" element="div"/>
        <div class="form-group">
 			<form:textarea id="text" path="text" rows="10" cols="100" name="text" class="form-control"/>

@@ -1,0 +1,3 @@
+INSERT INTO user(NAME,USERNAME,PASSWORD,ENABLED) VALUES('engin','engin','sonat',1);
+INSERT INTO user_roles(ROLE,USERNAME) VALUES('ROLE_ADMIN','engin');
+

@@ -28,7 +28,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 public class User {
 	@Pattern(regexp="[a-zA-Z]+",message="{Pattern.User.Name.validation}")
 	@Name
-	private String Name;
+	private String name;
 	private Set<Post> posts=new HashSet<Post>(0);
 	@Pattern(regexp="[a-zA-Z]+",message="{Pattern.User.username.validation}")
 	@Username
@@ -37,14 +37,13 @@ public class User {
 	@Size(min=5,max=50,message="{Size.User.password.validation}")
 	private String password;
 	private boolean enabled;
-	private Set<UserRole> userRole = new HashSet<UserRole>(0);
-
+	private Set<UserRole> 	userRole = new HashSet<UserRole>(0);
 	
 	public User() {
 		super();
 	}
 	public User(String name) {
-		this.Name=name;
+		this.name=name;
 	}	
 	public User(String name,String username, String password, boolean enabled) {
 		this.username = username;
@@ -58,19 +57,13 @@ public class User {
 		this.enabled = enabled;
 		this.userRole = userRole;
 	}
-	
-//	public int getID() {
-//		return ID;
-//	}
-//	public void setID(int ID) {
-//		this.ID = ID;
-//	}
-	@Column(name="name",unique=true,nullable=false)
+
+	@Column(name="NAME",unique=true,nullable=false)
 	public String getName() {
-		return Name;
+		return name;
 	}
 	public void setName(String name) {
-		Name = name;
+		this.name = name;
 	}
 	
 	@OneToMany(fetch=FetchType.LAZY,mappedBy="user")
@@ -82,7 +75,7 @@ public class User {
 	}
 	
 	@Id
-	@Column(name="username",unique=true,nullable=false)
+	@Column(name="USERNAME",unique=true,nullable=false)
 	public String getUsername() {
 		return username;
 	}
@@ -90,7 +83,7 @@ public class User {
 		this.username = username;
 	}
 	
-	@Column(name="password",nullable=false)
+	@Column(name="PASSWORD",nullable=false)
 	public String getPassword() {
 		return password;
 	}
@@ -98,7 +91,7 @@ public class User {
 		this.password = password;
 	}
 	
-	@Column(name="enabled",nullable=false)
+	@Column(name="ENABLED",nullable=false)
 	public boolean isEnabled() {
 		return enabled;
 	}

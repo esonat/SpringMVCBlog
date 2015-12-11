@@ -32,7 +32,7 @@ public class UserRole {
 	}
 	@Id
 	@GeneratedValue(strategy=IDENTITY)
-	@Column(name="user_role_id",unique=true,nullable=false)
+	@Column(name="USER_ROLE_ID",unique=true,nullable=false)
 	public Integer getUserRoleId() {
 		return this.userRoleId;
 	}
@@ -41,7 +41,7 @@ public class UserRole {
 		this.userRoleId = userRoleId;
 	}
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="username",nullable=false)
+	@JoinColumn(name="USERNAME",nullable=false)
 	public User getUser() {
 		return this.user;
 	}
@@ -50,7 +50,7 @@ public class UserRole {
 		this.user = user;
 	}
 	
-	@Column(name="role",nullable=false)
+	@Column(name="ROLE",nullable=false)
 	public String getRole() {
 		return this.role;
 	}
