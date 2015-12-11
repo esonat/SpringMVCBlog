@@ -95,6 +95,9 @@ public class CommentController {
 	public String listChildComments(Model model,
 									@PathVariable("postId")int postId,
 									@PathVariable("commentId")int commentId){
+		
+		List<Comment> childComments=commentService.getChildComments(postId,commentId);
+		
 		return "comments";
 	}
 	@RequestMapping(value="/post/{postId}/comment/{commentId}/comment/{childCommentId}")

@@ -4,8 +4,13 @@ import java.util.List;
 import com.sonat.blog.domain.Comment;
 
 public interface CommentService {
+	Comment 		getCommentById		(int commentID);
 	List<Comment> 	getPostComments		(int postID);
 	Comment 		getPostCommentById	(int postID,int commentID);
 	void			addPostComment		(int postID,Comment comment);
 	void			deletePostComment	(int postID,int commentID);
+	List<Comment>   getChildComments	(int postID,int commentID);
+	Comment 		getChildCommentById	(int postID,int commentID,int childCommentID);
+	void 			addChildComment		(int postID,int commentID);
+	void			deleteChildComment	(int postID,int commentID,int childCommentID);
 }

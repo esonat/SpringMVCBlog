@@ -2,6 +2,8 @@ package com.sonat.blog.domain.repository.impl;
 
 import java.util.Date;
 import java.util.List;
+
+import org.apache.taglibs.standard.lang.jstl.Literal;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
@@ -74,4 +76,28 @@ public class CommentRepositoryImpl implements CommentRepository {
 		session.getTransaction().commit();
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<Comment> getChildComments(int commentID) {
+		Session session=HibernateUtil.getSessionFactory().openSession();
+		Query query=session.createQuery("FROM Comment C WHERE C.parent.ID= :commentID");
+		
+		query.setParameter("commentID",commentID);
+		if(query.list().size()==0) return null;
+		
+		return(List<Comment>)query.list();
+	}
+	
+	public void addChildComment(Comment parentComment, Comment childComment) {
+		Session session=HibernateUtil.getSessionFactory().openSession();				
+		session.beginTransaction();
+		
+		Date date = new Date();	
+		
+		childComment.setDatetime(date);
+		parentComment.getChildren().add(childComment);
+		childComment.setDepth(parentComment.getDepth()+1);
+		
+		session.save(childComment);
+		session.getTransaction().commit();
+	}	
 }

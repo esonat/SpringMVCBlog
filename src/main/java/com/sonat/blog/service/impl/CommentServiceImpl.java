@@ -17,6 +17,10 @@ public class CommentServiceImpl implements CommentService {
 	@Autowired
 	private PostService postService;
 	
+	public Comment getCommentById(int commentID) {
+		return commentRepository.getCommentById(commentID);
+	}
+	
 	public List<Comment> getPostComments(int postID) {
 		Post post=postService.getPostById(postID);
 		if(post==null) return null;
@@ -44,5 +48,15 @@ public class CommentServiceImpl implements CommentService {
 		
 		commentRepository.deletePostComment(commentID);
 	}	
+	public List<Comment>   getChildComments	(int postID,int commentID){
+		Post post			=	postService.getPostById(postID);
+		
+		if(post==null) return null;
+		
+	}
+	Comment 		getChildCommentById	(int postID,int commentID,int childCommentID);
+	void 			addChildComment		(int postID,int commentID);
+	void			deleteChildComment	(int postID,int commentID,int childCommentID);
+
 
 }
