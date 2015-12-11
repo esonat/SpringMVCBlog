@@ -11,8 +11,4 @@ public interface PostService {
 	List<Post> 		getPostsByUsername(String username); 
 	void 			addPost(Post post);
 	void 			deletePost(int ID);
-	List<Comment> 	getPostComments(int postID);
-	Comment 		getPostCommentById(int postID,int commentID);
-	void			addPostComment(int postID,Comment comment);
-	void			deletePostComment(int postID,int commentID);
 }

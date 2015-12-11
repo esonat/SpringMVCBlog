@@ -11,6 +11,4 @@ public interface PostRepository {
 	List<Post> 	getPostsByUsername(String username); 
 	void 		addPost(Post post);
 	void 		deletePost(int ID);
-	void addPostComment(int postID, Comment comment);
-	Comment getPostCommentById(int postID, int commentID); 
 }

@@ -43,20 +43,4 @@ public class PostServiceImpl implements PostService{
 	}
 	
 /** COMMENTS **/
-	public List<Comment> getPostComments(int postID) {
-		return commentRepository.getPostComments(postID);
-	}
-
-	public Comment getPostCommentById(int postID, int commentID) {
-		return commentRepository.getPostCommentById(postID,commentID);
-	}
-
-	public void addPostComment(int postID, Comment comment) {
-		postRepository.addPostComment(postID,comment);
-	}
-
-	public void deletePostComment(int postID, int commentID) {
-		// TODO Auto-generated method stub
-		
-	}	
 }

@@ -88,34 +88,5 @@ public class PostRepositoryImpl implements PostRepository{
 
 	}
 	
-	public void addPostComment(int postID, Comment comment) 
-	{
-		Session session=HibernateUtil.getSessionFactory().openSession();		
-		Post post=getPostById(postID);
-		
-		if(post==null) return;
-		
-		session.beginTransaction();
-		
-		Date date = new Date();	
-		
-		comment.setDatetime(date);
-		comment.setPost(post);
-		
-		post.getComments().add(comment);
-		session.save(comment);
-		
-		session.getTransaction().commit();
-	}
 	
-	public Comment getPostCommentById(int postID, int commentID){
-		Session session=HibernateUtil.getSessionFactory().openSession();		
-		Query query=session.createQuery("From Comment where ID= :commentID and POST_ID= :postID");
-		query.setParameter("commentID",commentID);
-		query.setParameter("postID",postID);
-	
-		if(query.list().size()==0) return null;
-		
-		return (Comment)query.list().get(0);		
-	}
 }

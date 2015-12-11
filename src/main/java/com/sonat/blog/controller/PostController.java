@@ -62,7 +62,8 @@ public class PostController {
 		return "posts";
 	}
 	@RequestMapping("/{id}")
-	public String getPostById(Model model,@PathVariable("id")int id){
+	public String getPostById(Model model,
+							 @PathVariable("id")int id){
 		Post post=postService.getPostById(id);
 		
 		if(post==null) return "redirect:/post";
@@ -78,7 +79,9 @@ public class PostController {
 	
 	
 	@RequestMapping("/user/{username}")
-	public String getPostsByUsername(Model model,@PathVariable("username")String username){
+	public String getPostsByUsername(Model model,
+									 @PathVariable("username")String username){
+		
 		List<Post> list=postService.getPostsByUsername(username); 
 				
 		model.addAttribute("post",list);
@@ -88,27 +91,28 @@ public class PostController {
 	}
 
 	@RequestMapping(value="/add", method=RequestMethod.GET)
-    public String addPost(Model model,@ModelAttribute("post") Post post){
+    public String addPost(Model model,
+    					  @ModelAttribute("post") Post post){
 		
 	    model.addAttribute("loggedUser",SecurityUtil.getCurrentUsername());
 	    return "addPost";
 	}
 	
 	@RequestMapping(value="/add", method=RequestMethod.POST)
-    public String addPost(@ModelAttribute("post")@Valid Post post, BindingResult result, Model model)
-    {
-        if( ! result.hasErrors() ){
-        	
-        	postService.addPost(post);
-            return "redirect:/post";
-        } 
-        return "addPost";
+    public String addPost(Model model,
+    					  BindingResult result,
+    					  @ModelAttribute("post")@Valid Post post){
+        if(result.hasErrors()) return "addPost";
+               	
+    	postService.addPost(post);
+        return "redirect:/post"; 
     }   
 	
 		
-	@RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
-	public String deletePost(@PathVariable("id") int id, final RedirectAttributes redirectAttributes) {
-		postService.deletePost(id);
+	@RequestMapping(value = "/{postId}/delete", method = RequestMethod.POST)
+	public String deletePost(final RedirectAttributes redirectAttributes,
+							 @PathVariable("postId") int postId){
+		postService.deletePost(postId);
 		return "redirect:/post";		
 	}
 	   
