@@ -56,7 +56,7 @@ public class Post {
 		this.text = text;
 	}
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="USER_ID",nullable=false)
 	public User getUser() {
 		return user;

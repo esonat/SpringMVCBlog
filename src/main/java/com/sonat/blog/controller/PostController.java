@@ -12,6 +12,7 @@ import javax.validation.Valid;
 import org.omg.CORBA.Request;
 import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.metadata.PostgresCallMetaDataProvider;
 import org.springframework.security.access.method.P;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -52,19 +53,25 @@ public class PostController {
 	@RequestMapping
 	public String getAllPosts(Model model,
 							  @ModelAttribute("comment") Comment comment){
-		Map<String,List<Post>> postsMap=new HashMap<String, List<Post>>();
+		Map<Post,List<Comment>> postsMap=new HashMap<Post,List<Comment>>();
 		
-		for(User user:userService.getAll())
-		{
-			String 		username	=	user.getUsername();
-			List<Post> 	postList 	=	postService.getPostsByUsername(username);
-			
-			if(!postsMap.containsKey(username))postsMap.put(username,postList);
-		}				
-
-	    model.addAttribute("postsMap",	postsMap);
-	    model.addAttribute("loggedUser",SecurityUtil.getCurrentUsername());
-	    
+		for(Post post:postService.getAll()){
+			List<Comment> comments=commentService.getPostComments(post.getID());
+			if(!postsMap.containsKey(post)) postsMap.put(post,comments);
+		}
+//		Map<String,List<Post>> postsMap=new HashMap<String, List<Post>>();
+//		
+//		for(User user:userService.getAll())
+//		{
+//			String 		username	=	user.getUsername();
+//			List<Post> 	postList 	=	postService.getPostsByUsername(username);
+//			
+//			if(!postsMap.containsKey(username))postsMap.put(username,postList);
+//		}				
+//		
+		model.addAttribute("postsMap",	postsMap);
+		model.addAttribute("loggedUser",SecurityUtil.getCurrentUsername());
+//	    
 		return "posts";
 	}
 	@RequestMapping("/{id}")
