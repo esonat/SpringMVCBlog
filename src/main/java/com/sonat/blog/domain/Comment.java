@@ -17,6 +17,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Cascade;
+
 @Entity
 @Table(name="comment",catalog="blogDB")
 public class Comment {
@@ -78,7 +80,7 @@ public class Comment {
 	 //@JoinColumn(name="PARENT_ID", insertable = false, updatable = false)
 	//@ManyToOne(cascade={CascadeType.ALL})
 	
-	@ManyToOne()
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="PARENT_ID")
    public Comment getParent() {
 		return parent;
@@ -98,15 +100,18 @@ public class Comment {
 //	@JoinColumn(name="parent", nullable=false)
 //	@OneToMany(mappedBy="parent",fetch=FetchType.LAZY,cascade={CascadeType.ALL})
 	
-	@OneToMany(mappedBy="parent")
+	@OneToMany(mappedBy="parent",fetch=FetchType.EAGER)
+	@Cascade(org.hibernate.annotations.CascadeType.DELETE)
 	public Set<Comment> getChildren() {
 		return children;
 	}
 	public void setChildren(Set<Comment> children) {
 		this.children = children;
 	}
-	
-	@ManyToOne(fetch=FetchType.LAZY)
+
+	//@Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
+
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="POST_ID",nullable=false)
 	public Post getPost() {
 		return post;

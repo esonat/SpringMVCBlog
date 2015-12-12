@@ -82,7 +82,7 @@ public class CommentController {
 	public String deletePostComment(@PathVariable("postId")		int postId,
 									@PathVariable("commentId")	int commentId){
 		
-		commentService.deletePostComment(postId,commentId);
+		commentService.deleteComment(postId,commentId);
 		return "redirect:/post";		
 	}	
 	
@@ -98,6 +98,7 @@ public class CommentController {
 		
 		List<Comment> childComments=commentService.getChildComments(postId,commentId);
 		
+		model.addAttribute("comments",childComments);
 		return "comments";
 	}
 	@RequestMapping(value="/post/{postId}/comment/{commentId}/comment/{childCommentId}")
@@ -105,28 +106,45 @@ public class CommentController {
 								  @PathVariable("postId")int postId,
 								  @PathVariable("commentId")int commentId,
 								  @PathVariable("childCommentId")int childCommentId){
-		return "comments";		
+		Comment childComment=commentService.getChildCommentById(postId, commentId, childCommentId);
+
+		model.addAttribute("commentType","CHILD");
+		model.addAttribute("parentID",commentId);
+		model.addAttribute("postID",postId);
+		model.addAttribute("comment",childComment);
+		
+		return "comment";		
 	}
 	@RequestMapping(value="/post/{postId}/comment/{commentId}/comment/add",method=RequestMethod.GET)
 	public String addChildComment(Model model,
+									@ModelAttribute("childComment")Comment comment,
 									@PathVariable("postId")int postId,
 									@PathVariable("commentId")int commentId){
-		return "comments";
+		
+		model.addAttribute("postID",postId);
+		model.addAttribute("commentID",commentId);
+		
+		return "addComment";
 	}
 	@RequestMapping(value="/post/{postId}/comment/{commentId}/comment/add",method=RequestMethod.POST)
-	public String addChildComment(@ModelAttribute("childComment")@Valid Comment comment,
+	public String addChildComment(@ModelAttribute("childComment")@Valid Comment childComment,
 								  Model model,
 								  BindingResult result,
 								  @PathVariable("postId")int postId,
 								  @PathVariable("commentId")int commentId){
-		return "comments";
+			
+		Comment parentComment=commentService.getCommentById(commentId);
+		
+		commentService.addChildComment(postId,parentComment,childComment);
+		return "redirect:/post";
 	}
 	
-	@RequestMapping(value="/post/{id}/comment/{id}/comment/{id}/delete",method=RequestMethod.POST)
+	@RequestMapping(value="/post/{postId}/comment/{commentId}/comment/{childCommentId}/delete",method=RequestMethod.POST)
 	public String deleteChildComment(@PathVariable("postId")int postId,	
 									 @PathVariable("commentId")int commentId,
 									 @PathVariable("childCommentId")int childCommentId){
 		
+		commentService.deleteChildComment(postId, commentId, childCommentId);
 		return "redirect:/post";
 	}
 }

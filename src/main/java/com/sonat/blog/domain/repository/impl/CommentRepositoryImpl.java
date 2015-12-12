@@ -3,7 +3,10 @@ package com.sonat.blog.domain.repository.impl;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.SessionCookieConfig;
+
 import org.apache.taglibs.standard.lang.jstl.Literal;
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
@@ -22,7 +25,9 @@ public class CommentRepositoryImpl implements CommentRepository {
 		query.setParameter("commentID", commentID);
 		if(query.list().size()==0) return null;
 		
-		return (Comment)query.list().get(0);
+		Comment comment=(Comment)query.list().get(0);
+		session.close();
+		return comment;
 	}	
 	
 	public Comment getPostCommentById(int postID, int commentID){
@@ -64,7 +69,7 @@ public class CommentRepositoryImpl implements CommentRepository {
 		session.getTransaction().commit();
 	}
 
-	public void deletePostComment(int commentID){
+	public void deleteComment(int commentID){
 		Session session=HibernateUtil.getSessionFactory().openSession();		
 		Query query=session.createQuery("DELETE Comment where ID= :commentID");
 		
@@ -88,16 +93,34 @@ public class CommentRepositoryImpl implements CommentRepository {
 	}
 	
 	public void addChildComment(Comment parentComment, Comment childComment) {
-		Session session=HibernateUtil.getSessionFactory().openSession();				
+		Session session=HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
 		
 		Date date = new Date();	
+		Post post =parentComment.getPost();
 		
 		childComment.setDatetime(date);
 		parentComment.getChildren().add(childComment);
 		childComment.setDepth(parentComment.getDepth()+1);
+		childComment.setPost(post);
 		
 		session.save(childComment);
 		session.getTransaction().commit();
-	}	
+	}
+	public void	deleteChildComment(Comment parentComment,int childCommentID){
+		Session session=HibernateUtil.getSessionFactory().openSession();
+		Query query=session.createQuery("DELETE Comment where ID= :childCommentID");
+		query.setParameter("childCommentID", childCommentID);
+						
+		Comment childComment=getCommentById(childCommentID);
+	
+		session.beginTransaction();
+//		for(Comment child:childComment.getChildren()){
+//			child.setParent(null);
+//			session.update(child);
+//		}
+		
+		session.delete(childComment);
+		session.getTransaction().commit();
+	}
 }

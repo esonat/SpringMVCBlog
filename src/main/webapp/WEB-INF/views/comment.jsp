@@ -16,8 +16,14 @@
    		<p>${comment.text}</p>
 	    <small>${username} - <span class="glyphicon glyphicon-time"></span> ${comment.datetime}</small>
 	    	<sec:authorize access="hasRole('ROLE_ADMIN')">
-			  	<spring:url value="/post/${postID}/comment/${comment.ID}/delete" var="deleteUrl" />
-			  	<form action="${deleteUrl}" method="POST">
+	    	  <c:if test="${commentType == 'CHILD'}">     
+			 	<spring:url value='/post/${postID}/comment/${parentID}/comment/${comment.ID}/delete' var="deleteUrl" />
+			  </c:if>
+			  <c:if test="${commentType == 'PARENT'}">     
+			 	<spring:url value='/post/${postID}/comment/${comment.ID}/delete' var="deleteUrl" />
+			  </c:if>
+			  			   	
+			  <form action="${deleteUrl}" method="POST">
 					<button class="btn btn-danger">Delete</button>
 					<input type="hidden" name="${_csrf.parameterName}"   value="${_csrf.token}" />
 				</form>

@@ -14,5 +14,6 @@ public interface CommentRepository {
 	Comment 		getPostCommentById	(int postID,int commentID);
 	void			addPostComment		(Post post,Comment comment);
 	List<Comment>   getChildComments	(int commentID);
-	void 			addChildComment		(Comment comment,Comment childComment);
+	void 			addChildComment		(Comment parentComment,Comment childComment);
+	void			deleteChildComment	(Comment parentComment,int childCommentID);
 }
