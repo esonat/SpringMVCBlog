@@ -25,6 +25,14 @@ import com.sonat.blog.util.HibernateUtil;
 public class CommentRepositoryImpl implements CommentRepository {
 
 	@SuppressWarnings("unchecked")
+	public List<Comment> getAllComments(){
+		Session session	=	HibernateUtil.getSessionFactory().openSession();
+		Query query		=	session.createQuery("FROM Comment");
+		
+		if(query.list().size()==0) return null;
+		return query.list();
+	}
+	@SuppressWarnings("unchecked")
 	public List<Comment> getAllCommentsByPostId(int postID){
 		Session session	=	HibernateUtil.getSessionFactory().openSession();
 		Query query		=	session.createQuery("FROM Comment C WHERE C.post.ID= :postID");
@@ -98,7 +106,6 @@ public class CommentRepositoryImpl implements CommentRepository {
 	}
 
 	
-	@SuppressWarnings("unchecked")
 	public List<Comment> getChildComments(int commentID) {
 		List<Comment> childComments=new ArrayList<Comment>();
 		

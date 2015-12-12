@@ -14,7 +14,45 @@
     <jsp:attribute name="footer">
     </jsp:attribute>
     <jsp:body>
-   <div class="form-group">
+    <div class="form-group">
+    	<c:forEach items="${postList}" var="post">
+    		<p>${post.text}</p>
+	 		<p>${post.date}</p>
+	 		<sec:authorize access="hasRole('ROLE_ADMIN')">
+			  	<spring:url value="/post/${post.ID}/delete" var="deletePostUrl" />
+			  	<form action="${deletePostUrl}" method="POST">
+					<button class="btn btn-danger">Delete</button>
+					<input type="hidden" name="${_csrf.parameterName}"   value="${_csrf.token}" />
+				</form>
+			</sec:authorize>
+			 			    			
+			<form:form action="/blog/post/${post.ID}/comment/add" modelAttribute="comment" method="POST">
+			    <form:errors path="*" cssClass="alert alert-danger" element="div"/>
+			    <div class="form-group">
+					<form:textarea id="text" path="text" rows="2" cols="50" name="text" class="form-control"/>
+				</div>
+				<input type="submit" value="Comment" class="btn btn-primary"/>
+			</form:form>
+			<c:forEach items="${commentList}" var="commentStruct">
+				<c:if test="${commentStruct.postID == post.ID}">
+					<p>${commentStruct.parent.text}</p>
+					<p>${commentStruct.parent.datetime}</p>
+					<hr></hr>
+					
+					<c:forEach items="${commentStruct.children}" var="comment">
+						<div style="margin-left:${comment.depth*50};background-color:black;">
+							<p>${comment.text}</p>
+							<p>${comment.datetime}</p>
+							<hr></hr>
+						</div>
+					</c:forEach>
+				</c:if>
+			</c:forEach>			
+		</c:forEach>
+    </div>
+    
+    
+  <%--  <div class="form-group">
    		<c:forEach items="${postMap}" var="postItem">
 	 		<p>${postItem.key.text}</p>
 	 		<p>${postItem.key.date}</p>
@@ -51,7 +89,7 @@
 	 			</div>
 	 			</c:forEach>
 	 	</c:forEach>
-	 </div>   
+	 </div> --%>   
     </jsp:body>
 </t:genericpage>
 <!-- 

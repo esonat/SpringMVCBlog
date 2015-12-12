@@ -4,6 +4,7 @@ import java.util.List;
 import com.sonat.blog.domain.Comment;
 
 public interface CommentService {
+	List<Comment>	getAllComments();
 	List<Comment> 	getAllCommentsByPostId(int postID);
 	Comment 		getCommentById		(int commentID);
 	List<Comment> 	getPostComments		(int postID);

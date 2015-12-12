@@ -17,6 +17,10 @@ public class CommentServiceImpl implements CommentService {
 	@Autowired
 	private PostService postService;
 	
+	public List<Comment>	getAllComments(){
+		return commentRepository.getAllComments();
+	}
+	
 	public Comment getCommentById(int commentID) {
 		return commentRepository.getCommentById(commentID);
 	}

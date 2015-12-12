@@ -39,6 +39,8 @@ import com.sonat.blog.domain.User;
 import com.sonat.blog.service.CommentService;
 import com.sonat.blog.service.PostService;
 import com.sonat.blog.service.UserService;
+import com.sonat.blog.util.CommentStruct;
+import com.sonat.blog.util.CommentTree;
 import com.sonat.blog.util.SecurityUtil;
 
 @Controller
@@ -54,33 +56,15 @@ public class PostController {
 	@RequestMapping
 	public String getAllPosts(Model model,
 							  @ModelAttribute("comment") Comment comment){
-		Map<Post,Map<Comment,List<Comment>>> postMap=new HashMap<Post, Map<Comment,List<Comment>>>();
+		List<Post> postList=postService.getAll();
 		
-		for(Post post:postService.getAll()){
-			Map<Comment,List<Comment>> commentMap=new HashMap<Comment, List<Comment>>();
-			List<Comment> postComments=new ArrayList<Comment>();
-			postComments=commentService.getPostComments(post.getID());
-			
-			for(Comment c:postComments){
-				if(!commentMap.containsKey(c)) 
-					commentMap.put(c,commentService.getChildComments(post.getID(),c.getID()));
-			}
-			
-			if(!postMap.containsKey(post)) postMap.put(post,commentMap);
-		}
-//		Map<String,List<Post>> postsMap=new HashMap<String, List<Post>>();
-//		
-//		for(User user:userService.getAll())
-//		{
-//			String 		username	=	user.getUsername();
-//			List<Post> 	postList 	=	postService.getPostsByUsername(username);
-//			
-//			if(!postsMap.containsKey(username))postsMap.put(username,postList);
-//		}				
-//		
-		model.addAttribute("postMap",postMap);
+		CommentTree commentTree=new CommentTree();
+		List<CommentStruct> commentList=commentTree.getCommentList();
+		
+		model.addAttribute("postList",postList);
+		model.addAttribute("commentList",commentList);
 		model.addAttribute("loggedUser",SecurityUtil.getCurrentUsername());
-//	    
+		
 		return "posts";
 	}
 	@RequestMapping("/{id}")
