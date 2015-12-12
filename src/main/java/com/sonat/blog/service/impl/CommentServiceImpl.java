@@ -21,6 +21,10 @@ public class CommentServiceImpl implements CommentService {
 		return commentRepository.getCommentById(commentID);
 	}
 	
+	public List<Comment> getAllCommentsByPostId(int postID){
+		return commentRepository.getAllCommentsByPostId(postID);
+	}
+	
 	public List<Comment> getPostComments(int postID) {
 		Post post=postService.getPostById(postID);
 		if(post==null) return null;

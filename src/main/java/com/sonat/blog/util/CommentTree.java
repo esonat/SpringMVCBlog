@@ -1,5 +1,6 @@
 package com.sonat.blog.util;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import org.hibernate.validator.internal.util.privilegedactions.GetAnnotationPara
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.sonat.blog.domain.Comment;
+import com.sonat.blog.domain.Post;
 import com.sonat.blog.service.CommentService;
 import com.sonat.blog.service.PostService;
 
@@ -17,19 +19,20 @@ public class CommentTree {
 	@Autowired 
 	CommentService commentService;
 
-	private int postID;
-	private Map<Comment,List<Comment>> commentMap;
+	private int commentID;
+	private Comment root;
 	
-	public CommentTree(int postID){
-		this.postID=postID;
+	public CommentTree(int commentID){
+		this.commentID=commentID;
 	}
-	
-//	public Map<Comment,List<Comment>> formTree(){
-//		List<Comment> rootComments=commentService.getPostComments(this.postID);
-//		for (Comment comment : rootComments) {
-//			
-//		}
-//	}
-	
-	
+	public Comment getRoot(){
+		return commentService.getCommentById(commentID);
+	}
+	public List<Comment> getChildren(){
+		return commentService.getChildComments(root.getPost().getID(),commentID);
+	}
+	public List<CommentTree> nextTree(){
+		List<CommentTree> list=new ArrayList<CommentTree>();
+		
+	}
 }

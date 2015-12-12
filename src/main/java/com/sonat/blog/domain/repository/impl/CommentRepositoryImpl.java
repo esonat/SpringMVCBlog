@@ -12,6 +12,7 @@ import org.codehaus.jackson.node.IntNode;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.tuple.component.ComponentMetamodel;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
@@ -23,6 +24,16 @@ import com.sonat.blog.util.HibernateUtil;
 @Repository
 public class CommentRepositoryImpl implements CommentRepository {
 
+	@SuppressWarnings("unchecked")
+	public List<Comment> getAllCommentsByPostId(int postID){
+		Session session	=	HibernateUtil.getSessionFactory().openSession();
+		Query query		=	session.createQuery("FROM Comment C WHERE C.post.ID= :postID");
+		
+		query.setParameter("postID", postID);
+		if(query.list().size()==0) return null;
+		
+		return (List<Comment>)query.list();		
+	}
 	public Comment getCommentById(int commentID) {
 		Session session	=	HibernateUtil.getSessionFactory().openSession();
 		Query query		=	session.createQuery("FROM Comment C WHERE C.ID= :commentID");
@@ -86,19 +97,19 @@ public class CommentRepositoryImpl implements CommentRepository {
 		session.getTransaction().commit();
 	}
 
+	
 	@SuppressWarnings("unchecked")
 	public List<Comment> getChildComments(int commentID) {
 		List<Comment> childComments=new ArrayList<Comment>();
 		
 		Session session=HibernateUtil.getSessionFactory().openSession();
-		Query query=session.createQuery("FROM Comment");
+		Query query=session.createQuery("FROM Comment C WHERE C.ID= :commentID");
+		query.setParameter("commentID",commentID);
 		
 		if(query.list().size()==0) return null;
-		
 		Comment comment=(Comment)query.list().get(0);
-		for(Comment child:comment.getChildren()){
-			childComments.add(child);
-		}
+		for(Comment childComment:comment.getChildren())
+			childComments.add(childComment);
 		
 		return childComments;
 //		List<Comment> queryList=new ArrayList<Comment>();

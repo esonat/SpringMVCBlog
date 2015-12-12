@@ -1,4 +1,4 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
+<%-- <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
  
  	<p>${comment.text}</p>
  	<p>${comment.datetime}</p>
@@ -9,4 +9,5 @@
     		<jsp:param name="comment" value="${childComment}"/>
 		</jsp:include>
  	</c:forEach>
+  --%>
  

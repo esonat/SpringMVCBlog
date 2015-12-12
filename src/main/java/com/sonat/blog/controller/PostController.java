@@ -1,5 +1,6 @@
 package com.sonat.blog.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,11 +54,19 @@ public class PostController {
 	@RequestMapping
 	public String getAllPosts(Model model,
 							  @ModelAttribute("comment") Comment comment){
-		Map<Post,List<Comment>> postsMap=new HashMap<Post,List<Comment>>();
+		Map<Post,Map<Comment,List<Comment>>> postMap=new HashMap<Post, Map<Comment,List<Comment>>>();
 		
 		for(Post post:postService.getAll()){
-			List<Comment> comments=commentService.getPostComments(post.getID());
-			if(!postsMap.containsKey(post)) postsMap.put(post,comments);
+			Map<Comment,List<Comment>> commentMap=new HashMap<Comment, List<Comment>>();
+			List<Comment> postComments=new ArrayList<Comment>();
+			postComments=commentService.getPostComments(post.getID());
+			
+			for(Comment c:postComments){
+				if(!commentMap.containsKey(c)) 
+					commentMap.put(c,commentService.getChildComments(post.getID(),c.getID()));
+			}
+			
+			if(!postMap.containsKey(post)) postMap.put(post,commentMap);
 		}
 //		Map<String,List<Post>> postsMap=new HashMap<String, List<Post>>();
 //		
@@ -69,7 +78,7 @@ public class PostController {
 //			if(!postsMap.containsKey(username))postsMap.put(username,postList);
 //		}				
 //		
-		model.addAttribute("postsMap",	postsMap);
+		model.addAttribute("postMap",postMap);
 		model.addAttribute("loggedUser",SecurityUtil.getCurrentUsername());
 //	    
 		return "posts";
