@@ -1,15 +1,20 @@
 package com.sonat.blog.domain.repository.impl;
 
+import java.rmi.activation.ActivationGroupDesc.CommandEnvironment;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.SessionCookieConfig;
 
 import org.apache.taglibs.standard.lang.jstl.Literal;
+import org.codehaus.jackson.node.IntNode;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.Post;
 import com.sonat.blog.domain.repository.CommentRepository;
@@ -83,13 +88,27 @@ public class CommentRepositoryImpl implements CommentRepository {
 
 	@SuppressWarnings("unchecked")
 	public List<Comment> getChildComments(int commentID) {
-		Session session=HibernateUtil.getSessionFactory().openSession();
-		Query query=session.createQuery("FROM Comment C WHERE C.parent.ID= :commentID");
+		List<Comment> childComments=new ArrayList<Comment>();
 		
-		query.setParameter("commentID",commentID);
+		Session session=HibernateUtil.getSessionFactory().openSession();
+		Query query=session.createQuery("FROM Comment");
+		
 		if(query.list().size()==0) return null;
 		
-		return(List<Comment>)query.list();
+		Comment comment=(Comment)query.list().get(0);
+		for(Comment child:comment.getChildren()){
+			childComments.add(child);
+		}
+		
+		return childComments;
+//		List<Comment> queryList=new ArrayList<Comment>();
+//		queryList=(List<Comment>)query.list();
+//		
+//		for(int index=0;index<queryList.size();index++){
+//			Comment comment=queryList.get(index);
+//			if(comment.getParent().getID()==commentID)
+//				childComments.add(comment);
+//		}
 	}
 	
 	public void addChildComment(Comment parentComment, Comment childComment) {
@@ -100,9 +119,10 @@ public class CommentRepositoryImpl implements CommentRepository {
 		Post post =parentComment.getPost();
 		
 		childComment.setDatetime(date);
-		parentComment.getChildren().add(childComment);
 		childComment.setDepth(parentComment.getDepth()+1);
 		childComment.setPost(post);
+		childComment.setParent(parentComment);
+		parentComment.getChildren().add(childComment);
 		
 		session.save(childComment);
 		session.getTransaction().commit();

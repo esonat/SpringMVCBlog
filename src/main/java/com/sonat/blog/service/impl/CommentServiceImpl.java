@@ -49,9 +49,9 @@ public class CommentServiceImpl implements CommentService {
 		commentRepository.deleteComment(commentID);
 	}	
 	public List<Comment>   getChildComments	(int postID,int commentID){
-		Post post			=	postService.getPostById(postID);
-		if(post==null) return null;
-		
+//		Post post			=	postService.getPostById(postID);
+//		if(post==null) return null;
+//		
 		return commentRepository.getChildComments(commentID);		
 	}
 	public Comment getChildCommentById(int postID,int commentID,int childCommentID){

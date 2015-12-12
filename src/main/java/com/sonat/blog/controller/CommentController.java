@@ -121,10 +121,11 @@ public class CommentController {
 									@PathVariable("postId")int postId,
 									@PathVariable("commentId")int commentId){
 		
+		model.addAttribute("commentType","CHILD");
 		model.addAttribute("postID",postId);
 		model.addAttribute("commentID",commentId);
 		
-		return "addComment";
+		return "addChildComment";
 	}
 	@RequestMapping(value="/post/{postId}/comment/{commentId}/comment/add",method=RequestMethod.POST)
 	public String addChildComment(@ModelAttribute("childComment")@Valid Comment childComment,

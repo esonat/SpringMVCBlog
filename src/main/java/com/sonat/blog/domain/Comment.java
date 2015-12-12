@@ -82,7 +82,8 @@ public class Comment {
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="PARENT_ID")
-   public Comment getParent() {
+	@Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
+	public Comment getParent() {
 		return parent;
 	}
 	public void setParent(Comment parent) {
