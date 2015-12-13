@@ -33,8 +33,11 @@
 				</div>
 				<input type="submit" value="Comment" class="btn btn-primary"/>
 			</form:form>
+			
 			<c:forEach items="${commentList}" var="commentStruct">
-				<c:if test="${commentStruct.postID == post.ID}">
+				<c:if test="${commentStruct.postID==1}">
+				<div style="margin-left:${commentStruct.parent.depth*50};background-color:black;">
+					
 					<p>${commentStruct.parent.text}</p>
 					<p>${commentStruct.parent.datetime}</p>
 					<hr></hr>
@@ -46,6 +49,7 @@
 							<hr></hr>
 						</div>
 					</c:forEach>
+				</div>
 				</c:if>
 			</c:forEach>			
 		</c:forEach>

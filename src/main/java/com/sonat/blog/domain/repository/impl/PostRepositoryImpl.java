@@ -33,6 +33,7 @@ import com.sonat.blog.util.HibernateUtil;
 public class PostRepositoryImpl implements PostRepository{
 	@Autowired 
 	UserService userService;
+	
 	public PostRepositoryImpl(){
 	}
 	

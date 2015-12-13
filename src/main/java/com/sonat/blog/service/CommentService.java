@@ -2,8 +2,10 @@ package com.sonat.blog.service;
 
 import java.util.List;
 import com.sonat.blog.domain.Comment;
+import com.sonat.blog.domain.Post;
 
 public interface CommentService {
+	Post 			getPostOfComment(int commentID);
 	List<Comment>	getAllComments();
 	List<Comment> 	getAllCommentsByPostId(int postID);
 	Comment 		getCommentById		(int commentID);

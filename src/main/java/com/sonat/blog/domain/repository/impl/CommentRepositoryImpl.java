@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.net.ssl.SSLContext;
 import javax.servlet.SessionCookieConfig;
 
 import org.apache.taglibs.standard.lang.jstl.Literal;
@@ -24,13 +25,27 @@ import com.sonat.blog.util.HibernateUtil;
 @Repository
 public class CommentRepositoryImpl implements CommentRepository {
 
+	public Post getPostOfComment(int commentID)
+	{
+		Session session=HibernateUtil.getSessionFactory().openSession();
+		Query query=session.createQuery("FROM Comment C WHERE C.ID= :commentID");
+		query.setParameter("commentID",commentID);
+		
+		Comment comment=(Comment)query.list().get(0);
+		
+		Post post=comment.getPost();
+		return post;
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<Comment> getAllComments(){
 		Session session	=	HibernateUtil.getSessionFactory().openSession();
 		Query query		=	session.createQuery("FROM Comment");
 		
+		if(query.list()==null) return null;
 		if(query.list().size()==0) return null;
-		return query.list();
+		
+		return (List<Comment>)query.list();
 	}
 	@SuppressWarnings("unchecked")
 	public List<Comment> getAllCommentsByPostId(int postID){
@@ -106,19 +121,20 @@ public class CommentRepositoryImpl implements CommentRepository {
 	}
 
 	
+	@SuppressWarnings("unchecked")
 	public List<Comment> getChildComments(int commentID) {
-		List<Comment> childComments=new ArrayList<Comment>();
-		
-		Session session=HibernateUtil.getSessionFactory().openSession();
-		Query query=session.createQuery("FROM Comment C WHERE C.ID= :commentID");
-		query.setParameter("commentID",commentID);
-		
-		if(query.list().size()==0) return null;
-		Comment comment=(Comment)query.list().get(0);
-		for(Comment childComment:comment.getChildren())
-			childComments.add(childComment);
-		
-		return childComments;
+		return null;
+//		Session session=HibernateUtil.getSessionFactory().openSession();
+//		Query query=session.createQuery("FROM Comment C WHERE C.parent.ID= :commentID");
+//		query.setParameter("commentID",commentID);
+//		
+//		//if(query.list().size()==0) return null;
+//		///Comment comment=(Comment)query.list().get(0);
+//		
+////		for(Comment childComment:comment.getChildren())
+////			childComments.add(childComment);
+////		
+//		return (List<Comment>)query.list();
 //		List<Comment> queryList=new ArrayList<Comment>();
 //		queryList=(List<Comment>)query.list();
 //		

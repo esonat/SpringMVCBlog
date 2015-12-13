@@ -52,13 +52,15 @@ public class PostController {
 	private CommentService commentService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private CommentTree commentTree;
 		
 	@RequestMapping
 	public String getAllPosts(Model model,
 							  @ModelAttribute("comment") Comment comment){
-		List<Post> postList=postService.getAll();
 		
-		CommentTree commentTree=new CommentTree();
+				
+		List<Post> postList=postService.getAll();
 		List<CommentStruct> commentList=commentTree.getCommentList();
 		
 		model.addAttribute("postList",postList);
