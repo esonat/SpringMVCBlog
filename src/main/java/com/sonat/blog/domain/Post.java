@@ -14,6 +14,8 @@ import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.Cascade;
+
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.util.Date;
@@ -75,6 +77,7 @@ public class Post {
 	}
 	
 	@OneToMany(fetch=FetchType.LAZY,mappedBy="post")
+	@Cascade(org.hibernate.annotations.CascadeType.DELETE)
 	public Set<Comment> getComments() {
 		return comments;
 	}

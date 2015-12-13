@@ -81,12 +81,19 @@ public class PostRepositoryImpl implements PostRepository{
 
 	public void deletePost(int ID) {
 		Session session=HibernateUtil.getSessionFactory().openSession();		
-		Query query=session.createQuery("delete Post where ID= :postID");
+		//Query query=session.createQuery("delete Post where ID= :postID");
+		Query query=session.createQuery("from Post P where P.ID= :postID");
 		query.setParameter("postID", ID);
 		session.beginTransaction();
-		query.executeUpdate();
-		session.getTransaction().commit();
 
+		Post post=(Post)query.list().get(0);
+		for(Comment comment:post.getComments()){
+			comment.setPost(null);
+			session.save(comment);
+		}
+		
+		session.delete(post);
+		session.getTransaction().commit();
 	}
 	
 	

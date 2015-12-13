@@ -2,11 +2,11 @@ package com.sonat.blog.util;
 
 import java.util.List;
 import com.sonat.blog.domain.Comment;
-import com.sonat.blog.domain.Post;
 
 public class CommentStruct{
 	public int postID;
-	public Comment parent;
+	public int parentID;
+	public Comment comment;
 	public List<Comment> children;
 	
 	public int getPostID() {
@@ -14,12 +14,18 @@ public class CommentStruct{
 	}
 	public void setPostID(int postID) {
 		this.postID = postID;
+	}	
+	public int getParentID() {
+		return parentID;
 	}
-	public Comment getParent() {
-		return parent;
+	public void setParentID(int parentID) {
+		this.parentID = parentID;
 	}
-	public void setParent(Comment parent) {
-		this.parent = parent;
+	public Comment getComment() {
+		return comment;
+	}
+	public void setComment(Comment comment) {
+		this.comment = comment;
 	}
 	public List<Comment> getChildren() {
 		return children;
