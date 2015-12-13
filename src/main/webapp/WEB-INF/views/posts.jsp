@@ -17,7 +17,10 @@
     <div class="form-group">
     	<c:forEach items="${postList}" var="post">
     		<p>${post.text}</p>
+    		
 	 		<small><span class="glyphicon glyphicon-time"></span>${post.date}</small>
+	 		
+	 		<!-- ADMIN DELETE BUTTON -->
 	 		<sec:authorize access="hasRole('ROLE_ADMIN')">
 			  	<spring:url value="/post/${post.ID}/delete" var="deletePostUrl" />
 			  	<form action="${deletePostUrl}" method="POST">
@@ -25,7 +28,8 @@
 					<input type="hidden" name="${_csrf.parameterName}"   value="${_csrf.token}" />
 				</form>
 			</sec:authorize>
-			 			    			
+			 			    		
+			<!-- ADD COMMENT TO POST -->	
 			<form:form action="/blog/post/${post.ID}/comment/add" modelAttribute="comment" method="POST">
 			    <form:errors path="*" cssClass="alert alert-danger" element="div"/>
 			    <div class="form-group">
@@ -36,37 +40,42 @@
 			
 			<div style="background-color:grey;">
 			<c:forEach items="${commentList}" var="commentStruct">
-				<c:if test="${commentStruct.postID==post.ID}">
-				<div style="margin-left:${commentStruct.comment.depth*50};">
-				<c:if test="${commentStruct.parentID==0}">	
-					<p>${commentStruct.comment.text}</p>
-					<small><span class="glyphicon glyphicon-time"></span> ${commentStruct.comment.datetime}</small>
-				
-					 	<sec:authorize access="hasRole('ROLE_ADMIN')">
-							<c:if test="${commentStruct.comment.depth==0}">
-						  		<spring:url value="/post/${post.ID}/comment/${commentStruct.comment.ID}/delete" var="deleteCommentUrl" />
-							</c:if>						 
-							<c:if test="${commentStruct.comment.depth!=0}">
-						  		<spring:url value="/post/${post.ID}/comment/${commentStruct.parentID}/comment/${commentStruct.comment.ID}/delete" var="deleteCommentUrl" />
-							</c:if>						 
-							 
-						  	<form action="${deleteCommentUrl}" method="POST">
-								<button class="btn btn-danger">Delete</button>
-								<input type="hidden" name="${_csrf.parameterName}"   value="${_csrf.token}" />
-							</form>
-
-						</sec:authorize>
-												
-						<form:form action="/blog/post/${post.ID}/comment/${commentStruct.comment.ID}/comment/add" modelAttribute="comment" method="POST">
-						    <form:errors path="*" cssClass="alert alert-danger" element="div"/>
-						    <div>
-								<form:input type="text" id="text" path="text" size="100" name="text"/>
-							</div>
-							<input type="submit" value="Comment" class="btn btn-primary"/>
-						</form:form>
-										
-					<hr></hr>
+				<c:if test="${commentStruct.postID == post.ID}">
 					
+					<div style="margin-left:${commentStruct.comment.depth*50};">
+					<c:if test="${commentStruct.parentID==0}">	
+						<!-- COMMENT TEXT -->
+						<p>${commentStruct.comment.text}</p>
+						<!-- COMMENT DATETIME -->
+						<small><span class="glyphicon glyphicon-time"></span> ${commentStruct.comment.datetime}</small>
+							
+						 	<sec:authorize access="hasRole('ROLE_ADMIN')">
+								<!-- IF POST COMMENT -->
+								<c:if test="${commentStruct.comment.depth==0}">
+							  		<spring:url value="/post/${post.ID}/comment/${commentStruct.comment.ID}/delete" var="deleteCommentUrl" />
+								</c:if>				
+								<!-- IF  -->		 
+								<c:if test="${commentStruct.comment.depth!=0}">
+							  		<spring:url value="/post/${post.ID}/comment/${commentStruct.parentID}/comment/${commentStruct.comment.ID}/delete" var="deleteCommentUrl" />
+								</c:if>						 
+								 
+							  	<form action="${deleteCommentUrl}" method="POST">
+									<button class="btn btn-danger">Delete</button>
+									<input type="hidden" name="${_csrf.parameterName}"   value="${_csrf.token}" />
+								</form>
+	
+							</sec:authorize>
+													
+							<form:form action="/blog/post/${post.ID}/comment/${commentStruct.comment.ID}/comment/add" modelAttribute="comment" method="POST">
+							    <form:errors path="*" cssClass="alert alert-danger" element="div"/>
+							    <div>
+									<form:input type="text" id="text" path="text" size="100" name="text"/>
+								</div>
+								<input type="submit" value="Comment" class="btn btn-primary"/>
+							</form:form>
+											
+						<hr></hr>
+						
 					</c:if>
 					<c:forEach items="${commentStruct.children}" var="childComment">
 						

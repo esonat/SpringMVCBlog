@@ -26,14 +26,14 @@ public class SecurityUtil {
 	}
 	public static String getCurrentUsername(){
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	    String username = auth.getName(); 
+	    String username		= auth.getName(); 
 		
 		return username;
 	}
 	public static boolean isCurrentUserAdmin(){
-		User currentUser=getCurrentUser();
-		if(currentUser==null) return false;
-		
+		User currentUser=  getCurrentUser();
+		if(currentUser	== null) return false;
+	
 		for(UserRole role:getCurrentUser().getUserRole()){
 			if(role.getRole().equals("ROLE_ADMIN")) return true;
 		}

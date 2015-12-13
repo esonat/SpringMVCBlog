@@ -8,7 +8,7 @@ import com.sonat.blog.domain.Post;
 import javassist.compiler.ast.IntConst;
 
 public interface CommentRepository {
-	Post getPostOfComment				(int commentID);
+	Post 			getPostOfComment	(int commentID);
 	List<Comment>	getAllComments();
 	List<Comment> 	getAllCommentsByPostId(int postID);
 	Comment 		getCommentById		(int commentID);	

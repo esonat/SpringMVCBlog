@@ -1,17 +1,7 @@
 package com.sonat.blog.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import javax.persistence.QueryHint;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
-
-import org.omg.CORBA.Request;
-import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.metadata.PostgresCallMetaDataProvider;
 import org.springframework.security.access.method.P;
@@ -35,7 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.Post;
-import com.sonat.blog.domain.User;
+import com.sonat.blog.service.CategoryService;
 import com.sonat.blog.service.CommentService;
 import com.sonat.blog.service.PostService;
 import com.sonat.blog.service.UserService;
@@ -49,9 +39,7 @@ public class PostController {
 	@Autowired
 	private PostService postService;
 	@Autowired
-	private CommentService commentService;
-	@Autowired
-	private UserService userService;
+	private CategoryService categoryService;
 	@Autowired
 	private CommentTree commentTree;
 		
@@ -108,11 +96,13 @@ public class PostController {
 	}
 	
 	@RequestMapping(value="/add", method=RequestMethod.POST)
-    public String addPost(@ModelAttribute("post")@Valid Post post,
+    public String addPost(@ModelAttribute("post")Post post,
     					  Model model,
+    					  @RequestParam(value="categoryName")String categoryName,
     					  BindingResult result){
         if(result.hasErrors()) return "addPost";
                	
+        
     	postService.addPost(post);
         return "redirect:/post"; 
     }   
