@@ -15,6 +15,8 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.Cascade;
+
 import com.sonat.blog.domain.*;
 import com.sonat.blog.validator.Name;
 import com.sonat.blog.validator.Username;
@@ -38,7 +40,7 @@ public class User {
 	private String password;
 	private boolean enabled;
 	private Set<UserRole> 	userRole = new HashSet<UserRole>(0);
-	
+
 	public User() {
 		super();
 	}
@@ -67,6 +69,7 @@ public class User {
 	}
 	
 	@OneToMany(fetch=FetchType.LAZY,mappedBy="user")
+	@Cascade(org.hibernate.annotations.CascadeType.DELETE)
 	public Set<Post> getPosts() {
 		return posts;
 	}

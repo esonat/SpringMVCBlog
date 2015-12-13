@@ -1,23 +1,12 @@
 package com.sonat.blog.util;
 
-import java.rmi.activation.ActivationGroupDesc.CommandEnvironment;
-import java.security.KeyStore.PrivateKeyEntry;
-import java.sql.Struct;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-
-import javax.rmi.CORBA.Stub;
-import javax.swing.InternalFrameFocusTraversalPolicy;
-
 import org.hibernate.id.enhanced.SequenceStructure;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.InitBinder;
-
 import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.Post;
 import com.sonat.blog.service.CommentService;

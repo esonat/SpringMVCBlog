@@ -31,7 +31,7 @@ public class Post {
 	private Date date;
 	private User user;
 	private Set<Comment> comments;
-	//private int UserID;
+	private Category category;
 	
 	public Post(){
 		super();
@@ -84,15 +84,13 @@ public class Post {
 	public void setComments(Set<Comment> comments) {
 		this.comments = comments;
 	}
-
 	
-	
-//	
-//	
-//	public int getUserID(){
-//		return UserID;
-//	}
-//	public void setUserID(int UserID){
-//		this.UserID=UserID;
-//	}	
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="CATEGORY_ID",nullable=false)
+	public Category getCategory() {
+		return category;
+	}
+	public void setCategory(Category category) {
+		this.category = category;
+	}	
 }

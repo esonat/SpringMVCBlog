@@ -18,10 +18,11 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Cascade;
+import org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor;
 
 @Entity
 @Table(name="comment",catalog="blogDB")
-public class Comment {
+public class Comment{
 	private int ID;
 	private String text;
 	private Date datetime;
@@ -128,5 +129,4 @@ public class Comment {
 	public void setDepth(int depth) {
 		this.depth = depth;
 	}
-	
 }

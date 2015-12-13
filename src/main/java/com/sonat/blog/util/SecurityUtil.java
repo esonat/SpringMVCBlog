@@ -1,16 +1,12 @@
 package com.sonat.blog.util;
 
-import java.util.List;
-
-import org.omg.PortableInterceptor.USER_EXCEPTION;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import com.sonat.blog.domain.User;
 import com.sonat.blog.domain.UserRole;
 import com.sonat.blog.service.UserService;
+
 
 public class SecurityUtil {
 	@Autowired
