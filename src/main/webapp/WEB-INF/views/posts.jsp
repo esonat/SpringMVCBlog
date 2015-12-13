@@ -29,29 +29,48 @@
 			<form:form action="/blog/post/${post.ID}/comment/add" modelAttribute="comment" method="POST">
 			    <form:errors path="*" cssClass="alert alert-danger" element="div"/>
 			    <div class="form-group">
-					<form:textarea id="text" path="text" rows="2" cols="50" name="text" class="form-control"/>
+					<form:input type="text" id="text" path="text" rows="2" cols="50" name="text" class="form-control"/>
 				</div>
 				<input type="submit" value="Comment" class="btn btn-primary"/>
 			</form:form>
-			
+			<div style="background-color:grey;">
 			<c:forEach items="${commentList}" var="commentStruct">
-				<c:if test="${commentStruct.postID==1}">
-				<div style="margin-left:${commentStruct.parent.depth*50};background-color:black;">
+				<c:if test="${commentStruct.postID==post.ID}">
+				<div style="margin-left:${commentStruct.parent.depth*50};">
 					
 					<p>${commentStruct.parent.text}</p>
 					<p>${commentStruct.parent.datetime}</p>
+					
+						<form:form action="/blog/post/${post.ID}/comment/${commentStruct.parent.ID}/comment/add" modelAttribute="comment" method="POST">
+						    <form:errors path="*" cssClass="alert alert-danger" element="div"/>
+						    <div>
+								<form:input type="text" id="text" path="text" size="100" name="text"/>
+							</div>
+							<input type="submit" value="Comment" class="btn btn-primary"/>
+						</form:form>
+										
 					<hr></hr>
 					
 					<c:forEach items="${commentStruct.children}" var="comment">
-						<div style="margin-left:${comment.depth*50};background-color:black;">
+						<div style="margin-left:${comment.depth*50};">
 							<p>${comment.text}</p>
 							<p>${comment.datetime}</p>
+					
+								<form:form action="/blog/post/${post.ID}/comment/${comment.ID}/comment/add" modelAttribute="comment" method="POST">
+								    <form:errors path="*" cssClass="alert alert-danger" element="div"/>
+								    <div class="form-group">
+										<form:input type="text" id="text" path="text" rows="2" cols="20" name="text" class="form-control"/>
+									</div>
+									<input type="submit" value="Comment" class="btn btn-primary"/>
+								</form:form>
+					
 							<hr></hr>
 						</div>
 					</c:forEach>
 				</div>
 				</c:if>
 			</c:forEach>			
+			</div>
 		</c:forEach>
     </div>
     

@@ -40,7 +40,7 @@ public class CommentRepositoryImpl implements CommentRepository {
 	@SuppressWarnings("unchecked")
 	public List<Comment> getAllComments(){
 		Session session	=	HibernateUtil.getSessionFactory().openSession();
-		Query query		=	session.createQuery("FROM Comment");
+		Query query		=	session.createQuery("FROM Comment order by datetime asc");
 		
 		if(query.list()==null) return null;
 		if(query.list().size()==0) return null;
@@ -159,6 +159,8 @@ public class CommentRepositoryImpl implements CommentRepository {
 		parentComment.getChildren().add(childComment);
 		
 		session.save(childComment);
+		session.save(parentComment);
+		
 		session.getTransaction().commit();
 	}
 	public void	deleteChildComment(Comment parentComment,int childCommentID){
