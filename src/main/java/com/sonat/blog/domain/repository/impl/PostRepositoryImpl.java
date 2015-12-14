@@ -22,6 +22,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.servlet.RequestToViewNameTranslator;
 
+import com.sonat.blog.domain.Category;
 import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.Post;
 import com.sonat.blog.domain.User;
@@ -53,6 +54,17 @@ public class PostRepositoryImpl implements PostRepository{
 		
 		return (Post)query.list().get(0);
 	}
+	
+	public List<Post> getPostsByCategory(int categoryID){
+		Session session=HibernateUtil.getSessionFactory().openSession();
+		Query query=session.createQuery("FROM Post P WHERE P.category.ID= :categoryID");
+		query.setParameter("categoryID",categoryID);
+	
+		if(query.list()==null ||
+	       query.list().size()==0) return null;
+			
+		return query.list();
+	}
 
 	@SuppressWarnings("unchecked")
 	public List<Post> getPostsByUsername(String username) {
@@ -62,20 +74,23 @@ public class PostRepositoryImpl implements PostRepository{
 		return query.list();
 	}
 
-	public void addPost(Post post) {
+	public void addPost(Post post,Category category) {
 		Session session=HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
 		
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Authentication auth = 	SecurityContextHolder.getContext().getAuthentication();
 	    String username = 		auth.getName(); 
 		User user		=		userService.getUserByUsername(username);
 		
-		post.setUser(user);
 		Date date = new Date();
+		
+		post.setUser(user);
 		post.setDate(date);
+		post.setCategory(category);
 		
 		session.save(post);				
 		post.getUser().getPosts().add(post);
+		
 		session.getTransaction().commit();
 	}
 

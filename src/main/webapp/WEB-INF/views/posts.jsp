@@ -30,15 +30,19 @@
 			</sec:authorize>
 			 			    		
 			<!-- ADD COMMENT TO POST -->	
+			<div class="well">
 			<form:form action="/blog/post/${post.ID}/comment/add" modelAttribute="comment" method="POST">
-			    <form:errors path="*" cssClass="alert alert-danger" element="div"/>
-			    <div class="form-group">
-					<form:input type="text" id="text" path="text" rows="2" cols="50" name="text" class="form-control"/>
-				</div>
-				<input type="submit" value="Comment" class="btn btn-primary"/>
-			</form:form>
+				  <h4>Leave a Comment:</h4>
+                   <form:errors path="*" cssClass="alert alert-danger" element="div"/>
+					    <div class="form-group">
+							<form:input type="text" id="text" path="text" rows="2" cols="50" name="text" class="form-control"/>
+						</div>
+					<input type="submit" value="Comment" class="btn btn-primary"/>
+					</form:form>
+                  </div>
+			    
 			
-			<div style="background-color:grey;">
+			<div>
 			<c:forEach items="${commentList}" var="commentStruct">
 				<c:if test="${commentStruct.postID == post.ID}">
 					
@@ -68,8 +72,8 @@
 													
 							<form:form action="/blog/post/${post.ID}/comment/${commentStruct.comment.ID}/comment/add" modelAttribute="comment" method="POST">
 							    <form:errors path="*" cssClass="alert alert-danger" element="div"/>
-							    <div>
-									<form:input type="text" id="text" path="text" size="100" name="text"/>
+							    <div class="form-group">
+									<form:input type="text" id="text" path="text" rows="2" cols="50" name="text" class="form-control"/>
 								</div>
 								<input type="submit" value="Comment" class="btn btn-primary"/>
 							</form:form>
@@ -79,15 +83,15 @@
 					</c:if>
 					<c:forEach items="${commentStruct.children}" var="childComment">
 						
-						<div style="margin-left:${childComment.depth*50};background-color:black;">
+						<div style="margin-left:${childComment.depth*50};">
 							<p>${childComment.text}</p>
 							<small><span class="glyphicon glyphicon-time"></span> ${childComment.datetime}</small>
 								<form:form action="/blog/post/${post.ID}/comment/${childComment.ID}/comment/add" modelAttribute="comment" method="POST">
 								    <form:errors path="*" cssClass="alert alert-danger" element="div"/>
 								    <div class="form-group">
-										<form:input type="text" id="text" path="text" rows="2" cols="20" name="text" class="form-control"/>
+										<form:input type="text" id="text" path="text" rows="2" cols="50" name="text" class="form-control"/>
+										<input type="submit" value="Comment" class="btn btn-primary"/>
 									</div>
-									<input type="submit" value="Comment" class="btn btn-primary"/>
 								</form:form>
 					
 							<hr></hr>

@@ -17,6 +17,9 @@ public class CategoryServiceImpl implements CategoryService{
 	public Category getCategoryById	(int categoryID){
 		return categoryRepository.getCategoryById(categoryID);
 	}
+	public Category getCategoryByName(String categoryName){
+		return categoryRepository.getCategoryByName(categoryName);
+	}
 	public List<Category> getAllCategories(){
 		return categoryRepository.getAllCategories();
 	}

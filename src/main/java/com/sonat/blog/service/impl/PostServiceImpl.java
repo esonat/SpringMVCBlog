@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sonat.blog.domain.Category;
 import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.Post;
 import com.sonat.blog.domain.repository.CommentRepository;
@@ -25,13 +26,17 @@ public class PostServiceImpl implements PostService{
 	public Post getPostById(int ID) {
 		return postRepository.getPostById(ID);
 	}
+	
+	public List<Post> getPostsByCategory(int categoryID){
+		return postRepository.getPostsByCategory(categoryID);
+	}
 
 	public List<Post> getPostsByUsername(String username) {
 		return postRepository.getPostsByUsername(username);
 	}
 
-	public void addPost(Post post) {
-		postRepository.addPost(post);
+	public void addPost(Post post,Category category) {
+		postRepository.addPost(post,category);
 	}
 
 	public void deletePost(int ID) {

@@ -1,6 +1,9 @@
 package com.sonat.blog.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.metadata.PostgresCallMetaDataProvider;
@@ -23,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.sonat.blog.domain.Category;
 import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.Post;
 import com.sonat.blog.service.CategoryService;
@@ -73,6 +77,21 @@ public class PostController {
 		return "post";
 	}		
 	
+	@RequestMapping(value="/category/{categoryId}")
+	public String getPostsByCategory(Model model,
+									 @PathVariable("categoryId")int categoryId){
+		List<Post> postList=postService.getPostsByCategory(categoryId); 
+		//if(postList==null) return "redirect:/post";
+		
+		List<CommentStruct> commentList=commentTree.getCommentList();
+		
+		model.addAttribute("postList",postList);
+		model.addAttribute("commentList",commentList);
+		model.addAttribute("loggedUser",SecurityUtil.getCurrentUsername());
+		
+		return "posts";
+	}
+	
 	
 	@RequestMapping("/user/{username}")
 	public String getPostsByUsername(Model model,
@@ -91,6 +110,14 @@ public class PostController {
     							 Model model,
     							 BindingResult result){
 		
+		//Map<Integer,String> categories=new HashMap<Integer,String>();
+		List<String> categories=new ArrayList<String>();
+		
+		for(Category category:categoryService.getAllCategories()){
+			categories.add(category.getName());
+		}
+		
+		model.addAttribute("categories",categories);
 	    model.addAttribute("loggedUser",SecurityUtil.getCurrentUsername());
 	    return "addPost";
 	}
@@ -102,8 +129,8 @@ public class PostController {
     					  BindingResult result){
         if(result.hasErrors()) return "addPost";
                	
-        
-    	postService.addPost(post);
+        Category category=categoryService.getCategoryByName(categoryName);
+    	postService.addPost(post,category);
         return "redirect:/post"; 
     }   
 	

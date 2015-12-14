@@ -33,10 +33,7 @@ public class CommentTreeImpl implements CommentTree{
 			struct.setPostID(postID);	
 			struct.setParentID(parentID);
 			struct.setChildren(children);
-/*			boolean exists=false;
-			for(CommentStruct item:list){
-				if(item.comment.getID()==struct.getComment().getID()) exists=true;
-			}			*/
+			
 			list.add(struct);
 		}		
 		return list;

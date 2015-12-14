@@ -15,6 +15,11 @@
        <form:errors path="*" cssClass="alert alert-danger" element="div"/>
        <div class="form-group">
 			<form:textarea id="text" path="text" rows="10" cols="100" name="text" class="form-control"/>
+			<select name="categoryName" id="categoryName">
+				<c:forEach items="${categories}" var="category">
+					<option value="${category}">${category}</option>
+				</c:forEach>
+			</select>
 		</div>
 		<input type="submit" value="Submit" class="btn btn-primary"/>
 	 </form:form>	 

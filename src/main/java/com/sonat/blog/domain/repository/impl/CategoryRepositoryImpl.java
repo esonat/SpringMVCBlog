@@ -26,7 +26,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 	
 	public Category getCategoryByName(String categoryName) {
 		Session session=HibernateUtil.getSessionFactory().openSession();
-		Query query=session.createQuery("FROM Category C WHERE C.NAME: =categoryName");
+		Query query=session.createQuery("FROM Category C WHERE C.name= :categoryName");
 		query.setParameter("categoryName", categoryName);
 		
 		if(query.list()==null ||

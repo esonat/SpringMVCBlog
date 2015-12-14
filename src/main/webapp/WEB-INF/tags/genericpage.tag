@@ -37,7 +37,7 @@
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav" style="font-weight:10px;">
                     <li>
                         <a href="/blog/login">Login</a>
                     </li>
@@ -46,6 +46,9 @@
                     </li>
                     <li>
                         <a href="/blog/post/add">Add Post</a>
+                    </li>
+                     <li>
+                        <a href="/blog/category/add">Add Category</a>
                     </li>
                     <li>
                         <a href="/blog/user/add">Register</a>
