@@ -51,7 +51,6 @@ public class PostController {
 	public String getAllPosts(Model model,
 							  @ModelAttribute("comment") Comment comment){
 		
-				
 		List<Post> postList=postService.getAll();
 		List<CommentStruct> commentList=commentTree.getCommentList();
 		
@@ -79,6 +78,7 @@ public class PostController {
 	
 	@RequestMapping(value="/category/{categoryId}")
 	public String getPostsByCategory(Model model,
+									 @ModelAttribute("comment") Comment comment,
 									 @PathVariable("categoryId")int categoryId){
 		List<Post> postList=postService.getPostsByCategory(categoryId); 
 		//if(postList==null) return "redirect:/post";

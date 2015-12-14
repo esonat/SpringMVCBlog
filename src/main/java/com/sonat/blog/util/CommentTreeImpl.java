@@ -13,6 +13,7 @@ public class CommentTreeImpl implements CommentTree{
 	@Autowired
 	private CommentService commentService;
 
+
 	public List<CommentStruct> getCommentList(){
 		List<Comment> 		allComments	= commentService.getAllComments();
 		List<CommentStruct> list		= new ArrayList<CommentStruct>();
