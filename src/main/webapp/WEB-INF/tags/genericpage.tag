@@ -1,6 +1,7 @@
 <%@tag description="Overall Page template" pageEncoding="UTF-8"%>
 <%@attribute name="header" fragment="true" %>
 <%@attribute name="footer" fragment="true" %>
+<%@attribute name="categories" fragment="true"%>
 <html>
 <head>
 	<meta charset="utf-8">
@@ -11,7 +12,7 @@
 
     <title>Blog Application</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-	<style type="text/css">	
+    <style type="text/css">	
 		body {
 		    padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
 		}	
@@ -61,13 +62,44 @@
         <!-- /.container -->
     </nav>
     </div>
-    <div id="body">
-     <jsp:doBody/>
-	     <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
-	     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <div class="container">
+        <div class="row">
+          <div class="col-lg-8">
+		    <div id="body">
+		     <jsp:doBody/>   
+			 </div>
+		 </div>
+		 <div class="col-md-4">
+		      <!-- Blog Search Well -->
+                <div class="well">
+                    <h4>Blog Search</h4>
+                    <div class="input-group">
+                        <input type="text" class="form-control">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">
+                                <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                        </span>
+                    </div>
+                    <!-- /.input-group -->
+                </div>
+
+                <!-- Blog Categories Well -->
+                <div class="well">
+                    <h4>Blog Categories</h4>
+                    <div class="row">
+ 	                   <jsp:invoke fragment="categories"/>
+                    </div>
+                    <!-- /.row -->
+                </div>
+		 </div>	 			
+    	<div id="pagefooter">
+      		<jsp:invoke fragment="footer"/>
+    	</div>
 	    </div>
-    <div id="pagefooter">
-      <jsp:invoke fragment="footer"/>
-    </div>
+
+   </div>
+     <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+	   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   </body>
 </html>

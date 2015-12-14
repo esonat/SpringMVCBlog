@@ -10,6 +10,16 @@
 	</jsp:attribute>
     <jsp:attribute name="footer">
     </jsp:attribute>
+     <jsp:attribute name="categories">
+    	<div class="col-lg-6">
+			<ul class="list-unstyled">
+			<c:forEach items="${categories}" var="category">
+				<li><a href="/blog/post/category/${category.ID}">${category.name}</a></li>
+			</c:forEach>
+			</ul>
+		</div>
+    </jsp:attribute>
+    
     <jsp:body>
        <form:form action="/blog/post/add" modelAttribute="post" method="POST">
        <form:errors path="*" cssClass="alert alert-danger" element="div"/>

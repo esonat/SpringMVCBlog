@@ -13,6 +13,15 @@
 	</jsp:attribute>
     <jsp:attribute name="footer">
     </jsp:attribute>
+    <jsp:attribute name="categories">
+    	<div class="col-lg-6">
+			<ul class="list-unstyled">
+			<c:forEach items="${categories}" var="category">
+				<li><a href="/blog/post/category/${category.ID}">${category.name}</a></li>
+			</c:forEach>
+			</ul>
+		</div>
+    </jsp:attribute>
     <jsp:body>
     <div class="form-group">
     	<c:forEach items="${postList}" var="post">
@@ -24,7 +33,7 @@
 	 		<sec:authorize access="hasRole('ROLE_ADMIN')">
 			  	<spring:url value="/post/${post.ID}/delete" var="deletePostUrl" />
 			  	<form action="${deletePostUrl}" method="POST">
-					<button class="btn btn-danger">Delete</button>
+					<button style="font-size:10px;" class="btn btn-danger">Delete</button>
 					<input type="hidden" name="${_csrf.parameterName}"   value="${_csrf.token}" />
 				</form>
 			</sec:authorize>
@@ -34,14 +43,11 @@
 			<form:form action="/blog/post/${post.ID}/comment/add" modelAttribute="comment" method="POST">
 				  <h4>Leave a Comment:</h4>
                    <form:errors path="*" cssClass="alert alert-danger" element="div"/>
-					    <div class="form-group">
-							<form:input type="text" id="text" path="text" rows="2" cols="50" name="text" class="form-control"/>
-						</div>
-					<input type="submit" value="Comment" class="btn btn-primary"/>
+						<form:input type="text" id="text" path="text" rows="2" cols="50" name="text" class="form-control"/>
+						</br>
+						<input type="submit" style="font-size:10px;" value="Comment" class="btn btn-primary"/>
 					</form:form>
-                  </div>
-			    
-			
+                  </div>			
 			<div>
 			<c:forEach items="${commentList}" var="commentStruct">
 				<c:if test="${commentStruct.postID == post.ID}">
@@ -52,7 +58,6 @@
 						<p>${commentStruct.comment.text}</p>
 						<!-- COMMENT DATETIME -->
 						<small><span class="glyphicon glyphicon-time"></span> ${commentStruct.comment.datetime}</small>
-							
 						 	<sec:authorize access="hasRole('ROLE_ADMIN')">
 								<!-- IF POST COMMENT -->
 								<c:if test="${commentStruct.comment.depth==0}">
@@ -64,36 +69,39 @@
 								</c:if>						 
 								 
 							  	<form action="${deleteCommentUrl}" method="POST">
-									<button class="btn btn-danger">Delete</button>
+									<button style="font-size:10px;" class="btn btn-danger">Delete</button>
 									<input type="hidden" name="${_csrf.parameterName}"   value="${_csrf.token}" />
-								</form>
-	
+								</form>	
 							</sec:authorize>
-													
+																				
 							<form:form action="/blog/post/${post.ID}/comment/${commentStruct.comment.ID}/comment/add" modelAttribute="comment" method="POST">
 							    <form:errors path="*" cssClass="alert alert-danger" element="div"/>
-							    <div class="form-group">
 									<form:input type="text" id="text" path="text" rows="2" cols="50" name="text" class="form-control"/>
-								</div>
-								<input type="submit" value="Comment" class="btn btn-primary"/>
-							</form:form>
-											
+									</br>
+									<input type="submit" style="font-size:10px;" value="Comment" class="btn btn-primary"/>
+							</form:form>		
 						<hr></hr>
-						
 					</c:if>
 					<c:forEach items="${commentStruct.children}" var="childComment">
 						
 						<div style="margin-left:${childComment.depth*50};">
 							<p>${childComment.text}</p>
 							<small><span class="glyphicon glyphicon-time"></span> ${childComment.datetime}</small>
+								
+							<sec:authorize access="hasRole('ROLE_ADMIN')">
+						  		<spring:url value="/post/${post.ID}/comment/${commentStruct.comment.ID}/comment/${childComment.ID}/delete" var="deleteCommentUrl" />
+							  	<form action="${deleteCommentUrl}" method="POST">
+									<button style="font-size:10px;" class="btn btn-danger">Delete</button>
+									<input type="hidden" name="${_csrf.parameterName}"   value="${_csrf.token}" />
+								</form>
+							</sec:authorize>
+							
 								<form:form action="/blog/post/${post.ID}/comment/${childComment.ID}/comment/add" modelAttribute="comment" method="POST">
 								    <form:errors path="*" cssClass="alert alert-danger" element="div"/>
-								    <div class="form-group">
 										<form:input type="text" id="text" path="text" rows="2" cols="50" name="text" class="form-control"/>
-										<input type="submit" value="Comment" class="btn btn-primary"/>
-									</div>
-								</form:form>
-					
+										</br>
+										<input type="submit" style="font-size:10px;" value="Comment" class="btn btn-primary"/>
+								</form:form>					
 							<hr></hr>
 						</div>
 					</c:forEach>

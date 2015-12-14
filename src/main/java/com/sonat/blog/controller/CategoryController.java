@@ -1,5 +1,7 @@
 package com.sonat.blog.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,9 @@ public class CategoryController {
 	public String getAddCategoryForm(@ModelAttribute("category")Category category,
 							   Model model,
 							   BindingResult result){
+		List<Category> categories=categoryService.getAllCategories();
+		
+		model.addAttribute("categories",categories);
 		model.addAttribute("loggedUser",SecurityUtil.getCurrentUsername());
 		return "addCategory";		
 	}

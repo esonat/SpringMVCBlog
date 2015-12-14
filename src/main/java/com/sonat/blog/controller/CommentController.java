@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.sonat.blog.domain.Category;
 import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.Post;
+import com.sonat.blog.service.CategoryService;
 import com.sonat.blog.service.CommentService;
 import com.sonat.blog.util.SecurityUtil;
 
@@ -24,13 +27,17 @@ public class CommentController {
 	
 	@Autowired
 	private CommentService commentService;
+	@Autowired
+	private CategoryService categoryService;
 	
 	@RequestMapping(value="/post/{postId}/comment/list",method=RequestMethod.GET)
 	public String listPostComments(Model model,
 								   @PathVariable("postId")int postId){
 		
 		List<Comment> 		postComments=commentService.getPostComments(postId);
+		List<Category> categories=categoryService.getAllCategories();
 		
+		model.addAttribute("categories",categories);
 		model.addAttribute("comments",postComments);
 		model.addAttribute("loggedUser",SecurityUtil.getCurrentUsername());
 	    
@@ -47,7 +54,9 @@ public class CommentController {
 		if(postComment==null) return "redirect:/post";
 		
 		String 	username=postComment.getPost().getUser().getUsername();
+		List<Category> categories=categoryService.getAllCategories();
 		
+		model.addAttribute("categories",categories);
 		model.addAttribute("postID",postId);
 		model.addAttribute("username",username);
 		model.addAttribute("comment",postComment);
@@ -60,7 +69,9 @@ public class CommentController {
 	public String addPostComment(Model model,
 								@PathVariable("id")int id,
 								@ModelAttribute("postComment") Comment comment){
+		List<Category> categories=categoryService.getAllCategories();
 		
+		model.addAttribute("categories",categories);
 		model.addAttribute("postID",id);
 		model.addAttribute("loggedUser",SecurityUtil.getCurrentUsername());
 		return "addComment";		
@@ -97,7 +108,9 @@ public class CommentController {
 									@PathVariable("commentId")int commentId){
 		
 		List<Comment> childComments=commentService.getChildComments(postId,commentId);
+		List<Category> categories=categoryService.getAllCategories();
 		
+		model.addAttribute("categories",categories);
 		model.addAttribute("comments",childComments);
 		return "comments";
 	}
@@ -107,7 +120,9 @@ public class CommentController {
 								  @PathVariable("commentId")int commentId,
 								  @PathVariable("childCommentId")int childCommentId){
 		Comment childComment=commentService.getChildCommentById(postId, commentId, childCommentId);
-
+		List<Category> categories=categoryService.getAllCategories();
+		
+		model.addAttribute("categories",categories);
 		model.addAttribute("commentType","CHILD");
 		model.addAttribute("parentID",commentId);
 		model.addAttribute("postID",postId);
@@ -120,7 +135,9 @@ public class CommentController {
 									@ModelAttribute("childComment")Comment comment,
 									@PathVariable("postId")int postId,
 									@PathVariable("commentId")int commentId){
+		List<Category> categories=categoryService.getAllCategories();
 		
+		model.addAttribute("categories",categories);
 		model.addAttribute("commentType","CHILD");
 		model.addAttribute("postID",postId);
 		model.addAttribute("commentID",commentId);

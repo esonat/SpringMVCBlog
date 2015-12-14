@@ -53,7 +53,9 @@ public class PostController {
 		
 		List<Post> postList=postService.getAll();
 		List<CommentStruct> commentList=commentTree.getCommentList();
-		
+		List<Category> categories=categoryService.getAllCategories();
+	
+		model.addAttribute("categories",categories);	
 		model.addAttribute("postList",postList);
 		model.addAttribute("commentList",commentList);
 		model.addAttribute("loggedUser",SecurityUtil.getCurrentUsername());
@@ -69,6 +71,7 @@ public class PostController {
 		
 		String username=post.getUser().getName();
 
+		
 		model.addAttribute("post",post);
 		model.addAttribute("username",username);
 		model.addAttribute("loggedUser",SecurityUtil.getCurrentUsername());
@@ -84,7 +87,10 @@ public class PostController {
 		//if(postList==null) return "redirect:/post";
 		
 		List<CommentStruct> commentList=commentTree.getCommentList();
+	
+		List<Category> categories=categoryService.getAllCategories();
 		
+		model.addAttribute("categories",categories);	
 		model.addAttribute("postList",postList);
 		model.addAttribute("commentList",commentList);
 		model.addAttribute("loggedUser",SecurityUtil.getCurrentUsername());
