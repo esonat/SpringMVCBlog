@@ -1,8 +1,14 @@
 package com.sonat.blog.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.commons.collections.set.ListOrderedSet;
+import org.apache.taglibs.standard.lang.jstl.test.beans.PublicInterface2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor;
+
 import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.Post;
 import com.sonat.blog.domain.repository.CommentRepository;
@@ -87,5 +93,12 @@ public class CommentServiceImpl implements CommentService {
 	public List<Comment> getAllComments(){
 		CommentRepository commentRepository=new CommentRepositoryImpl();
 		return commentRepository.getAllComments();
+	}
+	
+	public List<Comment> getCommentsByDepth(int postID,int depth){
+		return commentRepository.getCommentsByDepth(postID,depth);
+	}
+	public List<Comment>   getChildCommentsByDepth(int commentID,int depth){
+		return commentRepository.getChildCommentsByDepth(commentID,depth);
 	}
 }

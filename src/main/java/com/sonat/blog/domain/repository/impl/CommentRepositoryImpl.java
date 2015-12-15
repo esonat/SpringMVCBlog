@@ -219,4 +219,28 @@ public class CommentRepositoryImpl implements CommentRepository {
 			}
 		}
 	}
+	
+	public List<Comment> getCommentsByDepth(int postID,int depth){
+		Session session=HibernateUtil.getSessionFactory().openSession();
+		Query query=session.createQuery("FROM Comment C WHERE C.post.ID= :postID AND C.depth= :depth order by C.datetime asc");
+		query.setParameter("postID",postID);
+		query.setParameter("depth", depth);
+		
+		if(query.list()==null
+		|| query.list().size()==0) return null;
+		
+		return query.list();		
+	}
+	
+	public List<Comment>   getChildCommentsByDepth(int commentID,int depth){
+		Session session=HibernateUtil.getSessionFactory().openSession();
+		Query query=session.createQuery("FROM Comment C WHERE C.parent.ID= :commentID AND C.depth= :depth order by C.datetime asc");
+		query.setParameter("commentID",commentID);
+		query.setParameter("depth", depth);
+		
+		if(query.list()==null
+		|| query.list().size()==0) return null;
+		
+		return query.list();		
+	}
 }

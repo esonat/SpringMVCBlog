@@ -19,4 +19,7 @@ public interface CommentRepository {
 	List<Comment>   getChildComments(int commentID);
 	void 			addChildComment		(Comment parentComment,Comment childComment);
 	void			deleteChildComment	(Comment parentComment,int childCommentID);
+	List<Comment>	getCommentsByDepth	(int postID,int depth);
+	List<Comment>   getChildCommentsByDepth(int commentID,int depth);
 }
+

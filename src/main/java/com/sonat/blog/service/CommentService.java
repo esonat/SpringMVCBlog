@@ -17,4 +17,6 @@ public interface CommentService {
 	Comment 		getChildCommentById	(int postID,int commentID,int childCommentID);
 	void 			addChildComment		(int postID,Comment parentComment,Comment childComment);
 	void			deleteChildComment	(int postID,int commentID,int childCommentID);
+	List<Comment>   getCommentsByDepth	(int postID,int depth);
+	List<Comment>   getChildCommentsByDepth(int commentID,int depth);
 }

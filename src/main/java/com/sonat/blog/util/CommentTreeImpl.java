@@ -1,39 +1,42 @@
 package com.sonat.blog.util;
 
-import java.security.PrivilegedActionException;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.mockito.exceptions.verification.NeverWantedButInvoked;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.Post;
-import com.sonat.blog.service.CommentService;
-import com.sonat.blog.service.PostService;
+import com.sonat.blog.service.impl.CommentServiceImpl;
 
 @Component
 public class CommentTreeImpl implements CommentTree{
 	
 	@Autowired
-	private CommentService commentService;
+	private CommentServiceImpl 	commentService;
 	
-	private List<Comment> commentList;
+	private List<Comment> 		commentList;
 	private List<List<Comment>> postComments;
 	
 	public CommentTreeImpl(List<Post> postList){
 		this.commentList	= new ArrayList<Comment>();
 		this.postComments	= new ArrayList<List<Comment>>();
 		
-		for(Post post:postList)
-			postComments.add(commentService.getPostComments(post.getID()));
+		for(Post post:postList){
+			List<Comment> listComments=new ArrayList<Comment>();
+			for(Comment comment:commentService.getPostComments(post.getID())){
+				listComments.add(comment);
+			}
+			postComments.add(listComments);
+			//postComments.add(commentService.getPostComments(post.getID()));
+		}
+			
 		for(List<Comment> list:postComments)
 			addToList(list);
 	}
 	
 	public void addToList(List<Comment> list){
 		for(Comment comment:list){
-			if(comment.getChildren().size()==0)
+			if(comment.getChildren()==null) 
 				commentList.add(comment);
 			else{ 
 				List<Comment> children=new ArrayList<Comment>();
@@ -43,14 +46,6 @@ public class CommentTreeImpl implements CommentTree{
 				addToList(children);
 			}
 		}
-	}
-
-	public CommentService getCommentService() {
-		return commentService;
-	}
-
-	public void setCommentService(CommentService commentService) {
-		this.commentService = commentService;
 	}
 
 	public List<Comment> getCommentList() {
@@ -69,6 +64,7 @@ public class CommentTreeImpl implements CommentTree{
 		this.postComments = postComments;
 	}
 	
+}
 	
 //	public List<CommentStruct> getCommentList(List<Post> postList){
 //		List<Comment> allComments	= new ArrayList<Comment>();
@@ -105,4 +101,3 @@ public class CommentTreeImpl implements CommentTree{
 //		}		
 //		return list;
 //	}	
-}
