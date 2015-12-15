@@ -70,7 +70,7 @@ public class Comment{
 		return ID;
 	}
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="PARENT_ID")
 	@Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
 	public Comment getParent() {

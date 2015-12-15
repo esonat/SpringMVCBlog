@@ -52,7 +52,7 @@ public class CommentRepositoryImpl implements CommentRepository {
 	@SuppressWarnings("unchecked")
 	public List<Comment> getAllCommentsByPostId(int postID){
 		Session session	=	HibernateUtil.getSessionFactory().openSession();
-		Query query		=	session.createQuery("FROM Comment C WHERE C.post.ID= :postID");
+		Query query		=	session.createQuery("FROM Comment C WHERE C.post.ID= :postID order by C.datetime asc");
 		
 		query.setParameter("postID", postID);
 		if(query.list().size()==0) return null;
@@ -69,7 +69,7 @@ public class CommentRepositoryImpl implements CommentRepository {
 		Comment comment=(Comment)query.list().get(0);
 		session.close();
 		return comment;
-	}	
+	}		
 	
 	public Comment getPostCommentById(int postID, int commentID){
 		Session session=HibernateUtil.getSessionFactory().openSession();		
@@ -149,7 +149,7 @@ public class CommentRepositoryImpl implements CommentRepository {
 	@SuppressWarnings("unchecked")
 	public List<Comment> getChildComments(int commentID) {
 		Session session=HibernateUtil.getSessionFactory().openSession();
-		Query query=session.createQuery("FROM Comment C WHERE C.parent.ID= :commentID order by datetime asc");
+		Query query=session.createQuery("FROM Comment C WHERE C.parent.ID= :commentID order by C.datetime asc");
 		query.setParameter("commentID",commentID);
 		
 		if(query.list()==null) return null;

@@ -1,20 +1,10 @@
 package com.sonat.blog.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.metadata.PostgresCallMetaDataProvider;
-import org.springframework.security.access.method.P;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.LockedException;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,18 +13,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.sonat.blog.domain.Category;
 import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.Post;
 import com.sonat.blog.service.CategoryService;
-import com.sonat.blog.service.CommentService;
 import com.sonat.blog.service.PostService;
-import com.sonat.blog.service.UserService;
 import com.sonat.blog.util.CommentStruct;
 import com.sonat.blog.util.CommentTree;
+import com.sonat.blog.util.CommentTreeImpl;
 import com.sonat.blog.util.SecurityUtil;
 
 @Controller
@@ -44,15 +31,18 @@ public class PostController {
 	private PostService postService;
 	@Autowired
 	private CategoryService categoryService;
-	@Autowired
-	private CommentTree commentTree;
-		
+//	@Autowired
+//	private CommentTree commentTree;
+//	
 	@RequestMapping
 	public String getAllPosts(Model model,
 							  @ModelAttribute("comment") Comment comment){
 		
 		List<Post> postList=postService.getAll();
-		List<CommentStruct> commentList=commentTree.getCommentList();
+		CommentTreeImpl commentTree=new CommentTreeImpl(postList);
+		
+		//List<CommentStruct> commentList=commentTree.getCommentList(postList);
+		List<Comment> commentList=commentTree.getCommentList();
 		List<Category> categories=categoryService.getAllCategories();
 	
 		model.addAttribute("categories",categories);	
@@ -83,11 +73,9 @@ public class PostController {
 	public String getPostsByCategory(Model model,
 									 @ModelAttribute("comment") Comment comment,
 									 @PathVariable("categoryId")int categoryId){
-		List<Post> postList=postService.getPostsByCategory(categoryId); 
-		//if(postList==null) return "redirect:/post";
+		List<Post> postList=postService.getPostsByCategory(categoryId);
+		List<CommentStruct> commentList=commentTree.getCommentList(postList);
 		
-		List<CommentStruct> commentList=commentTree.getCommentList();
-	
 		List<Category> categories=categoryService.getAllCategories();
 		
 		model.addAttribute("categories",categories);	
@@ -116,12 +104,7 @@ public class PostController {
     							 Model model,
     							 BindingResult result){
 		
-		//Map<Integer,String> categories=new HashMap<Integer,String>();
-		List<String> categories=new ArrayList<String>();
-		
-		for(Category category:categoryService.getAllCategories()){
-			categories.add(category.getName());
-		}
+		List<Category> categories=categoryService.getAllCategories();
 		
 		model.addAttribute("categories",categories);
 	    model.addAttribute("loggedUser",SecurityUtil.getCurrentUsername());
@@ -129,7 +112,7 @@ public class PostController {
 	}
 	
 	@RequestMapping(value="/add", method=RequestMethod.POST)
-    public String addPost(@ModelAttribute("post")Post post,
+    public String addPost(@ModelAttribute("post")@Valid Post post,
     					  Model model,
     					  @RequestParam(value="categoryName")String categoryName,
     					  BindingResult result){

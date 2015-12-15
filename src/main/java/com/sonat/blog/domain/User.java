@@ -46,6 +46,7 @@ public class User {
 	}
 
 	public User(String name,String username, String password, boolean enabled, Set<UserRole> userRole) {
+		this.name=name;
 		this.username = username;
 		this.password = password;
 		this.enabled = enabled;

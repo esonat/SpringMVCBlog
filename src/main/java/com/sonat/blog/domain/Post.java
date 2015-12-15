@@ -39,13 +39,21 @@ public class Post {
 		this.text=text;
 		this.user=user;
 	}
+	public Post(int ID,String text,Date date,Category category,Set<Comment> comments,User user){
+		this.ID=ID;
+		this.text=text;
+		this.date=date;
+		this.category=category;
+		this.comments=comments;
+		this.user=user;
+	}
 	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="CATEGORY_ID",nullable=false)
 	public Category getCategory() {
 		return category;
 	}
-	@OneToMany(fetch=FetchType.LAZY,mappedBy="post")
+	@OneToMany(fetch=FetchType.EAGER,mappedBy="post")
 	@Cascade(org.hibernate.annotations.CascadeType.DELETE)
 	public Set<Comment> getComments() {
 		return comments;

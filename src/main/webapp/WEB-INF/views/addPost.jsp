@@ -27,7 +27,7 @@
 			<form:textarea id="text" path="text" rows="10" cols="100" name="text" class="form-control"/>
 			<select name="categoryName" id="categoryName">
 				<c:forEach items="${categories}" var="category">
-					<option value="${category}">${category}</option>
+					<option value="${category.name}">${category.name}</option>
 				</c:forEach>
 			</select>
 		</div>

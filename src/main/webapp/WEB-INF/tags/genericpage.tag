@@ -20,6 +20,16 @@
 		    margin: 50px 0;
 		}
 	</style>
+	<script type="text/javascript">
+  $(document).ready(function() {
+    $('.comment').keydown(function(event) {
+        if (event.keyCode == 13) {
+            this.form.submit();
+            return false;
+         }
+    });
+  });
+</script>
     
 </head>
   <body>
