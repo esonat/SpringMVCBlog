@@ -19,4 +19,6 @@ public interface CommentService {
 	void			deleteChildComment	(int postID,int commentID,int childCommentID);
 	List<Comment>   getCommentsByDepth	(int postID,int depth);
 	List<Comment>   getChildCommentsByDepth(int commentID,int depth);
+	public List<Comment> getCommentTree(Post post);
+		
 }

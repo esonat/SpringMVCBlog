@@ -24,14 +24,13 @@
     </jsp:attribute>
     <jsp:body>
     <div class="form-group">
-    	<c:forEach items="${postList}" var="post">
-    		<p>${post.text}</p>
-    		
-	 		<small><span class="glyphicon glyphicon-time"></span>${post.date}</small>
+    	<c:forEach items="${postsMap}" var="postItem">
+    		<p>${postItem.key.text}</p>
+	 		<small><span class="glyphicon glyphicon-time"></span>${postItem.key.date}</small>
 	 		
 	 		<!-- ADMIN DELETE BUTTON -->
 	 		<sec:authorize access="hasRole('ROLE_ADMIN')">
-			  	<spring:url value="/post/${post.ID}/delete" var="deletePostUrl" />
+			  	<spring:url value="/post/${postItem.key.ID}/delete" var="deletePostUrl" />
 			  	<form action="${deletePostUrl}" method="POST">
 					<button style="font-size:10px;" class="btn btn-danger">Delete</button>
 					<input type="hidden" name="${_csrf.parameterName}"   value="${_csrf.token}" />
@@ -40,7 +39,7 @@
 			 			    		
 			<!-- ADD COMMENT TO POST -->	
 			<div class="well">
-			<form:form action="/blog/post/${post.ID}/comment/add" modelAttribute="comment" method="POST">
+				<form:form action="/blog/post/${postItem.key.ID}/comment/add" modelAttribute="comment" method="POST">
 				  <h4>Leave a Comment:</h4>
                    <form:errors path="*" cssClass="alert alert-danger" element="div"/>
 						<table>
@@ -51,8 +50,8 @@
 					</form:form>
               </div>
               <!-- COMMENTS -->
-              	<c:forEach items="${commentList}" var="comment">
-				<!--<c:if test="${comment.post.ID == post.ID}">-->
+              	<c:forEach items="${postItem.value}" var="comment" varStatus="loop">
+				<c:if test="${comment.post.ID == postItem.key.ID}">
 					<div style="margin-left:${comment.depth*50};">
 						<!-- COMMENT TEXT -->
 						<p>${comment.text}</p>
@@ -60,12 +59,12 @@
 						<small><span class="glyphicon glyphicon-time"></span> ${comment.datetime}</small>
 						 	<sec:authorize access="hasRole('ROLE_ADMIN')">
 									<!-- IF POST COMMENT -->
-									<c:if test="${commentStruct.comment.depth==0}">
-								  		<spring:url value="/post/${post.ID}/comment/${commentStruct.comment.ID}/delete" var="deleteCommentUrl" />
+									<c:if test="${comment.depth==0}">
+								  		<spring:url value="/post/${postItem.key.ID}/comment/${comment.ID}/delete" var="deleteCommentUrl" />
 									</c:if>				
 									<!-- IF CHILD -->		 
-									<c:if test="${commentStruct.comment.depth!=0}">
-								  		<spring:url value="/post/${post.ID}/comment/${commentStruct.parentID}/comment/${commentStruct.comment.ID}/delete" var="deleteCommentUrl" />
+									<c:if test="${comment.depth!=0}">
+								  		<spring:url value="/post/${postItem.key.ID}/comment/${comment.parent.ID}/comment/${comment.ID}/delete" var="deleteCommentUrl" />
 									</c:if>						 
 								  	<form action="${deleteCommentUrl}" method="POST">
 									<table>
@@ -78,24 +77,23 @@
 							</sec:authorize>
 							
 									<c:if test="${comment.depth==0}">
-									  	<spring:url value="/post/${post.ID}/comment/${comment.ID}/add" var="addCommentUrl" />
+									  	<spring:url value="/post/${postItem.key.ID}/comment/${comment.ID}/add" var="addCommentUrl" />
 									</c:if>				
 									<!-- IF CHILD -->		 
 									<c:if test="${comment.depth!=0}">
-								  		<spring:url value="/post/${post.ID}/comment/${comment.parent.ID }/comment/${comment.ID}/add" var="addCommentUrl" />
+								  		<spring:url value="/post/${postItem.key.ID}/comment/${comment.parent.ID }/comment/${comment.ID}/add" var="addCommentUrl" />
 									</c:if>
 																													
-									<form:form action="/blog/post/${post.ID}/comment/${comment.ID}/comment/add" modelAttribute="comment" method="POST">
+									<form:form action="/blog/post/${postItem.key.ID}/comment/${comment.ID}/comment/add" modelAttribute="comment" method="POST">
 									    <form:errors path="*" cssClass="alert alert-danger" element="div"/>
 										<table>
 										<tr>
 											<td><form:input class="comment form-control" type="text" id="text" path="text" size="300" name="text" placeholder="Comment..."/></td>
-											<td><input type="submit" style="font-size:10px;" value="Comment" class="btn btn-primary"/></td>
 										</tr>
 										</table>
 									</form:form>		
 							</div>
-				<!--  </c:if>-->	
+						</c:if>	
 					</c:forEach>
 					</c:forEach>
 					</div>

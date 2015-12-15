@@ -1,5 +1,6 @@
 package com.sonat.blog.controller;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -47,10 +48,11 @@ public class PostController {
 							  @ModelAttribute("comment") Comment comment){
 		
 		List<Post> postList=postService.getAll();
-		Map<Post,List<Comment>> postsMap=new HashMap<Post, List<Comment>>();
+		Map<Post,List<Comment>> postsMap=new HashMap<Post,List<Comment>>();
+		ArrayList<Comment> comments=new ArrayList<Comment>();
 		
 		for(Post post:postList){
-			if(!postsMap.containsKey(post)) postsMap.put(post,getCommentTree(post));
+			if(!postsMap.containsKey(post))	postsMap.put(post,commentService.getCommentTree(post));
 		}
 		
 		List<Category> categories=categoryService.getAllCategories();
@@ -141,28 +143,6 @@ public class PostController {
 		postService.deletePost(postId);
 		return "redirect:/post";		
 	}
-
-	public List<Comment> getCommentTree(Post post){
-		List<Comment> visited=new ArrayList<Comment>();
-		int postID=post.getID();
-		
-		for(Comment comment:commentService.getPostComments(postID)){
-			//int commentID	= comment.getID();
-			int depth		= comment.getDepth();
-			
-			findNext(comment,depth+1,visited);
-		}
-		return visited;
-	}	  
 	
-	public void findNext(Comment comment,int depth,List<Comment> list){
-		if(comment.getChildren()!=null
-		&& comment.getChildren().size()>0){
-			int commentID=comment.getID();
-			List<Comment> children=commentService.getChildCommentsByDepth(commentID, depth);
-			
-			list.add(comment);
-			for(Comment child:children) findNext(child,depth+1, list);
-		}
-	}
+	
 }

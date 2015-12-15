@@ -24,6 +24,12 @@ public class CommentServiceImpl implements CommentService {
 	private CommentRepository commentRepository;
 	@Autowired
 	private PostRepository postRepository;
+	
+	private List<Comment> visited;
+	
+	public CommentServiceImpl(){
+		visited=new ArrayList<Comment>();
+	}
 	//	@Autowired
 //	private PostService postService;
 //	
@@ -100,5 +106,31 @@ public class CommentServiceImpl implements CommentService {
 	}
 	public List<Comment>   getChildCommentsByDepth(int commentID,int depth){
 		return commentRepository.getChildCommentsByDepth(commentID,depth);
+	}
+	
+	public List<Comment> getCommentTree(Post post){
+		int postID=post.getID();
+		visited=new ArrayList<Comment>();
+		List<Comment> commentList=getCommentsByDepth(postID,0);
+		
+		if(commentList==null) return null;
+		
+		for(Comment comment:commentList){
+			findNext(comment,0);			
+		}
+		//for(Comment comment:visited) result.add(comment);
+		return visited;
+	}	  
+	
+	public void findNext(Comment comment,int depth){
+		if(comment.getChildren().size()>0){
+			int commentID			= comment.getID();
+			List<Comment> children	= getChildCommentsByDepth(commentID, depth+1);
+			
+			visited.add(comment);
+			if(children!=null)
+				for(Comment child:children) findNext(child,depth+1);
+		
+		}else visited.add(comment);
 	}
 }

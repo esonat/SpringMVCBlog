@@ -8,7 +8,6 @@ import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.Post;
 import com.sonat.blog.service.impl.CommentServiceImpl;
 
-@Component
 public class CommentTreeImpl implements CommentTree{
 	
 	@Autowired
