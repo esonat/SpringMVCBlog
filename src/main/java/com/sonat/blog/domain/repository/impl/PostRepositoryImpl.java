@@ -1,27 +1,13 @@
 package com.sonat.blog.domain.repository.impl;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import javax.print.attribute.standard.DateTimeAtCompleted;
-import javax.servlet.http.Cookie;
-
-import org.apache.taglibs.standard.lang.jstl.test.beans.PublicInterface2;
-import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.hql.ast.tree.SessionFactoryAwareNode;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.util.ParallelSorter;
-import org.springframework.jdbc.core.metadata.PostgresCallMetaDataProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.servlet.RequestToViewNameTranslator;
-
 import com.sonat.blog.domain.Category;
 import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.Post;
@@ -42,7 +28,8 @@ public class PostRepositoryImpl implements PostRepository{
 	public List<Post> getAll() {
 		Session session=HibernateUtil.getSessionFactory().openSession();
 		Query query=session.createQuery("FROM Post");
-		return query.list();		
+		
+		return (List<Post>)query.list();		
 	}
 
 	public Post getPostById(int ID) {
@@ -52,9 +39,10 @@ public class PostRepositoryImpl implements PostRepository{
 		
 		if(query.list().size()==0) return null;
 		
-		return (Post)query.list().get(0);
+		return (Post)query.uniqueResult();
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<Post> getPostsByCategory(int categoryID){
 		Session session=HibernateUtil.getSessionFactory().openSession();
 		Query query=session.createQuery("FROM Post P WHERE P.category.ID= :categoryID");
@@ -63,7 +51,7 @@ public class PostRepositoryImpl implements PostRepository{
 		if(query.list()==null ||
 	       query.list().size()==0) return null;
 			
-		return query.list();
+		return (List<Post>)query.list();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -96,7 +84,6 @@ public class PostRepositoryImpl implements PostRepository{
 
 	public void deletePost(int ID) {
 		Session session=HibernateUtil.getSessionFactory().openSession();		
-		//Query query=session.createQuery("delete Post where ID= :postID");
 		Query query=session.createQuery("from Post P where P.ID= :postID");
 		query.setParameter("postID", ID);
 		session.beginTransaction();

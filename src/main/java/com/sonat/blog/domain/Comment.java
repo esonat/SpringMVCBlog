@@ -49,7 +49,7 @@ public class Comment{
 	}
 	
 	@OneToMany(mappedBy="parent",fetch=FetchType.EAGER)
-	@Cascade(org.hibernate.annotations.CascadeType.DELETE)
+	@Cascade({org.hibernate.annotations.CascadeType.DELETE})
 	public Set<Comment> getChildren() {
 		return children;
 	}
