@@ -16,6 +16,7 @@ import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.Post;
 import com.sonat.blog.domain.User;
 import com.sonat.blog.domain.repository.PostRepository;
+import com.sonat.blog.exception.PostNotFoundException;
 import com.sonat.blog.service.UserService;
 import com.sonat.blog.util.HibernateUtil;
 
@@ -80,7 +81,8 @@ public class PostRepositoryImpl implements PostRepository{
 		Query query=session.createQuery("FROM Post P WHERE P.ID= :postID");
 		query.setParameter("postID",ID);
 		
-		if(query.list().size()==0) return null;
+		if(query.list().size()==0) 
+			throw new PostNotFoundException(ID);
 		
 		return (Post)query.uniqueResult();
 	}

@@ -1,4 +1,5 @@
 <%@tag description="Overall Page template" pageEncoding="UTF-8"%>
+ <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@attribute name="header" fragment="true" %>
 <%@attribute name="footer" fragment="true" %>
 <%@attribute name="categories" fragment="true"%>
@@ -55,12 +56,16 @@
                     <li>
                         <a href="/blog/post">Posts</a>
                     </li>
+                    <sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
                     <li>
                         <a href="/blog/post/add">Add Post</a>
                     </li>
+                    </sec:authorize>
+                    <sec:authorize access="hasRole('ROLE_ADMIN')">
                      <li>
                         <a href="/blog/category/add">Add Category</a>
                     </li>
+                    </sec:authorize>
                     <li>
                         <a href="/blog/user/add">Register</a>
                     </li>

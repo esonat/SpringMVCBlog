@@ -10,16 +10,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.sonat.blog.domain.Category;
 import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.Post;
 import com.sonat.blog.domain.validator.PostValidator;
+import com.sonat.blog.exception.PostNotFoundException;
 import com.sonat.blog.service.CategoryService;
 import com.sonat.blog.service.CommentService;
 import com.sonat.blog.service.PostService;
@@ -170,5 +173,13 @@ public class PostController {
 		return "user";
 	}
 	
-	
+	@ExceptionHandler(PostNotFoundException.class)
+	public ModelAndView handleError(HttpServletRequest req, PostNotFoundException exception) {
+		 ModelAndView mav = new ModelAndView();
+		 mav.addObject("invalidProductId", exception.getPostID());
+		 mav.addObject("exception", exception);
+		 mav.addObject("url", req.getRequestURL()+"?"+req.getQueryString());
+		 mav.setViewName("postNotFound");
+		 return mav;
+	}	
 }
