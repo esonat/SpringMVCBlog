@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.sonat.blog.domain.Category;
 import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.Post;
+import com.sonat.blog.domain.validator.PostValidator;
 import com.sonat.blog.service.CategoryService;
 import com.sonat.blog.service.CommentService;
 import com.sonat.blog.service.PostService;
@@ -33,7 +34,8 @@ public class PostController {
 	private CategoryService categoryService;
 	@Autowired
 	private CommentService commentService;
-	
+	@Autowired
+	private PostValidator postValidator;
 	
 	@RequestMapping(value="/add", method=RequestMethod.POST)
     public String addPost(@ModelAttribute("post")Post post,
@@ -45,11 +47,17 @@ public class PostController {
     					  HttpServletResponse response){
 		
        // if(result.hasErrors()) return "posts";
-        
-        Category category=categoryService.getCategoryByName(categoryName);
-    	postService.addPost(post,category);
+		postValidator.validate(post, result);
+
+        if (result.hasErrors()){
+    		return "redirect:"+returnURL;    
+        }
+        else {
+        	Category category=categoryService.getCategoryByName(categoryName);
+         	postService.addPost(post,category);
+        }
     	
-        return "redirect:"+returnURL; 
+        return "redirect:/post"; 
     }
 	@RequestMapping(value = "/{postId}/delete", method = RequestMethod.POST)
 	public String deletePost(final RedirectAttributes redirectAttributes, @PathVariable("postId") int postId,

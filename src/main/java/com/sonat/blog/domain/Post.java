@@ -11,6 +11,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Cascade;
@@ -21,6 +22,7 @@ import java.util.Date;
 import java.util.Set;
 //uniqueConstraints={@UniqueConstraint(columnNames="TEXT")})
 //@Size(min=5,max=500,message="{Size.Post.text.validation}"
+
 @Entity
 @Table(name="post",catalog="blogDB")
 public class Post {
@@ -70,7 +72,7 @@ public class Post {
 		return ID;
 	}
 	
-	@Column(name="TEXT",nullable=false)
+	@Column(name="TEXT",length=10000,nullable=false)
 	public String getText() {
 		return text;
 	}

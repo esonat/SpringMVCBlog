@@ -61,7 +61,7 @@ public class User {
 		this.name = name;
 	}
 	
-	@OneToMany(fetch=FetchType.LAZY,mappedBy="user")
+	@OneToMany(fetch=FetchType.EAGER,mappedBy="user")
 	@Cascade(org.hibernate.annotations.CascadeType.DELETE)
 	public Set<Post> getPosts() {
 		return posts;

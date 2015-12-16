@@ -27,7 +27,7 @@
     	<c:forEach items="${postsMap}" var="postItem">
     		<p>${postItem.key.text}</p>
 	 		<small><span class="glyphicon glyphicon-time"></span>${postItem.key.date}</small>
-	 		
+			<p>${postItem.key.user.username}
 	 		<!-- ADMIN DELETE BUTTON -->
 	 		<sec:authorize access="hasRole('ROLE_ADMIN')">
 			  	<spring:url value="/post/${postItem.key.ID}/delete?returnURL=${returnURL}" var="deletePostUrl" />
@@ -41,7 +41,7 @@
 			<div class="well">
 				<form:form action="/blog/post/${postItem.key.ID}/comment/add?returnURL=${returnURL}" modelAttribute="comment" method="POST">
 				  <h4>Leave a Comment:</h4>
-                   <form:errors path="*" cssClass="alert alert-danger" element="div"/>
+                   <form:errors path="text" cssClass="alert alert-danger" element="div"/>
 						<table>
 						<tr>
 							<td><form:input class="form-control comment" type="text" id="text" path="text" size="300" name="text" placeholder="Comment..."/></td>
@@ -85,7 +85,7 @@
 									</c:if>
 																													
 									<form:form action="/blog/post/${postItem.key.ID}/comment/${comment.ID}/comment/add?returnURL=${returnURL}" modelAttribute="comment" method="POST">
-									    <form:errors path="*" cssClass="alert alert-danger" element="div"/>
+									    <form:errors path="text" cssClass="alert alert-danger" element="div"/>
 										<table>
 										<tr>
 											<td><form:input class="comment form-control" type="text" id="text" path="text" size="300" name="text" placeholder="Comment..."/></td>
@@ -95,6 +95,7 @@
 							</div>
 						</c:if>	
 					</c:forEach>
+					<hr></hr>
 					</c:forEach>
 					</div>
 		</jsp:body>

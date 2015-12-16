@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.sonat.blog.domain.Category;
 import com.sonat.blog.domain.Comment;
+import com.sonat.blog.domain.validator.CommentValidator;
 import com.sonat.blog.service.CategoryService;
 import com.sonat.blog.service.CommentService;
 import com.sonat.blog.util.SecurityUtil;
@@ -26,6 +29,8 @@ public class CommentController {
 	private CommentService commentService;
 	@Autowired
 	private CategoryService categoryService;
+	@Autowired
+	private CommentValidator commentValidator;
 	
 	@RequestMapping(value="/post/{postId}/comment/{commentId}/comment/add",method=RequestMethod.POST)
 	public String addChildComment(@ModelAttribute("childComment")@Valid Comment childComment,
@@ -35,6 +40,12 @@ public class CommentController {
 								  @PathVariable("commentId")int commentId,
 								  @RequestParam("returnURL")String returnURL){
 			
+		commentValidator.validate(childComment, result);
+		
+		 if (result.hasErrors()){
+			return "redirect:"+returnURL;
+		 }
+		 
 		Comment parentComment=commentService.getCommentById(commentId);
 		commentService.addChildComment(postId,parentComment,childComment);
 		
@@ -74,13 +85,16 @@ public class CommentController {
 	@RequestMapping(value="/post/{postId}/comment/add",method=RequestMethod.POST)
 	public String addPostComment(Model model,
 								@PathVariable("postId")int postId,
-								@ModelAttribute("postComment") @Valid Comment postComment,
+								@ModelAttribute("postComment") Comment postComment,
 								@RequestParam("returnURL")String returnURL,
-								BindingResult bindingResult,
+								BindingResult result,
 								HttpServletRequest request,
 								HttpServletResponse response){
 		
-		if(bindingResult.hasErrors())	return "addComment";
+		commentValidator.validate(postComment,result);
+		if(result.hasErrors()){
+			return "redirect:/post";		
+		}
 		
 		commentService.addPostComment(postId,postComment);
 		
@@ -177,5 +191,10 @@ public class CommentController {
 		model.addAttribute("loggedUser",SecurityUtil.getCurrentUsername());
 	    
 		return "comments";		
+	}
+	
+	@InitBinder("Comment")
+	protected void initBinder(WebDataBinder binder) {
+	    binder.setValidator(new CommentValidator());
 	}
 }
