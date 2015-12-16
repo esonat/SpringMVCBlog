@@ -8,18 +8,18 @@ import com.sonat.blog.domain.Post;
 import javassist.compiler.ast.IntConst;
 
 public interface CommentRepository {
-	Post 			getPostOfComment	(int commentID);
+	void 			addChildComment		(Comment parentComment,Comment childComment);
+	void			addPostComment		(Post post,Comment comment);
+	void			deleteChildComment	(Comment parentComment,int childCommentID);
+	void			deleteComment		(int commentID);	
 	List<Comment>	getAllComments();
 	List<Comment> 	getAllCommentsByPostId(int postID);
-	Comment 		getCommentById		(int commentID);	
-	void			deleteComment		(int commentID);
-	List<Comment> 	getPostComments		(int postID);
-	Comment 		getPostCommentById	(int postID,int commentID);
-	void			addPostComment		(Post post,Comment comment);
 	List<Comment>   getChildComments(int commentID);
-	void 			addChildComment		(Comment parentComment,Comment childComment);
-	void			deleteChildComment	(Comment parentComment,int childCommentID);
-	List<Comment>	getCommentsByDepth	(int postID,int depth);
 	List<Comment>   getChildCommentsByDepth(int commentID,int depth);
+	Comment 		getCommentById		(int commentID);
+	List<Comment>	getCommentsByDepth	(int postID,int depth);
+	Comment 		getPostCommentById	(int postID,int commentID);
+	List<Comment> 	getPostComments		(int postID);
+	Post 			getPostOfComment	(int commentID);
 }
 

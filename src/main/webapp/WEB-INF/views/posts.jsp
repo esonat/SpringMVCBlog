@@ -30,7 +30,7 @@
 	 		
 	 		<!-- ADMIN DELETE BUTTON -->
 	 		<sec:authorize access="hasRole('ROLE_ADMIN')">
-			  	<spring:url value="/post/${postItem.key.ID}/delete" var="deletePostUrl" />
+			  	<spring:url value="/post/${postItem.key.ID}/delete?returnURL=${returnURL}" var="deletePostUrl" />
 			  	<form action="${deletePostUrl}" method="POST">
 					<button style="font-size:10px;" class="btn btn-danger">Delete</button>
 					<input type="hidden" name="${_csrf.parameterName}"   value="${_csrf.token}" />
@@ -39,7 +39,7 @@
 			 			    		
 			<!-- ADD COMMENT TO POST -->	
 			<div class="well">
-				<form:form action="/blog/post/${postItem.key.ID}/comment/add" modelAttribute="comment" method="POST">
+				<form:form action="/blog/post/${postItem.key.ID}/comment/add?returnURL=${returnURL}" modelAttribute="comment" method="POST">
 				  <h4>Leave a Comment:</h4>
                    <form:errors path="*" cssClass="alert alert-danger" element="div"/>
 						<table>
@@ -60,11 +60,11 @@
 						 	<sec:authorize access="hasRole('ROLE_ADMIN')">
 									<!-- IF POST COMMENT -->
 									<c:if test="${comment.depth==0}">
-								  		<spring:url value="/post/${postItem.key.ID}/comment/${comment.ID}/delete" var="deleteCommentUrl" />
+								  		<spring:url value="/post/${postItem.key.ID}/comment/${comment.ID}/delete?returnURL=${returnURL}" var="deleteCommentUrl" />
 									</c:if>				
 									<!-- IF CHILD -->		 
 									<c:if test="${comment.depth!=0}">
-								  		<spring:url value="/post/${postItem.key.ID}/comment/${comment.parent.ID}/comment/${comment.ID}/delete" var="deleteCommentUrl" />
+								  		<spring:url value="/post/${postItem.key.ID}/comment/${comment.parent.ID}/comment/${comment.ID}/delete?returnURL=${returnURL}" var="deleteCommentUrl" />
 									</c:if>						 
 								  	<form action="${deleteCommentUrl}" method="POST">
 									<table>
@@ -77,14 +77,14 @@
 							</sec:authorize>
 							
 									<c:if test="${comment.depth==0}">
-									  	<spring:url value="/post/${postItem.key.ID}/comment/${comment.ID}/add" var="addCommentUrl" />
+									  	<spring:url value="/post/${postItem.key.ID}/comment/${comment.ID}/add?returnURL=${returnURL}" var="addCommentUrl" />
 									</c:if>				
 									<!-- IF CHILD -->		 
 									<c:if test="${comment.depth!=0}">
-								  		<spring:url value="/post/${postItem.key.ID}/comment/${comment.parent.ID }/comment/${comment.ID}/add" var="addCommentUrl" />
+								  		<spring:url value="/post/${postItem.key.ID}/comment/${comment.parent.ID }/comment/${comment.ID}/add?returnURL=${returnURL}" var="addCommentUrl" />
 									</c:if>
 																													
-									<form:form action="/blog/post/${postItem.key.ID}/comment/${comment.ID}/comment/add" modelAttribute="comment" method="POST">
+									<form:form action="/blog/post/${postItem.key.ID}/comment/${comment.ID}/comment/add?returnURL=${returnURL}" modelAttribute="comment" method="POST">
 									    <form:errors path="*" cssClass="alert alert-danger" element="div"/>
 										<table>
 										<tr>

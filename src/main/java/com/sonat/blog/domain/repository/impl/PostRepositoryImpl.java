@@ -2,6 +2,9 @@ package com.sonat.blog.domain.repository.impl;
 
 import java.util.Date;
 import java.util.List;
+
+import javax.validation.constraints.Size;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,44 +27,6 @@ public class PostRepositoryImpl implements PostRepository{
 	public PostRepositoryImpl(){
 	}
 	
-	@SuppressWarnings("unchecked")
-	public List<Post> getAll() {
-		Session session=HibernateUtil.getSessionFactory().openSession();
-		Query query=session.createQuery("FROM Post");
-		
-		return (List<Post>)query.list();		
-	}
-
-	public Post getPostById(int ID) {
-		Session session=HibernateUtil.getSessionFactory().openSession();
-		Query query=session.createQuery("FROM Post P WHERE P.ID= :postID");
-		query.setParameter("postID",ID);
-		
-		if(query.list().size()==0) return null;
-		
-		return (Post)query.uniqueResult();
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<Post> getPostsByCategory(int categoryID){
-		Session session=HibernateUtil.getSessionFactory().openSession();
-		Query query=session.createQuery("FROM Post P WHERE P.category.ID= :categoryID");
-		query.setParameter("categoryID",categoryID);
-	
-		if(query.list()==null ||
-	       query.list().size()==0) return null;
-			
-		return (List<Post>)query.list();
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<Post> getPostsByUsername(String username) {
-		Session session=HibernateUtil.getSessionFactory().openSession();
-		Query query=session.createQuery("FROM Post P WHERE P.user.username= :username");
-		query.setParameter("username",username);
-		return query.list();
-	}
-
 	public void addPost(Post post,Category category) {
 		Session session=HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
@@ -96,6 +61,48 @@ public class PostRepositoryImpl implements PostRepository{
 		
 		session.delete(post);
 		session.getTransaction().commit();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Post> getAll() {
+		Session session=HibernateUtil.getSessionFactory().openSession();
+		Query query=session.createQuery("FROM Post P order by P.date asc");
+		
+		if(query.list()==null
+		|| query.list().size()==0) return null;
+		
+		List<Post> list=query.list();
+		return list;
+	}
+
+	public Post getPostById(int ID) {
+		Session session=HibernateUtil.getSessionFactory().openSession();
+		Query query=session.createQuery("FROM Post P WHERE P.ID= :postID");
+		query.setParameter("postID",ID);
+		
+		if(query.list().size()==0) return null;
+		
+		return (Post)query.uniqueResult();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Post> getPostsByCategory(int categoryID){
+		Session session=HibernateUtil.getSessionFactory().openSession();
+		Query query=session.createQuery("FROM Post P WHERE P.category.ID= :categoryID order by date asc");
+		query.setParameter("categoryID",categoryID);
+	
+		if(query.list()==null ||
+	       query.list().size()==0) return null;
+			
+		return (List<Post>)query.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Post> getPostsByUsername(String username) {
+		Session session=HibernateUtil.getSessionFactory().openSession();
+		Query query=session.createQuery("FROM Post P WHERE P.user.username= :username order by date asc");
+		query.setParameter("username",username);
+		return query.list();
 	}
 	
 	

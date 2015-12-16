@@ -22,17 +22,17 @@ public class CommentServiceImpl implements CommentService {
 
 	@Autowired
 	private CommentRepository commentRepository;
+//	@Autowired
+//	private PostRepository postRepository;
+//	
 	@Autowired
-	private PostRepository postRepository;
+	private PostService postService;
 	
 	private List<Comment> visited;
 	
 	public CommentServiceImpl(){
 		visited=new ArrayList<Comment>();
 	}
-	//	@Autowired
-//	private PostService postService;
-//	
 	public Post getPostOfComment(int commentID){
 		return commentRepository.getPostOfComment(commentID);
 	}
@@ -45,47 +45,47 @@ public class CommentServiceImpl implements CommentService {
 	}
 	
 	public List<Comment> getPostComments(int postID) {
-//		Post post=postService.getPostById(postID);
-//		if(post==null) return null;
-//		
+		Post post	=	postService.getPostById(postID);
+		if(post==null) return null;
+		
 		return commentRepository.getPostComments(postID);
 	}
 
 	public Comment getPostCommentById(int postID,int commentID) {
-//		Post post=postService.getPostById(postID);
-//		if(post==null) return null;
-//		
+		Post post=postService.getPostById(postID);
+		if(post==null) return null;
+		
 		return commentRepository.getPostCommentById(postID,commentID);
 	}
 
 	public void addPostComment(int postID, Comment comment) {
-//		Post post=postService.getPostById(postID);
-//		if(post==null) return;
-		Post post=postRepository.getPostById(postID);
+		Post post=postService.getPostById(postID);
+		if(post==null) return;
+		
 		commentRepository.addPostComment(post,comment);
 	}
 
 	public void deleteComment(int postID, int commentID) {
-//		Post post=postService.getPostById(postID);
-//		if(post==null) return;
-//		
+		Post post=postService.getPostById(postID);
+		if(post==null) return;
+		
 		commentRepository.deleteComment(commentID);
 	}	
 	public List<Comment>   getChildComments	(int postID,int commentID){
-//		Post post			=	postService.getPostById(postID);
-//		if(post==null) return null;
-//		
+		Post post			=	postService.getPostById(postID);
+		if(post==null) return null;
+		
 		return commentRepository.getChildComments(commentID);		
 	}
 	public Comment getChildCommentById(int postID,int commentID,int childCommentID){
-//		Post post			=	postService.getPostById(postID);
-//		if(post==null) return null;
+		Post post			=	postService.getPostById(postID);
+		if(post==null) return null;
 //		
 		return commentRepository.getCommentById(childCommentID);
 	}
 	public void addChildComment(int postID,Comment parentComment,Comment childComment){
-//		Post post			=	postService.getPostById(postID);
-//		if(post==null) return;
+		Post post			=	postService.getPostById(postID);
+		if(post==null) return;
 		
 		commentRepository.addChildComment(parentComment,childComment);
 	}

@@ -21,10 +21,11 @@
     </jsp:attribute>
     
     <jsp:body>
-       <form:form action="/blog/post/add" modelAttribute="post" method="POST">
-       <form:errors path="*" cssClass="alert alert-danger" element="div"/>
+       <form:form action="/blog/post/add?returnURL=${returnURL}" modelAttribute="post" method="POST">
+<!--  <form:errors path="*" cssClass="alert alert-danger" element="div"/>-->
        <div class="form-group">
 			<form:textarea id="text" path="text" rows="10" cols="100" name="text" class="form-control"/>
+			<form:errors path="text" cssClass="alert alert-danger"/>
 			<select name="categoryName" id="categoryName">
 				<c:forEach items="${categories}" var="category">
 					<option value="${category.name}">${category.name}</option>

@@ -14,26 +14,25 @@ import com.sonat.blog.util.HibernateUtil;
 public class CategoryRepositoryImpl implements CategoryRepository {
 
 	
-	public Category getCategoryById(int categoryID) {
+	public void addCategory(Category category) {
 		Session session=HibernateUtil.getSessionFactory().openSession();
-		Query query=session.createQuery("FROM Category C where C.ID: =categoryID");
+		session.beginTransaction();
 		
-		if(query.list()==null ||
-		   query.list().size()==0) return null;
-
-		return (Category)query.uniqueResult();
+		session.save(category);
+		session.getTransaction().commit();
 	}
 	
-	public Category getCategoryByName(String categoryName) {
+	public void deleteCategory(int categoryID) {
 		Session session=HibernateUtil.getSessionFactory().openSession();
-		Query query=session.createQuery("FROM Category C WHERE C.name= :categoryName");
-		query.setParameter("categoryName", categoryName);
-		
+		Query query=session.createQuery("FROM Category C WHERE C.ID: =categoryID");
 		if(query.list()==null ||
-		   query.list().size()==0) return null;
+		   query.list().size()==0) return;
 		
 		Category category=(Category)query.uniqueResult();
-		return category;
+		
+		session.beginTransaction();
+		session.delete(category);
+		session.getTransaction().commit();	
 	}
 
 
@@ -48,25 +47,26 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 		return (List<Category>)query.list();
 	}
 
-	public void addCategory(Category category) {
+	public Category getCategoryById(int categoryID) {
 		Session session=HibernateUtil.getSessionFactory().openSession();
-		session.beginTransaction();
+		Query query=session.createQuery("FROM Category C where C.ID: =categoryID");
 		
-		session.save(category);
-		session.getTransaction().commit();
+		if(query.list()==null ||
+		   query.list().size()==0) return null;
+
+		return (Category)query.uniqueResult();
 	}
 
-	public void deleteCategory(int categoryID) {
+	public Category getCategoryByName(String categoryName) {
 		Session session=HibernateUtil.getSessionFactory().openSession();
-		Query query=session.createQuery("FROM Category C WHERE C.ID: =categoryID");
+		Query query=session.createQuery("FROM Category C WHERE C.name= :categoryName");
+		query.setParameter("categoryName", categoryName);
+		
 		if(query.list()==null ||
-		   query.list().size()==0) return;
+		   query.list().size()==0) return null;
 		
 		Category category=(Category)query.uniqueResult();
-		
-		session.beginTransaction();
-		session.delete(category);
-		session.getTransaction().commit();	
+		return category;
 	}
 
 

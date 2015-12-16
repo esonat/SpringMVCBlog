@@ -26,7 +26,6 @@ public class Comment{
 	private int depth;
 	private int ID;
 	private Comment parent;
-	private int parentId;
 	private Post post;
 	private String text;
 	
