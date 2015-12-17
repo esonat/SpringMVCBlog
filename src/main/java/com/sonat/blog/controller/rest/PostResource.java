@@ -23,6 +23,7 @@ import org.springframework.jdbc.core.StatementCreatorUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.sonat.blog.controller.rest.util.MaxAge;
 import com.sonat.blog.domain.Post;
 import com.sonat.blog.exception.CategoryNotFoundException;
 import com.sonat.blog.exception.PostNotFoundException;
@@ -40,6 +41,7 @@ public class PostResource {
 	@GET
 	@Path("/post")
 	@Produces("application/json")
+	@MaxAge(500)
 	public String getAllPosts(){
 		List<Post> allPosts=postService.getAll();
 		
@@ -59,6 +61,7 @@ public class PostResource {
 	@GET
 	@Path("/post/{id}")
 	@Produces("application/json")
+	@MaxAge(500)
 	public String getPostById(@PathParam("id")int id){
 		Post post;
 		
@@ -86,6 +89,7 @@ public class PostResource {
 	@GET
 	@Path(value="/post/category/{categoryId}")
 	@Produces("application/json")
+	@MaxAge(500)
 	public String getPostsByCategory(@PathParam("categoryId")int categoryID){
 		List<Post> posts;
 		
@@ -110,6 +114,7 @@ public class PostResource {
 	@GET
 	@Path("/post/user/{username}")
 	@Produces("application/json")
+	@MaxAge(500)
 	public String getPostsByUsername(@PathParam("username")String username){
 		List<Post> posts;
 		try{
