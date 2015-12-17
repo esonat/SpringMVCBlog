@@ -1,7 +1,6 @@
 package com.sonat.blog.controller.rest;
 
 import java.util.List;
-
 import javax.annotation.Resource;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -9,14 +8,11 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
-
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.sonat.blog.domain.Comment;
-import com.sonat.blog.domain.Post;
+import com.sonat.blog.exception.CommentNotFoundException;
 import com.sonat.blog.exception.PostNotFoundException;
 import com.sonat.blog.service.CommentService;
 
@@ -58,6 +54,8 @@ public class CommentResource {
 			postComment	=	commentService.getPostCommentById(postID,commentID);
 		}catch(PostNotFoundException e){
 			return ErrorMessages.POST_NOT_FOUND;
+		}catch(CommentNotFoundException e){
+			return ErrorMessages.COMMENT_NOT_FOUND;
 		}
 		 
 		ObjectMapper mapper = new ObjectMapper();
@@ -80,6 +78,8 @@ public class CommentResource {
 			childComments=commentService.getChildComments(postID,commentID);
 		}catch(PostNotFoundException e){
 			return ErrorMessages.POST_NOT_FOUND;
+		}catch (CommentNotFoundException e) {
+			return ErrorMessages.COMMENT_NOT_FOUND;
 		}
 		
 		ObjectMapper mapper = new ObjectMapper();
@@ -104,6 +104,8 @@ public class CommentResource {
 			childComment=commentService.getChildCommentById(postID, commentID, childCommentID);
 		}catch(PostNotFoundException e){
 			return ErrorMessages.POST_NOT_FOUND;
+		}catch(CommentNotFoundException e){
+			return ErrorMessages.COMMENT_NOT_FOUND;
 		}
 		
 		ObjectMapper mapper = new ObjectMapper();

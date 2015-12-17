@@ -11,8 +11,9 @@
 		<property name="hibernate.connection.password">sonat</property>
 		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
 		<property name="show_sql">true</property>
-		<property name="hbm2ddl.auto">create</property>
+	<!--<property name="hbm2ddl.auto">create</property>
 		<property name="hbm2ddl.import_files">initial_data.sql</property>
+		-->
 		<mapping class="com.sonat.blog.domain.Category"/>
 		<mapping class="com.sonat.blog.domain.Post"/>
 		<mapping class="com.sonat.blog.domain.User"/>

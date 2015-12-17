@@ -78,7 +78,7 @@ public class CommentServiceImpl implements CommentService {
 	public Comment getChildCommentById(int postID,int commentID,int childCommentID){
 		Post post			=	postService.getPostById(postID);
 		if(post==null) return null;
-//		
+
 		return commentRepository.getCommentById(childCommentID);
 	}
 	public void addChildComment(int postID,Comment parentComment,Comment childComment){

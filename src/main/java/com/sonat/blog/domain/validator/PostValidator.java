@@ -1,7 +1,5 @@
 package com.sonat.blog.domain.validator;
 
-import javax.swing.text.html.parser.TagElement;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -26,9 +24,11 @@ public class PostValidator implements Validator{
 		|| post.getText().length()>10000)
 			errors.rejectValue("text","Size.Post.text.validation");
 		
-		for(Post item:postService.getAll()){
-			if(post.getText().equals(item.getText()))
+		if(postService.getAll()!=null){
+			for(Post item:postService.getAll()){
+				if(post.getText().equals(item.getText()))
 				errors.rejectValue("text", "Unique.Post.text.validation");
-		}		
+			}		
+		}
 	}
 }
