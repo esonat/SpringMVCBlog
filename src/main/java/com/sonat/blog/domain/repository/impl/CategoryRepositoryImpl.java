@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import com.sonat.blog.domain.Category;
 import com.sonat.blog.domain.repository.CategoryRepository;
+import com.sonat.blog.exception.CategoryNotFoundException;
+import com.sonat.blog.exception.PostNotFoundException;
 import com.sonat.blog.util.HibernateUtil;
 
 @Repository
@@ -49,10 +51,11 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 
 	public Category getCategoryById(int categoryID) {
 		Session session=HibernateUtil.getSessionFactory().openSession();
-		Query query=session.createQuery("FROM Category C where C.ID: =categoryID");
+		Query query=session.createQuery("FROM Category C where C.ID= :categoryID");
+		query.setParameter("categoryID",categoryID);
 		
 		if(query.list()==null ||
-		   query.list().size()==0) return null;
+		   query.list().size()==0) throw new CategoryNotFoundException(categoryID);
 
 		return (Category)query.uniqueResult();
 	}

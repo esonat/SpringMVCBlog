@@ -10,6 +10,7 @@ import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.Post;
 import com.sonat.blog.domain.repository.CommentRepository;
 import com.sonat.blog.domain.repository.PostRepository;
+import com.sonat.blog.service.CategoryService;
 import com.sonat.blog.service.CommentService;
 import com.sonat.blog.service.PostService;
 import com.sonat.blog.service.UserService;
@@ -18,6 +19,10 @@ import com.sonat.blog.service.UserService;
 public class PostServiceImpl implements PostService{
 	@Autowired
 	private PostRepository postRepository;
+	@Autowired
+	private CategoryService categoryService;
+	@Autowired
+	private UserService userService;
 	
 	public List<Post> getAll() {
 		return postRepository.getAll();
@@ -28,10 +33,12 @@ public class PostServiceImpl implements PostService{
 	}
 	
 	public List<Post> getPostsByCategory(int categoryID){
+		categoryService.getCategoryById(categoryID);
 		return postRepository.getPostsByCategory(categoryID);
 	}
 
 	public List<Post> getPostsByUsername(String username) {
+		userService.getUserByUsername(username);
 		return postRepository.getPostsByUsername(username);
 	}
 

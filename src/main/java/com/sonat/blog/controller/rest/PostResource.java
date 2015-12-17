@@ -24,7 +24,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.sonat.blog.domain.Post;
+import com.sonat.blog.exception.CategoryNotFoundException;
 import com.sonat.blog.exception.PostNotFoundException;
+import com.sonat.blog.exception.UserNotFoundException;
 import com.sonat.blog.service.PostService;
 
 @Resource
@@ -34,9 +36,7 @@ public class PostResource {
 	@Autowired
 	private PostService postService;
 	
-	private final String POST_NOT_FOUND		="Post not found";
-	private final String CATEGORY_NOT_FOUND	="Category not found";
-		
+	
 	@GET
 	@Path("/post")
 	@Produces("application/json")
@@ -66,7 +66,7 @@ public class PostResource {
 			post=postService.getPostById(id);
 		}
 		catch(PostNotFoundException e){
-			return POST_NOT_FOUND;	
+			return ErrorMessages.POST_NOT_FOUND;	
 		}
 		
 		if(post==null){
@@ -87,7 +87,14 @@ public class PostResource {
 	@Path(value="/post/category/{categoryId}")
 	@Produces("application/json")
 	public String getPostsByCategory(@PathParam("categoryId")int categoryID){
-		List<Post> posts=postService.getPostsByCategory(categoryID);
+		List<Post> posts;
+		
+		try{
+			posts=postService.getPostsByCategory(categoryID);
+		}
+		catch(CategoryNotFoundException e){
+			return ErrorMessages.CATEGORY_NOT_FOUND;	
+		}
 		
 		ObjectMapper mapper = new ObjectMapper();
 		String result;
@@ -104,7 +111,12 @@ public class PostResource {
 	@Path("/post/user/{username}")
 	@Produces("application/json")
 	public String getPostsByUsername(@PathParam("username")String username){
-		List<Post> posts=postService.getPostsByUsername(username);
+		List<Post> posts;
+		try{
+			posts=postService.getPostsByUsername(username);
+		}catch(UserNotFoundException e){
+			return ErrorMessages.USER_NOT_FOUND;
+		}
 		
 		ObjectMapper mapper = new ObjectMapper();
 		String result;

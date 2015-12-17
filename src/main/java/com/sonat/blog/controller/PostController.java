@@ -22,6 +22,7 @@ import com.sonat.blog.domain.Category;
 import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.Post;
 import com.sonat.blog.domain.validator.PostValidator;
+import com.sonat.blog.exception.CategoryNotFoundException;
 import com.sonat.blog.exception.PostNotFoundException;
 import com.sonat.blog.service.CategoryService;
 import com.sonat.blog.service.CommentService;
@@ -180,6 +181,16 @@ public class PostController {
 		 mav.addObject("exception", exception);
 		 mav.addObject("url", req.getRequestURL()+"?"+req.getQueryString());
 		 mav.setViewName("postNotFound");
+		 return mav;
+	}	
+	
+	@ExceptionHandler(CategoryNotFoundException.class)
+	public ModelAndView handleCategoryError(HttpServletRequest req, CategoryNotFoundException exception) {
+		 ModelAndView mav = new ModelAndView();
+		 mav.addObject("invalidProductId", exception.getCategoryID());
+		 mav.addObject("exception", exception);
+		 mav.addObject("url", req.getRequestURL()+"?"+req.getQueryString());
+		 mav.setViewName("categoryNotFound");
 		 return mav;
 	}	
 }
