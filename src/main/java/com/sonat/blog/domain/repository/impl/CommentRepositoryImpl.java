@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.Post;
 import com.sonat.blog.domain.repository.CommentRepository;
+import com.sonat.blog.exception.CommentNotFoundException;
 import com.sonat.blog.util.HibernateUtil;
 
 @Repository
@@ -120,7 +121,8 @@ public class CommentRepositoryImpl implements CommentRepository {
 		Query query		=	session.createQuery("FROM Comment C WHERE C.ID= :commentID");
 		
 		query.setParameter("commentID", commentID);
-		if(query.list().size()==0) return null;
+		if(query.list().size()==0)  
+			throw new CommentNotFoundException(commentID);
 		
 		Comment comment=(Comment)query.list().get(0);
 		session.close();
@@ -146,7 +148,8 @@ public class CommentRepositoryImpl implements CommentRepository {
 		query.setParameter("commentID",commentID);
 		query.setParameter("postID",postID);
 	
-		if(query.list().size()==0) return null;
+		if(query.list().size()==0)
+			throw new CommentNotFoundException(commentID);
 		
 		return (Comment)query.list().get(0);		
 	}

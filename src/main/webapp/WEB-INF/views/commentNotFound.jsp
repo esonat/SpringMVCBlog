@@ -23,7 +23,7 @@
     <jsp:body>
     <section>
 		<div class="container">
-			<h1> Post Not Found</h1>
+			<h1> Comment Not Found</h1>
 		</div>
 	</section>
 	<section>

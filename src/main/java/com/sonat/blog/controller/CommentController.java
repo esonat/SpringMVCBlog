@@ -9,15 +9,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
 import com.sonat.blog.domain.Category;
 import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.validator.CommentValidator;
+import com.sonat.blog.exception.CommentNotFoundException;
+import com.sonat.blog.exception.PostNotFoundException;
 import com.sonat.blog.service.CategoryService;
 import com.sonat.blog.service.CommentService;
 import com.sonat.blog.util.SecurityUtil;
@@ -197,4 +202,23 @@ public class CommentController {
 	protected void initBinder(WebDataBinder binder) {
 	    binder.setValidator(new CommentValidator());
 	}
+	
+	@ExceptionHandler(CommentNotFoundException.class)
+	public ModelAndView handleError(HttpServletRequest req, CommentNotFoundException exception) {
+		 ModelAndView mav = new ModelAndView();
+		 mav.addObject("invalidCommentId", exception.getCommentID());
+		 mav.addObject("exception", exception);
+		 mav.addObject("url", req.getRequestURL()+"?"+req.getQueryString());
+		 mav.setViewName("commentNotFound");
+		 return mav;
+	}	
+	@ExceptionHandler(PostNotFoundException.class)
+	public ModelAndView handleError(HttpServletRequest req, PostNotFoundException exception) {
+		 ModelAndView mav = new ModelAndView();
+		 mav.addObject("invalidPostId", exception.getPostID());
+		 mav.addObject("exception", exception);
+		 mav.addObject("url", req.getRequestURL()+"?"+req.getQueryString());
+		 mav.setViewName("postNotFound");
+		 return mav;
+	}	
 }
