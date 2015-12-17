@@ -11,6 +11,8 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.Cascade;
 import com.sonat.blog.validator.Name;
 import com.sonat.blog.validator.Username;
@@ -63,6 +65,7 @@ public class User {
 	
 	@OneToMany(fetch=FetchType.EAGER,mappedBy="user")
 	@Cascade(org.hibernate.annotations.CascadeType.DELETE)
+	@JsonIgnore
 	public Set<Post> getPosts() {
 		return posts;
 	}
@@ -72,6 +75,7 @@ public class User {
 	
 	@Id
 	@Column(name="USERNAME",unique=true,nullable=false)
+	@JsonIgnore
 	public String getUsername() {
 		return username;
 	}
@@ -80,6 +84,7 @@ public class User {
 	}
 	
 	@Column(name="PASSWORD",nullable=false)
+	@JsonIgnore
 	public String getPassword() {
 		return password;
 	}
@@ -88,6 +93,7 @@ public class User {
 	}
 	
 	@Column(name="ENABLED",nullable=false)
+	@JsonIgnore
 	public boolean isEnabled() {
 		return enabled;
 	}

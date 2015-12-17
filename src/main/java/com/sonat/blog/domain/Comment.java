@@ -17,6 +17,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.Cascade;
 
 @Entity
@@ -66,6 +67,7 @@ public class Comment{
 	@Id
 	@GeneratedValue(strategy=IDENTITY)
 	@Column(name="COMMENT_ID",unique=true,nullable=true)
+	@JsonIgnore
 	public int getID() {
 		return ID;
 	}
@@ -73,11 +75,13 @@ public class Comment{
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="PARENT_ID")
 	@Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
+	@JsonIgnore
 	public Comment getParent() {
 		return parent;
 	}
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="POST_ID",nullable=false)
+	@JsonIgnore
 	public Post getPost() {
 		return post;
 	}

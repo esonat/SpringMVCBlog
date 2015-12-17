@@ -12,6 +12,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 @Entity
 @Table(name="category",catalog="blogDB",
 uniqueConstraints={@UniqueConstraint(columnNames="NAME")})
@@ -34,6 +36,7 @@ public class Category {
 	@Id
 	@GeneratedValue(strategy=IDENTITY)
 	@Column(name="CATEGORY_ID",unique=true,nullable=false)
+	@JsonIgnore
 	public int getID() {
 		return ID;
 	}
@@ -50,6 +53,7 @@ public class Category {
 	}
 	
 	@OneToMany(fetch=FetchType.LAZY,mappedBy="category")
+	@JsonIgnore
 	public Set<Post> getPosts() {
 		return posts;
 	}

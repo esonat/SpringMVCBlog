@@ -9,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
@@ -29,6 +31,7 @@ public class UserRole {
 	@Id
 	@GeneratedValue(strategy=IDENTITY)
 	@Column(name="USER_ROLE_ID",unique=true,nullable=false)
+	@JsonIgnore
 	public Integer getUserRoleId() {
 		return this.userRoleId;
 	}
@@ -38,6 +41,7 @@ public class UserRole {
 	}
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="USERNAME",nullable=false)
+	@JsonIgnore
 	public User getUser() {
 		return this.user;
 	}

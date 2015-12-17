@@ -14,6 +14,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Size;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.Cascade;
 
 import static javax.persistence.GenerationType.IDENTITY;
@@ -68,6 +69,7 @@ public class Post {
 	@Id
 	@GeneratedValue(strategy=IDENTITY)
 	@Column(name="POST_ID",unique=true,nullable=false)
+	@JsonIgnore
 	public int getID() {
 		return ID;
 	}

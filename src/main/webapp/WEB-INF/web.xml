@@ -31,7 +31,7 @@
 			/WEB-INF/spring/webcontext/blog-security.xml</param-value>
 		</init-param>
 	 -->	
- 	<load-on-startup>1</load-on-startup>
+	<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>DispatcherServlet</servlet-name>
@@ -61,5 +61,25 @@
 		<filter-name>springSecurityFilterChain</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	
+	<!-- 
+	<listener>
+      <listener-class>org.resteasy.plugins.server.servlet.ResteasyBootstrap</listener-class>
+   </listener>
+
+   <listener>
+      <listener-class>org.resteasy.plugins.spring.SpringContextLoaderListener</listener-class>
+   </listener>
+
+   <servlet>
+      <servlet-name>Resteasy</servlet-name>
+      <servlet-class>org.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
+ 	  <load-on-startup>2</load-on-startup>
+   </servlet>
+
+   <servlet-mapping>
+      <servlet-name>Resteasy</servlet-name>
+      <url-pattern>/rest/*</url-pattern>
+   </servlet-mapping> -->
 	</web-app>
 	
