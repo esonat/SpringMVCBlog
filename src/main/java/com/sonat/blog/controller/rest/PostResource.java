@@ -36,57 +36,59 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import com.sonat.blog.controller.rest.filter.PostMethodFilter;
 import com.sonat.blog.controller.rest.filter.ValidateMethod;
 import com.sonat.blog.controller.rest.util.MaxAge;
 import com.sonat.blog.domain.Category;
 import com.sonat.blog.domain.Post;
+import com.sonat.blog.domain.User;
 import com.sonat.blog.exception.CategoryNotFoundException;
 import com.sonat.blog.exception.PostNotFoundException;
 import com.sonat.blog.exception.UserNotFoundException;
 import com.sonat.blog.service.CategoryService;
 import com.sonat.blog.service.PostService;
+import com.sonat.blog.service.UserService;
 
 @Resource
 @Controller
 @Path("/rest")
+@ValidateMethod
 public class PostResource {
 	@Autowired
 	private PostService postService;
 	@Autowired
 	private CategoryService categoryService;
+	@Autowired
+	private UserService userService;
+	
 	
 	@POST
 	@Path("/post/add")
 	@Consumes("application/json")
     public Response addPost(Post post,
-    					   @QueryParam("categoryName")String categoryName){
+    					   @QueryParam("categoryName")String categoryName,
+    					   @QueryParam("userName")String userName){
 		
 		try{
 			Category category=categoryService.getCategoryByName(categoryName);
-	     	postService.addPost(post,category);
+	     	User user=userService.getUserByUsername(userName);
+	     	
+	     	post.setUser(user);
+			postService.addPost(post,category);
 		}catch(Exception e){
 			return Response.status(Status.BAD_REQUEST).build();
 		}
 		return Response.status(Status.CREATED).build();
-	}
-	
+	}	
 
 	@GET
 	@Path("/post")
 	@Produces("application/json")
-	@ValidateMethod
 	public String getAllPosts(){
 		List<Post> allPosts=postService.getAll();
-//		 if(allPosts==null){
-//			//throw new WebApplicationException(Response.Status.NOT_FOUND);
-//		}
 		ContainerRequestContext requestContext=ResteasyProviderFactory.getContextData(ContainerRequestContext.class);
-		 
-		
-		 ObjectMapper mapper = new ObjectMapper();
-		 String result="ABC";
+				
+		ObjectMapper mapper = new ObjectMapper();
+		String result;
 		 
 			try {
 				result=mapper.writerWithDefaultPrettyPrinter().writeValueAsString(allPosts);
@@ -104,7 +106,6 @@ public class PostResource {
 	@GET
 	@Path("/post/{id}")
 	@Produces("application/json")
-	@MaxAge(500)
 	public String getPostById(@PathParam("id")int id){
 		Post post;
 		

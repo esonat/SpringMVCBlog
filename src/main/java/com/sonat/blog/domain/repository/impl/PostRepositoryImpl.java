@@ -29,13 +29,14 @@ public class PostRepositoryImpl implements PostRepository{
 		Session session=HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
 		
-		Authentication auth = 	SecurityContextHolder.getContext().getAuthentication();
-	    String username = 		auth.getName(); 
-		User user		=		userService.getUserByUsername(username);
+		if(post.getUser()==null){
+			Authentication auth = 	SecurityContextHolder.getContext().getAuthentication();
+		    String username = 		auth.getName(); 
+			User user		=		userService.getUserByUsername(username);
+			post.setUser(user);	
+		}
 		
 		Date date = new Date();
-		
-		post.setUser(user);
 		post.setDate(date);
 		post.setCategory(category);
 		
