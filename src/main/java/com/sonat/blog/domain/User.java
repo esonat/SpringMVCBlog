@@ -29,8 +29,8 @@ public class User {
 	@Pattern(regexp="[a-zA-Z]+",message="{Pattern.User.username.validation}")
 	@Username
 	private String username;
-	@Pattern(regexp="^[A-Za-z0-9_.]+$",message="{Pattern.User.password.validation}")	
-	@Size(min=5,max=50,message="{Size.User.password.validation}")
+	//@Pattern(regexp="^[A-Za-z0-9_.]+$",message="{Pattern.User.password.validation}")	
+	@Size(min=5,max=150,message="{Size.User.password.validation}")
 	private String password;
 	private boolean enabled;
 	private Set<UserRole> 	userRole = new HashSet<UserRole>(0);

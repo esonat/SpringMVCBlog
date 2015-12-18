@@ -3,6 +3,7 @@ package com.sonat.blog.domain.repository.impl;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 import com.sonat.blog.domain.User;
 import com.sonat.blog.domain.UserRole;
@@ -20,6 +21,10 @@ public class UserRepositoryImpl implements UserRepository {
 		Session session=HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
 		
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String hashedPassword = passwordEncoder.encode(user.getPassword());
+		
+		user.setPassword(hashedPassword);
 		session.save(user);
 		
 		UserRole userRole=new UserRole(user,"ROLE_USER");

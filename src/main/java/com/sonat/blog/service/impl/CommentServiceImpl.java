@@ -2,17 +2,11 @@ package com.sonat.blog.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.commons.collections.set.ListOrderedSet;
-import org.apache.taglibs.standard.lang.jstl.test.beans.PublicInterface2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor;
-
 import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.Post;
 import com.sonat.blog.domain.repository.CommentRepository;
-import com.sonat.blog.domain.repository.PostRepository;
 import com.sonat.blog.domain.repository.impl.CommentRepositoryImpl;
 import com.sonat.blog.service.CommentService;
 import com.sonat.blog.service.PostService;
@@ -38,7 +32,7 @@ public class CommentServiceImpl implements CommentService {
 	}
 	
 	public List<Comment> getAllCommentsByPostId(int postID){
-	    Post post=postService.getPostById(postID);
+	    postService.getPostById(postID);
 		return commentRepository.getAllCommentsByPostId(postID);
 	}
 	

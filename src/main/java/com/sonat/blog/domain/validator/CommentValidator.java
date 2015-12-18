@@ -1,15 +1,11 @@
 package com.sonat.blog.domain.validator;
 
-import javax.swing.text.html.parser.TagElement;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
-
 import com.sonat.blog.domain.Comment;
-import com.sonat.blog.domain.Post;
 import com.sonat.blog.service.CommentService;
 
 @Component

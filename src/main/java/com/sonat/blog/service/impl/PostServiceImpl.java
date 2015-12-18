@@ -4,14 +4,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.sonat.blog.domain.Category;
-import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.Post;
-import com.sonat.blog.domain.repository.CommentRepository;
 import com.sonat.blog.domain.repository.PostRepository;
 import com.sonat.blog.service.CategoryService;
-import com.sonat.blog.service.CommentService;
 import com.sonat.blog.service.PostService;
 import com.sonat.blog.service.UserService;
 
@@ -49,6 +45,4 @@ public class PostServiceImpl implements PostService{
 	public void deletePost(int ID) {
 		postRepository.deletePost(ID);
 	}
-	
-/** COMMENTS **/
 }

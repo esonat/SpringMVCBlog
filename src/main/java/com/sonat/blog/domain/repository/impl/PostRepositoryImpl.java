@@ -2,9 +2,6 @@ package com.sonat.blog.domain.repository.impl;
 
 import java.util.Date;
 import java.util.List;
-
-import javax.validation.constraints.Size;
-
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;

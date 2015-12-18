@@ -2,10 +2,8 @@ package com.sonat.blog.controller.rest;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.ResponseProcessingException;
 import javax.ws.rs.core.Response;
-
-import org.hamcrest.core.Is;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -28,20 +26,21 @@ public class PostResourceTest {
 	}
 	@Test
 	public void testPostResource() throws Exception{
-		System.out.println("Get Post ID:1");
-		Response response=client.target("http://localhost:8080/blog/rest/post/1")
+		System.out.println("Get Post ID:2");
+		Response response=client.target("http://localhost:8080/blog/rest/post/2")
+				.request()
+				.get();
+		String value=response.readEntity(String.class);
+		Assert.assertFalse(value.equals(POST_NOT_FOUND));		
+		response.close();
+		
+		System.out.println("Get Post ID:5");
+		response=client.target("http://localhost:8080/blog/rest/post/5")
 				.request()
 				.get();
 		
-		Assert.assertFalse(response.equals(POST_NOT_FOUND));
-				
-		System.out.println("Get Post ID:3");
-		response=client.target("http://localhost:8080/blog/rest/post/1")
-				.request()
-				.get();
-		
-		Assert.assertEquals(response,POST_NOT_FOUND);
-		
-		
+		value=response.readEntity(String.class);
+		Assert.assertEquals(value,POST_NOT_FOUND);
+		response.close();
 	}
 }

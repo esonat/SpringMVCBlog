@@ -1,33 +1,38 @@
 package com.sonat.blog.controller.rest;
 
 import java.util.List;
-
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.core.Response.StatusType;
 
-import org.apache.http.HttpStatus;
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.hibernate.transform.RootEntityResultTransformer;
-import org.jboss.resteasy.specimpl.ResponseBuilderImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.StatementCreatorUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sonat.blog.controller.rest.util.MaxAge;
+import com.sonat.blog.domain.Category;
 import com.sonat.blog.domain.Post;
 import com.sonat.blog.exception.CategoryNotFoundException;
 import com.sonat.blog.exception.PostNotFoundException;
 import com.sonat.blog.exception.UserNotFoundException;
+import com.sonat.blog.service.CategoryService;
 import com.sonat.blog.service.PostService;
 
 @Resource
@@ -36,7 +41,24 @@ import com.sonat.blog.service.PostService;
 public class PostResource {
 	@Autowired
 	private PostService postService;
+	@Autowired
+	private CategoryService categoryService;
 	
+	
+	@POST
+	@Path("/post/add")
+	@Consumes("application/json")
+    public Response addPost(Post post,
+    					  @QueryParam("categoryName")String categoryName){
+		
+		try{
+			Category category=categoryService.getCategoryByName(categoryName);
+	     	postService.addPost(post,category);
+		}catch(Exception e){
+			return Response.status(Status.BAD_REQUEST).build();
+		}
+		return Response.status(Status.CREATED).build();
+	}
 	
 	@GET
 	@Path("/post")
