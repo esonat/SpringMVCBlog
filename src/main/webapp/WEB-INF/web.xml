@@ -48,7 +48,17 @@
 					/WEB-INF/spring/webcontext/blog-database.xml
 		</param-value>
 	</context-param>
-<!-- 	<context-param> -->
+<!-- 	<context-param> 
+    	<param-name>resteasy.scan.providers</param-name>
+    	<param-value>true</param-value>
+	</context-param>
+	<context-param>
+	      <param-name>resteasy.providers</param-name>
+	      <param-value>
+	      	com.sonat.blog.controller.rest.filter.PostMethodFilter
+	      </param-value>
+	</context-param>
+ --><!-- 	<context-param> -->
 <!-- 		<param-name>contextConfigLocation</param-name> -->
 <!-- 		<param-value>/WEB-INF/spring/webcontext/blog-security.xml</param-value> -->
 <!-- 	</context-param> -->

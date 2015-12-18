@@ -1,5 +1,6 @@
 package com.sonat.blog.controller.rest;
 
+import java.io.IOException;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -12,11 +13,21 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.client.ClientRequestFilter;
+import javax.ws.rs.container.ContainerRequestContext;
+import javax.ws.rs.container.ContainerRequestFilter;
+import javax.ws.rs.container.ContainerResponseContext;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.Response.StatusType;
 
+import org.apache.commons.fileupload.RequestContext;
+import org.apache.commons.fileupload.servlet.ServletRequestContext;
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.jboss.resteasy.spi.ResteasyProviderFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +37,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.sonat.blog.controller.rest.filter.PostMethodFilter;
+import com.sonat.blog.controller.rest.filter.ValidateMethod;
 import com.sonat.blog.controller.rest.util.MaxAge;
 import com.sonat.blog.domain.Category;
 import com.sonat.blog.domain.Post;
@@ -44,12 +57,11 @@ public class PostResource {
 	@Autowired
 	private CategoryService categoryService;
 	
-	
 	@POST
 	@Path("/post/add")
 	@Consumes("application/json")
     public Response addPost(Post post,
-    					  @QueryParam("categoryName")String categoryName){
+    					   @QueryParam("categoryName")String categoryName){
 		
 		try{
 			Category category=categoryService.getCategoryByName(categoryName);
@@ -60,23 +72,32 @@ public class PostResource {
 		return Response.status(Status.CREATED).build();
 	}
 	
+
 	@GET
 	@Path("/post")
 	@Produces("application/json")
-	@MaxAge(500)
+	@ValidateMethod
 	public String getAllPosts(){
 		List<Post> allPosts=postService.getAll();
+//		 if(allPosts==null){
+//			//throw new WebApplicationException(Response.Status.NOT_FOUND);
+//		}
+		ContainerRequestContext requestContext=ResteasyProviderFactory.getContextData(ContainerRequestContext.class);
+		 
 		
-		if(allPosts==null){
-			throw new WebApplicationException(Response.Status.NOT_FOUND);
-		}
 		 ObjectMapper mapper = new ObjectMapper();
-		 String result;
-		 try{
-			result=mapper.writerWithDefaultPrettyPrinter().writeValueAsString(allPosts);	 
-		 }catch(Exception e){
-			 throw new WebApplicationException(Response.Status.FORBIDDEN);
-		 }
+		 String result="ABC";
+		 
+			try {
+				result=mapper.writerWithDefaultPrettyPrinter().writeValueAsString(allPosts);
+			} catch (JsonGenerationException e) {
+				return "Json Generation Exception";
+			} catch (JsonMappingException e) {
+				return "Json Mapping Exception";
+			} catch (IOException e) {
+				return "IO Exception";
+			}	 
+		 
 	 return result;
 	}
 	
