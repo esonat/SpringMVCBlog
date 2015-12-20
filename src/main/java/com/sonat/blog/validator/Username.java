@@ -10,6 +10,7 @@ import java.lang.annotation.Target;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
+import com.sonat.blog.validator.UsernameValidator;
 
 import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.ws.rs.QueryParam;
 import com.sonat.blog.UI.model.*;
+import com.sonat.blog.UI.validator.DateQueryValidator;
 
 import org.hibernate.loader.custom.Return;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,6 @@ import com.sonat.blog.service.CategoryService;
 import com.sonat.blog.service.CommentService;
 import com.sonat.blog.service.PostService;
 import com.sonat.blog.util.SecurityUtil;
-import com.sonat.blog.validator.DateQueryValidator;
 
 @Controller
 @RequestMapping("/post")
@@ -94,14 +94,12 @@ public class PostController {
 	
 	@RequestMapping
 	public String getAllPosts(Model model,
-							@RequestParam(value="date",required=false)DateQueryModel dateQueryModel,
-							@ModelAttribute("comment") Comment comment){
-
-@RequestParam(value="dateFrom",required=false)String dateFrom,
-//							  @RequestParam(value="dateTo",required=false)  String dateTo,
-//							  @RequestParam(value="dateQuery",required=false)DateQueryEnum dateQuery,
-							  
-				
+							@ModelAttribute("comment") Comment comment,
+							@RequestParam(value="dateFrom",required=false)String dateFrom,
+							@RequestParam(value="dateTo",required=false)  String dateTo,
+							@RequestParam(value="dateQuery",required=false)DateQueryEnum dateQuery){
+//@RequestParam(value="date",required=false)DateQueryModel dateQueryModel,
+						
 		Map<Post,List<Comment>> postsMap=new LinkedHashMap<Post,List<Comment>>();
 		List<Post> postList=postService.getAll();
 		
