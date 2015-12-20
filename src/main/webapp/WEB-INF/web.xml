@@ -24,13 +24,10 @@
 	<servlet>
 		<servlet-name>DispatcherServlet</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-	<!-- 	<init-param>
-			<param-name>contextConfigLocation</param-name>
-			<param-value>
-			/WEB-INF/spring/webcontext/DispatcherServlet-context.xml,
-			/WEB-INF/spring/webcontext/blog-security.xml</param-value>
-		</init-param>
-	 -->	
+	   <init-param>
+          <param-name>readonly</param-name>
+          <param-value>false</param-value>
+        </init-param>
 	<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>
@@ -48,20 +45,6 @@
 					/WEB-INF/spring/webcontext/blog-database.xml
 		</param-value>
 	</context-param>
-<!-- 	<context-param> 
-    	<param-name>resteasy.scan.providers</param-name>
-    	<param-value>true</param-value>
-	</context-param>
-	<context-param>
-	      <param-name>resteasy.providers</param-name>
-	      <param-value>
-	      	com.sonat.blog.controller.rest.filter.PostMethodFilter
-	      </param-value>
-	</context-param>
- --><!-- 	<context-param> -->
-<!-- 		<param-name>contextConfigLocation</param-name> -->
-<!-- 		<param-value>/WEB-INF/spring/webcontext/blog-security.xml</param-value> -->
-<!-- 	</context-param> -->
 	<filter>
 		<filter-name>springSecurityFilterChain</filter-name>
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -71,27 +54,16 @@
 		<filter-name>springSecurityFilterChain</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	
+	<filter>
+	  <filter-name>cors</filter-name>
+	  <filter-class>com.sonat.blog.filter.CORSFilter</filter-class>
+	</filter>  
+	<filter-mapping>
+	  <filter-name>cors</filter-name>
+	  <url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+<!--  FILTER METHODS -->
+		
 </web-app>
-	
-   
-
-	<!-- 
-	<listener>
-      <listener-class>org.resteasy.plugins.server.servlet.ResteasyBootstrap</listener-class>
-   </listener>
-
-   <listener>
-      <listener-class>org.resteasy.plugins.spring.SpringContextLoaderListener</listener-class>
-   </listener>
-
-   <servlet>
-      <servlet-name>Resteasy</servlet-name>
-      <servlet-class>org.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
- 	  <load-on-startup>2</load-on-startup>
-   </servlet>
-
-   <servlet-mapping>
-      <servlet-name>Resteasy</servlet-name>
-      <url-pattern>/rest/*</url-pattern>
-   </servlet-mapping> -->
-	

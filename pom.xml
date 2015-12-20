@@ -6,10 +6,15 @@
   <packaging>war</packaging>
 <dependencies>
   	<dependency>
-  		<groupId>org.springframework</groupId>
-  		<artifactId>spring-webmvc</artifactId>
-  		<version>4.0.3.RELEASE</version>
-  	</dependency>
+	<groupId>org.springframework</groupId>
+	<artifactId>spring-webmvc</artifactId>
+	<version>4.2.4.RELEASE</version>
+</dependency>
+  	<dependency>
+	<groupId>org.springframework</groupId>
+	<artifactId>spring-core</artifactId>
+	<version>4.2.4.RELEASE</version>
+</dependency>
   	<dependency>
   		<groupId>javax.servlet</groupId>
   		<artifactId>jstl</artifactId>
