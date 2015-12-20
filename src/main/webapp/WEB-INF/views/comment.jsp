@@ -21,8 +21,9 @@
 		</div>
     </jsp:attribute>
     <jsp:body>
-    
-    <div style="margin-left:${comment.depth*50};">
+    		<c:forEach items="${commentList}" var="comment">
+    		<c:set var="depth" value="0"/>
+    			<div style="margin-left:${(comment.depth-depth)*50};">
 						<!-- COMMENT TEXT -->
 						<p>${comment.text}</p>
 						<!-- COMMENT DATETIME -->
@@ -30,11 +31,11 @@
 						 	<sec:authorize access="hasRole('ROLE_ADMIN')">
 									<!-- IF POST COMMENT -->
 									<c:if test="${comment.depth==0}">
-								  		<spring:url value="/post/${postItem.key.ID}/comment/${comment.ID}/delete?returnURL=${returnURL}" var="deleteCommentUrl" />
+								  		<spring:url value="/post/${postID}/comment/${comment.ID}/delete?returnURL=${returnURL}" var="deleteCommentUrl" />
 									</c:if>				
 									<!-- IF CHILD -->		 
 									<c:if test="${comment.depth!=0}">
-								  		<spring:url value="/post/${postItem.key.ID}/comment/${comment.parent.ID}/comment/${comment.ID}/delete?returnURL=${returnURL}" var="deleteCommentUrl" />
+								  		<spring:url value="/post/${postID}/comment/${comment.parent.ID}/comment/${comment.ID}/delete?returnURL=${returnURL}" var="deleteCommentUrl" />
 									</c:if>						 
 								  	<form action="${deleteCommentUrl}" method="POST">
 									<table>
@@ -47,21 +48,22 @@
 							</sec:authorize>
 							
 									<c:if test="${comment.depth==0}">
-									  	<spring:url value="/post/${postItem.key.ID}/comment/${comment.ID}/add?returnURL=${returnURL}" var="addCommentUrl" />
+									  	<spring:url value="/post/${postID}/comment/${comment.ID}/add?returnURL=${returnURL}" var="addCommentUrl" />
 									</c:if>				
 									<!-- IF CHILD -->		 
 									<c:if test="${comment.depth!=0}">
-								  		<spring:url value="/post/${postItem.key.ID}/comment/${comment.parent.ID }/comment/${comment.ID}/add?returnURL=${returnURL}" var="addCommentUrl" />
+								  		<spring:url value="/post/${postID}/comment/${comment.parent.ID }/comment/${comment.ID}/add?returnURL=${returnURL}" var="addCommentUrl" />
 									</c:if>
 																													
-									<form:form action="/blog/post/${postItem.key.ID}/comment/${comment.ID}/comment/add?returnURL=${returnURL}" modelAttribute="comment" method="POST">
+									<form:form action="/blog/post/${postID}/comment/${comment.ID}/comment/add?returnURL=${returnURL}" modelAttribute="comment" method="POST">
 									    <form:errors path="text" cssClass="alert alert-danger" element="div"/>
 										<table>
 										<tr>
-											<td><form:input class="comment form-control" type="text" id="text" path="text" size="300" name="text" placeholder="Comment..."/></td>
+											<td><form:input class="comment form-control" type="text" id="text" path="text" size="300" name="text" value="" placeholder="Comment..."/></td>
 										</tr>
 										</table>
 									</form:form>		
 							</div>
+							</c:forEach>
     </jsp:body>
 </t:genericpage>

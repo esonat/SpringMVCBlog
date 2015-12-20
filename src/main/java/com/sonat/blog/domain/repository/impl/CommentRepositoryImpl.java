@@ -89,7 +89,20 @@ public class CommentRepositoryImpl implements CommentRepository {
 		if(query.list().size()==0) return null;
 		
 		return (List<Comment>)query.list();		
-	}	
+	}
+	
+	public Comment getChildCommentById(int postID,int commentID,int childCommentID){
+		Session session	=	HibernateUtil.getSessionFactory().openSession();
+		Query query		=	session.createQuery("FROM Comment C WHERE C.post.ID= :postID AND C.parent.ID= :commentID AND C.ID= :childCommentID order by C.datetime asc");
+		query.setParameter("postID", postID);
+		query.setParameter("commentID", commentID);
+		query.setParameter("childCommentID", childCommentID);
+		
+		if(query.list().size()==0
+		|| query.list()==null) throw new CommentNotFoundException(childCommentID);
+
+		return (Comment)query.uniqueResult();
+	}
 	
 	@SuppressWarnings("unchecked")
 	public List<Comment> getChildComments(int commentID) {

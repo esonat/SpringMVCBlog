@@ -20,11 +20,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.sonat.blog.domain.Category;
 import com.sonat.blog.domain.Comment;
+import com.sonat.blog.domain.Post;
 import com.sonat.blog.domain.validator.CommentValidator;
 import com.sonat.blog.exception.CommentNotFoundException;
 import com.sonat.blog.exception.PostNotFoundException;
 import com.sonat.blog.service.CategoryService;
 import com.sonat.blog.service.CommentService;
+import com.sonat.blog.service.PostService;
 import com.sonat.blog.util.SecurityUtil;
 
 @Controller
@@ -136,40 +138,41 @@ public class CommentController {
 	}
 	@RequestMapping(value="/post/{postId}/comment/{commentId}/comment/{childCommentId}")
 	public String getChildComment(Model model,
+								  @ModelAttribute("comment") Comment comment,
 								  @PathVariable("postId")int postId,
 								  @PathVariable("commentId")int commentId,
 								  @PathVariable("childCommentId")int childCommentId){
 		Comment childComment=commentService.getChildCommentById(postId, commentId, childCommentId);
+		
+		
 		List<Category> categories=categoryService.getAllCategories();
+		List<Comment> commentList=commentService.getChildCommentTree(childComment);
 		
 		model.addAttribute("returnURL","/post/"+postId+"/comment/"+commentId+"/comment/"+childCommentId);
 		model.addAttribute("categories",categories);
-		model.addAttribute("commentType","CHILD");
-		model.addAttribute("parentID",commentId);
+		//model.addAttribute("commentType","CHILD");
+	//	model.addAttribute("parentID",commentId);
+		model.addAttribute("depth",childComment.getDepth());
 		model.addAttribute("postID",postId);
-		model.addAttribute("comment",childComment);
+		model.addAttribute("commentList",commentList);
 		
 		return "comment";		
 	}
 	@RequestMapping("/post/{postId}/comment/{commentId}")
 	public String getPostComment(Model model,
+								 @ModelAttribute("comment")Comment comment,
 								 @PathVariable("postId")int postId,
 								 @PathVariable("commentId")int commentId){
 	
 		Comment postComment	=	commentService.getPostCommentById(postId,commentId);
-		
 		if(postComment==null) return "redirect:/post";
 		
-		List<Comment> commentList=commentService.getChildCommentTree(postComment);
+		List<Comment> commentList	= commentService.getChildCommentTree(postComment);
+		List<Category> categories	= categoryService.getAllCategories();
 		
-		String 	username=postComment.getPost().getUser().getUsername();
-		List<Category> categories=categoryService.getAllCategories();
-		
-		
-		model.addAttribute("categories",categories);
+		model.addAttribute("returnURL","/post/"+postId+"/comment/"+commentId);
 		model.addAttribute("postID",postId);
-		model.addAttribute("username",username);
-		model.addAttribute("comment",postComment);
+		model.addAttribute("categories",categories);
 		model.addAttribute("commentList",commentList);
 		model.addAttribute("loggedUser",SecurityUtil.getCurrentUsername());
 	    
