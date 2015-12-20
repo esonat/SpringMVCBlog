@@ -10,7 +10,7 @@ import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.Post;
 import com.sonat.blog.domain.repository.CommentRepository;
 import com.sonat.blog.exception.CommentNotFoundException;
-import com.sonat.blog.util.HibernateUtil;
+import com.sonat.blog.util.database.HibernateUtil;
 
 @Repository
 public class CommentRepositoryImpl implements CommentRepository {

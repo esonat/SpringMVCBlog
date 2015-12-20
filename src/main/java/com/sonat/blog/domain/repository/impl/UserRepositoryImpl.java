@@ -9,7 +9,7 @@ import com.sonat.blog.domain.User;
 import com.sonat.blog.domain.UserRole;
 import com.sonat.blog.domain.repository.UserRepository;
 import com.sonat.blog.exception.UserNotFoundException;
-import com.sonat.blog.util.HibernateUtil;
+import com.sonat.blog.util.database.HibernateUtil;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository {

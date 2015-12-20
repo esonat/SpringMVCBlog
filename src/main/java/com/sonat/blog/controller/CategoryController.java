@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import com.sonat.blog.domain.Category;
 import com.sonat.blog.service.CategoryService;
-import com.sonat.blog.util.SecurityUtil;
+import com.sonat.blog.util.security.SecurityUtil;
 
 @Controller
 public class CategoryController {

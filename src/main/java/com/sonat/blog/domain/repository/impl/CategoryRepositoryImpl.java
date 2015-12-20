@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.sonat.blog.domain.Category;
 import com.sonat.blog.domain.repository.CategoryRepository;
 import com.sonat.blog.exception.CategoryNotFoundException;
-import com.sonat.blog.util.HibernateUtil;
+import com.sonat.blog.util.database.HibernateUtil;
 
 @Repository
 public class CategoryRepositoryImpl implements CategoryRepository {

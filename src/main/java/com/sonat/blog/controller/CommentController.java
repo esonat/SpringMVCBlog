@@ -27,7 +27,7 @@ import com.sonat.blog.exception.PostNotFoundException;
 import com.sonat.blog.service.CategoryService;
 import com.sonat.blog.service.CommentService;
 import com.sonat.blog.service.PostService;
-import com.sonat.blog.util.SecurityUtil;
+import com.sonat.blog.util.security.SecurityUtil;
 
 @Controller
 public class CommentController {

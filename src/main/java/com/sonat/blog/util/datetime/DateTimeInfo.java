@@ -1,4 +1,4 @@
-package com.sonat.blog.util;
+package com.sonat.blog.util.datetime;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -21,20 +21,15 @@ public class DateTimeInfo {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(new Date());
-		calendar.set(Calendar.HOUR,0);
-		calendar.set(Calendar.MINUTE,0);
-		calendar.set(Calendar.SECOND,0);
-	
+		
 		Date today;
 		try{
-			today=sdf.parse(new Date().toString());
-		
+			today=sdf.parse(calendar.getTime().toString());
 		}catch(ParseException e){
 			return null;
 		}
 		return today.toString();
 	}
-
 	
 	public static String getDateTimeToday(){
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -46,7 +41,7 @@ public class DateTimeInfo {
 	
 		Date today;
 		try{
-			today=sdf.parse(new Date().toString());
+			today=sdf.parse(calendar.getTime().toString());
 		
 		}catch(ParseException e){
 			return null;

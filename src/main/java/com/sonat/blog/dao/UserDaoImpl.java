@@ -6,8 +6,8 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
-import com.sonat.blog.util.HibernateUtil;
 import com.sonat.blog.domain.User;
+import com.sonat.blog.util.database.HibernateUtil;
 
 public class UserDaoImpl implements UserDao {
 

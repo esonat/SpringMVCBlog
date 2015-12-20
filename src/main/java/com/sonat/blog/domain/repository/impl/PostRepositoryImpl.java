@@ -15,7 +15,7 @@ import com.sonat.blog.domain.User;
 import com.sonat.blog.domain.repository.PostRepository;
 import com.sonat.blog.exception.PostNotFoundException;
 import com.sonat.blog.service.UserService;
-import com.sonat.blog.util.HibernateUtil;
+import com.sonat.blog.util.database.HibernateUtil;
 
 @Repository
 public class PostRepositoryImpl implements PostRepository{
