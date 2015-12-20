@@ -1,11 +1,16 @@
 package com.sonat.blog.controller;
 
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import javax.ws.rs.QueryParam;
+import com.sonat.blog.UI.model.*;
+
+import org.hibernate.loader.custom.Return;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +34,7 @@ import com.sonat.blog.service.CategoryService;
 import com.sonat.blog.service.CommentService;
 import com.sonat.blog.service.PostService;
 import com.sonat.blog.util.SecurityUtil;
+import com.sonat.blog.validator.DateQueryValidator;
 
 @Controller
 @RequestMapping("/post")
@@ -84,13 +90,18 @@ public class PostController {
 	    model.addAttribute("loggedUser",SecurityUtil.getCurrentUsername());
 	 
 	    return "addPost";
-	}
-	
+	}	
 	
 	@RequestMapping
 	public String getAllPosts(Model model,
-							  @ModelAttribute("comment") Comment comment){
-		
+							@RequestParam(value="date",required=false)DateQueryModel dateQueryModel,
+							@ModelAttribute("comment") Comment comment){
+
+@RequestParam(value="dateFrom",required=false)String dateFrom,
+//							  @RequestParam(value="dateTo",required=false)  String dateTo,
+//							  @RequestParam(value="dateQuery",required=false)DateQueryEnum dateQuery,
+							  
+				
 		Map<Post,List<Comment>> postsMap=new LinkedHashMap<Post,List<Comment>>();
 		List<Post> postList=postService.getAll();
 		

@@ -94,9 +94,15 @@
                             <button class="btn btn-default" type="button">
                                 <span class="glyphicon glyphicon-search"></span>
                         </button>
-                        </span>
+                        </span>                        
                     </div>
                     <!-- /.input-group -->
+                     <ul>
+                        	<li><a href="#">Today</a></li>
+                        	<li><a href="#">This week</a></li>
+                        	<li><a href="#">This month</a></li>
+                        	<li><a href="#">This year</a></li>
+                        </ul>
                 </div>
 
                 <!-- Blog Categories Well -->
