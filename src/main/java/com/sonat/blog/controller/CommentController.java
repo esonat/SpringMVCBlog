@@ -160,13 +160,17 @@ public class CommentController {
 		
 		if(postComment==null) return "redirect:/post";
 		
+		List<Comment> commentList=commentService.getChildCommentTree(postComment);
+		
 		String 	username=postComment.getPost().getUser().getUsername();
 		List<Category> categories=categoryService.getAllCategories();
+		
 		
 		model.addAttribute("categories",categories);
 		model.addAttribute("postID",postId);
 		model.addAttribute("username",username);
 		model.addAttribute("comment",postComment);
+		model.addAttribute("commentList",commentList);
 		model.addAttribute("loggedUser",SecurityUtil.getCurrentUsername());
 	    
 		return "comment";		

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.sonat.blog.domain.User;
 import com.sonat.blog.domain.repository.UserRepository;
+import com.sonat.blog.exception.UserNotFoundException;
 import com.sonat.blog.service.UserService;
 
 @Service
@@ -17,7 +18,8 @@ public class UserServiceImpl implements UserService {
 	public User getUserByName(String name){
 		return userRepository.getUserByName(name);
 	}
-	public User getUserByUsername(String username) {
+	public User getUserByUsername(String username) 
+	throws UserNotFoundException{
 		return userRepository.getUserByUsername(username);
 	}	
 	public List<User> getAll(){

@@ -1,5 +1,7 @@
 package com.sonat.blog.service.impl;
 
+import java.awt.datatransfer.FlavorEvent;
+import java.rmi.activation.ActivationGroupDesc.CommandEnvironment;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,8 @@ import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.Post;
 import com.sonat.blog.domain.repository.CommentRepository;
 import com.sonat.blog.domain.repository.impl.CommentRepositoryImpl;
+import com.sonat.blog.exception.CommentNotFoundException;
+import com.sonat.blog.exception.PostNotFoundException;
 import com.sonat.blog.service.CommentService;
 import com.sonat.blog.service.PostService;
 
@@ -43,7 +47,8 @@ public class CommentServiceImpl implements CommentService {
 		return commentRepository.getPostComments(postID);
 	}
 
-	public Comment getPostCommentById(int postID,int commentID) {
+	public Comment getPostCommentById(int postID,int commentID)
+	throws CommentNotFoundException,PostNotFoundException{
 		Post post=postService.getPostById(postID);
 		if(post==null) return null;
 		
@@ -113,6 +118,19 @@ public class CommentServiceImpl implements CommentService {
 		//for(Comment comment:visited) result.add(comment);
 		return visited;
 	}	  
+	
+	public List<Comment> getChildCommentTree(Comment comment){
+		//int postID=comment.getPost().getID();
+		visited=new ArrayList<Comment>();
+		List<Comment> commentList=getChildCommentsByDepth(comment.getID(),comment.getDepth()+1);
+		
+		if(commentList==null) return null;
+			
+		for(Comment child:commentList){
+			findNext(child, comment.getDepth()+1);
+		}
+		return visited;		 				
+	}
 	
 	public void findNext(Comment comment,int depth){
 		if(comment.getChildren().size()>0){

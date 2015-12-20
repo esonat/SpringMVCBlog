@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.sonat.blog.domain.Category;
 import com.sonat.blog.domain.Post;
 import com.sonat.blog.domain.repository.PostRepository;
+import com.sonat.blog.exception.PostNotFoundException;
 import com.sonat.blog.service.CategoryService;
 import com.sonat.blog.service.PostService;
 import com.sonat.blog.service.UserService;
@@ -24,7 +25,8 @@ public class PostServiceImpl implements PostService{
 		return postRepository.getAll();
 	}
 
-	public Post getPostById(int ID) {
+	public Post getPostById(int ID)
+	throws PostNotFoundException{
 		return postRepository.getPostById(ID);
 	}
 	

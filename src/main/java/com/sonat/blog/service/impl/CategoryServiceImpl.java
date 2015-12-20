@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.sonat.blog.domain.Category;
 import com.sonat.blog.domain.repository.CategoryRepository;
+import com.sonat.blog.exception.CategoryNotFoundException;
 import com.sonat.blog.service.CategoryService;
 
 @Service
@@ -14,7 +15,8 @@ public class CategoryServiceImpl implements CategoryService{
 	@Autowired
 	private CategoryRepository categoryRepository;
 	
-	public Category getCategoryById	(int categoryID){
+	public Category getCategoryById	(int categoryID)
+	throws CategoryNotFoundException{
 		return categoryRepository.getCategoryById(categoryID);
 	}
 	public Category getCategoryByName(String categoryName){

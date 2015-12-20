@@ -24,6 +24,7 @@ import com.sonat.blog.domain.Post;
 import com.sonat.blog.domain.validator.PostValidator;
 import com.sonat.blog.exception.CategoryNotFoundException;
 import com.sonat.blog.exception.PostNotFoundException;
+import com.sonat.blog.exception.UserNotFoundException;
 import com.sonat.blog.service.CategoryService;
 import com.sonat.blog.service.CommentService;
 import com.sonat.blog.service.PostService;
@@ -40,7 +41,7 @@ public class PostController {
 	private CommentService commentService;
 	@Autowired
 	private PostValidator postValidator;
-	
+		
 	@RequestMapping(value="/add", method=RequestMethod.POST)
     public String addPost(@ModelAttribute("post")Post post,
     					  Model model,
@@ -111,16 +112,18 @@ public class PostController {
 
 	@RequestMapping("/{id}")
 	public String getPostById(Model model,
-							 @PathVariable("id")int id){
+							 @PathVariable("id")int id,
+							 @ModelAttribute("comment") Comment comment){
+		
 		Post post=postService.getPostById(id);
+		//if(post==null) return "redirect:/post";
+		List<Comment> commentList=commentService.getCommentTree(post);
+		List<Category> categories=categoryService.getAllCategories();
 		
-		if(post==null) return "redirect:/post";
-		
-		String username=post.getUser().getName();
-
 		model.addAttribute("returnURL","/post/"+id);
+		model.addAttribute("categories",categories);	
 		model.addAttribute("post",post);
-		model.addAttribute("username",username);
+		model.addAttribute("comments",commentList);
 		model.addAttribute("loggedUser",SecurityUtil.getCurrentUsername());
 		
 		return "post";
@@ -193,4 +196,14 @@ public class PostController {
 		 mav.setViewName("categoryNotFound");
 		 return mav;
 	}	
+	
+	@ExceptionHandler(UserNotFoundException.class)
+	public ModelAndView handleCategoryError(HttpServletRequest req, UserNotFoundException exception) {
+		 ModelAndView mav = new ModelAndView();
+		 mav.addObject("invalidUsername", exception.getUsername());
+		 mav.addObject("exception", exception);
+		 mav.addObject("url", req.getRequestURL()+"?"+req.getQueryString());
+		 mav.setViewName("userNotFound");
+		 return mav;
+	}
 }
