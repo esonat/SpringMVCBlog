@@ -1,5 +1,7 @@
 package com.sonat.blog.domain.repository.impl;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import org.hibernate.Query;
@@ -16,6 +18,7 @@ import com.sonat.blog.domain.repository.PostRepository;
 import com.sonat.blog.exception.PostNotFoundException;
 import com.sonat.blog.service.UserService;
 import com.sonat.blog.util.database.HibernateUtil;
+import com.sonat.blog.util.datetime.DateTimeConstants;
 
 @Repository
 public class PostRepositoryImpl implements PostRepository{
@@ -105,5 +108,18 @@ public class PostRepositoryImpl implements PostRepository{
 		return query.list();
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<Post> getAllByDate(Date dateFrom, Date dateTo){
+		Session session=HibernateUtil.getSessionFactory().openSession();
+		Query query = session.createQuery("FROM Post WHERE date <=:dateTo AND date >= :dateFrom");
+		
+		query.setParameter("dateFrom",new java.sql.Date(dateFrom.getTime()));
+		query.setParameter("dateTo", new java.sql.Date(dateTo.getTime()));
+		
+		if(query.list()==null ||
+			       query.list().size()==0) return null;
+				
+		return (List<Post>)query.list();		
+	}
 	
 }

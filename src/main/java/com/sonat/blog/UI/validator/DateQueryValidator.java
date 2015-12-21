@@ -1,16 +1,7 @@
 package com.sonat.blog.UI.validator;
 
 import java.text.ParseException;
-import org.apache.commons.io.output.ThresholdingOutputStream;
-import org.hamcrest.core.Is;
-import org.hamcrest.core.IsNot;
-import org.hibernate.engine.IdentifierValue;
-import org.hibernate.stat.SecondLevelCacheStatistics;
-import org.mockito.internal.matchers.Not;
-import org.omg.PortableServer.ServantActivator;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.binding.convert.converters.StringToBigInteger;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitterReturnValueHandler;
+import java.util.Date;
 
 import com.sonat.blog.UI.model.DateQueryEnum;
 import com.sonat.blog.UI.model.DateQueryModel;
@@ -22,61 +13,61 @@ import com.sonat.blog.util.datetime.DateTimeInfo;
 import com.sonat.blog.validator.Username;
 
 public class DateQueryValidator {
-	public static String from;
-	public static String to;
+	public static Date from;
+	public static Date to;
 	
 	public static boolean setDateValues(String dateFrom,String dateTo,DateQueryEnum dateQueryEnum){
 		//IF ALL OF THEM NULL RETURN FALSE
-		if(dateFrom			== null 	
-		&& dateTo 			== null	 
-		&& dateQueryEnum	== null) 	return false;
 		
-		if(dateQueryEnum 	== null 
-		&& dateFrom			== null) 	return false;
-		
-		if(dateQueryEnum!=null 	
-		&& 	!(dateQueryEnum instanceof DateQueryEnum)) 	return false;
-		
-		if(dateQueryEnum!=null && dateQueryEnum instanceof DateQueryEnum){
-			switch (dateQueryEnum) {
-				case today:
-					from=	DateTimeInfo.getDateTimeToday();
-					to	=	DateTimeInfo.getDateTimeNow();
-				break;
-				case thisweek:
-					from=	DateTimeInfo.getDateTimeThisWeek();
-					to	=	DateTimeInfo.getDateTimeNow();
-				break;
-				case thismonth:
-					from=	DateTimeInfo.getDateTimeThisMonth();
-					to	=	DateTimeInfo.getDateTimeNow();
-				break;
-				case thisyear:
-					from=	DateTimeInfo.getDateTimeThisYear();
-					to	=	DateTimeInfo.getDateTimeNow();
-				break;
-				default:
-					break;
+		if(dateQueryEnum!=null){
+				if(dateQueryEnum instanceof DateQueryEnum){
+					switch (dateQueryEnum) {
+					case today:
+						from=	DateTimeInfo.getDateTimeToday();
+						to	=	DateTimeInfo.getDateTimeNow();
+						return true;
+					case thisweek:
+						from=	DateTimeInfo.getDateTimeThisWeek();
+						to	=	DateTimeInfo.getDateTimeNow();
+						return true;
+					case thismonth:
+						from=	DateTimeInfo.getDateTimeThisMonth();
+						to	=	DateTimeInfo.getDateTimeNow();
+						return true;
+					case thisyear:
+						from=	DateTimeInfo.getDateTimeThisYear();
+						to	=	DateTimeInfo.getDateTimeNow();
+						return true;
+					default:
+						return false;
+				}
+			}else if(!(dateQueryEnum instanceof DateQueryEnum))
+				return false;
+		}else if(dateQueryEnum==null){
+			
+			if(dateFrom==null && dateTo==null) return false;
+			if(dateFrom==null && dateTo!=null) return false;
+			
+			if(dateFrom!=null && dateTo==null){
+				Date fromValid=DateFormatValidator.Parse(dateFrom,DateTimeConstants.DATETIME_FORMAT);
+				if(fromValid==null)
+					return false;
+				
+				from	= fromValid;
+				to		= DateTimeInfo.getDateTimeNow();		
+				return true;
+			}
+			if(dateFrom!=null && dateTo!=null){
+				Date fromValid 	=	DateFormatValidator.Parse(dateFrom,DateTimeConstants.DATETIME_FORMAT);
+				Date toValid 	=	DateFormatValidator.Parse(dateTo  ,DateTimeConstants.DATETIME_FORMAT);
+			
+				if(fromValid==null || toValid==null) return false;
+				
+				from	=	fromValid;
+				to		=	toValid;
+				return true;
 			}
 		}
-		
-		if(dateFrom==null && dateTo!=null) return false;
-		if(dateFrom!=null && dateTo==null){
-			try{
-				from	= DateFormatValidator.Parse(dateFrom,DateTimeConstants.DATETIME_FORMAT);
-				to		= DateTimeInfo.getDateTimeNow();
-			}catch(ParseException e){
-				return false;
-			}			
-		}
-		if(dateFrom!=null && dateTo!=null){
-			try{
-				from	=	DateFormatValidator.Parse(dateFrom,DateTimeConstants.DATETIME_FORMAT);
-				to		=	DateFormatValidator.Parse(dateFrom,DateTimeConstants.DATETIME_FORMAT);
-			}catch(ParseException e){
-				return false;
-			}
-		}		
-		return true;
+		return false;
 	}
 }

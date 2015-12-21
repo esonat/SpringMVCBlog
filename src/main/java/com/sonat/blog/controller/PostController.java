@@ -1,5 +1,6 @@
 package com.sonat.blog.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -98,10 +99,15 @@ public class PostController {
 							@RequestParam(value="dateFrom",required=false)String dateFrom,
 							@RequestParam(value="dateTo",required=false)  String dateTo,
 							@RequestParam(value="dateQuery",required=false)DateQueryEnum dateQuery){
-//@RequestParam(value="date",required=false)DateQueryModel dateQueryModel,
-						
+
 		Map<Post,List<Comment>> postsMap=new LinkedHashMap<Post,List<Comment>>();
-		List<Post> postList=postService.getAll();
+		List<Post> postList=new ArrayList<Post>();
+				
+		boolean isDateParamsValid=DateQueryValidator.setDateValues(dateFrom, dateTo, dateQuery);
+		if(!isDateParamsValid) 
+			postList=postService.getAll();
+		else
+			postList=postService.getAllByDate(DateQueryValidator.from, DateQueryValidator.to);
 		
 		if(postList!=null){
 			for(Post post:postList){
