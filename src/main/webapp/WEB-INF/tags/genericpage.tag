@@ -98,13 +98,12 @@
                     </div>
                     <!-- /.input-group -->
                      <ul>
-                        	<li><a href="#">Today</a></li>
-                        	<li><a href="#">This week</a></li>
-                        	<li><a href="#">This month</a></li>
-                        	<li><a href="#">This year</a></li>
+                        	<li><a href="/blog/post?dateQuery=today">Today</a></li>
+                        	<li><a href="/blog/post?dateQuery=thisweek">This week</a></li>
+                        	<li><a href="/blog/post?dateQuery=thismonth">This month</a></li>
+                        	<li><a href="/blog/post?dateQuery=thisyear">This year</a></li>
                         </ul>
                 </div>
-
                 <!-- Blog Categories Well -->
                 <div class="well">
                     <h4>Blog Categories</h4>

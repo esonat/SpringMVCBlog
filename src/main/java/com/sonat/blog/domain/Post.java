@@ -14,6 +14,11 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Store;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -23,8 +28,9 @@ import java.util.Set;
 //@Size(min=5,max=500,message="{Size.Post.text.validation}"
 
 @Entity
+@Indexed
 @Table(name="post",catalog="blogDB")
-public class Post {
+public class Post extends ContentObject{
 	private Category category;
 	private Set<Comment> comments;
 	private Date date;
@@ -72,6 +78,7 @@ public class Post {
 		return ID;
 	}
 	
+	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
 	@Column(name="TEXT",length=10000,nullable=false)
 	public String getText() {
 		return text;
@@ -102,4 +109,10 @@ public class Post {
 	public void setUser(User user) {
 		this.user = user;
 	}	
+	 @Override
+     public String toString() {
+        StringBuilder stringBuilder = new StringBuilder("Id: ").append(this.getID()).append(" | Text:").append(this.getText()).append(" | Date:").append(this.getDate().toString());
+         
+        return stringBuilder.toString();
+     }
 }

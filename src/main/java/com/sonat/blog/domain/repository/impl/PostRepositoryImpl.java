@@ -6,6 +6,9 @@ import java.util.Date;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.Search;
+import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,6 +30,14 @@ public class PostRepositoryImpl implements PostRepository{
 	
 	public PostRepositoryImpl(){
 	}
+	
+	public void doIndex() throws InterruptedException {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        FullTextSession fullTextSession = Search.getFullTextSession(session);
+        fullTextSession.createIndexer().startAndWait();
+         
+        fullTextSession.close();
+    }
 	
 	public void addPost(Post post,Category category) {
 		Session session=HibernateUtil.getSessionFactory().openSession();
@@ -120,6 +131,23 @@ public class PostRepositoryImpl implements PostRepository{
 			       query.list().size()==0) return null;
 				
 		return (List<Post>)query.list();		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Post> searchPosts(String keyword){
+		Session session=HibernateUtil.getSessionFactory().openSession();
+		FullTextSession fullTextSession = Search.getFullTextSession(session);
+     
+        QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(Post.class).get();
+        org.apache.lucene.search.Query luceneQuery = queryBuilder.keyword().onFields("text").matching(keyword).createQuery();
+ 
+        // wrap Lucene query in a javax.persistence.Query
+        org.hibernate.Query fullTextQuery = fullTextSession.createFullTextQuery(luceneQuery, Post.class);
+         
+        List<Post> list = fullTextQuery.list();
+         
+        fullTextSession.close();
+        return list;
 	}
 	
 }

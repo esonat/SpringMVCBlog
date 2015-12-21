@@ -5,6 +5,9 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.Search;
+import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.stereotype.Repository;
 import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.Post;
@@ -189,4 +192,30 @@ public class CommentRepositoryImpl implements CommentRepository {
 		Post post=comment.getPost();
 		return post;
 	}
+
+	public List<Comment> searchComments(String keyword) {
+		Session session=HibernateUtil.getSessionFactory().openSession();
+		FullTextSession fullTextSession = Search.getFullTextSession(session);
+     
+        QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(Comment.class).get();
+        org.apache.lucene.search.Query luceneQuery = queryBuilder.keyword().onFields("text").matching(keyword).createQuery();
+ 
+        // wrap Lucene query in a javax.persistence.Query
+        org.hibernate.Query fullTextQuery = fullTextSession.createFullTextQuery(luceneQuery, Comment.class);
+         
+        List<Comment> list = fullTextQuery.list();
+         
+        fullTextSession.close();
+        return list;
+	}
+
+	public void doIndex() throws InterruptedException {
+		 Session session = HibernateUtil.getSessionFactory().openSession();
+	        FullTextSession fullTextSession = Search.getFullTextSession(session);
+	        fullTextSession.createIndexer().startAndWait();
+	         
+	        fullTextSession.close();
+
+	}
+	
 }

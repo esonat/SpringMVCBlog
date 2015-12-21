@@ -13,4 +13,6 @@ public interface PostRepository {
 	Post 		getPostById(int ID); 
 	List<Post> 	getPostsByCategory(int categoryID);
 	List<Post> 	getPostsByUsername(String username);
+	List<Post> searchPosts(String keyword);
+	void 		doIndex() throws InterruptedException;
 }
