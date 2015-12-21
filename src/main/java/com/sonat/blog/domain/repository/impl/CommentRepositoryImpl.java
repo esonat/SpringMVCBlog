@@ -7,6 +7,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
+import org.hibernate.search.SearchException;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.stereotype.Repository;
 import com.sonat.blog.domain.Comment;
@@ -193,7 +194,7 @@ public class CommentRepositoryImpl implements CommentRepository {
 		return post;
 	}
 
-	public List<Comment> searchComments(String keyword) {
+	public List<Comment> searchComments(String keyword) throws SearchException{
 		Session session=HibernateUtil.getSessionFactory().openSession();
 		FullTextSession fullTextSession = Search.getFullTextSession(session);
      

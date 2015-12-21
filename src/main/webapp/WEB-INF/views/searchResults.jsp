@@ -29,7 +29,7 @@
     </c:forEach>
     <c:forEach items="${commentList}" var="comment">
 		    <p>${comment.text}</p>
-	 		<small><span class="glyphicon glyphicon-time"></span>${comment.date}</small>
+	 		<small><span class="glyphicon glyphicon-time"></span>${comment.datetime}</small>
     </c:forEach>    
         </jsp:body>
 </t:genericpage>

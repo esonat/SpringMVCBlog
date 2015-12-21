@@ -28,16 +28,19 @@ public class SearchController {
 							 Model model){
 		
 		List<? extends ContentObject> results=searchService.getResults(keyword);
+		if(results==null) return "searchResults";
+		
 		List<Post> postList			=	new ArrayList<Post>();
 		List<Comment> commentList	=	new ArrayList<Comment>();
 		
-		for(Object item:results){
-				postList.add((Post)item); 
-			//if(item instanceof Comment) commentList.add((Comment)item); 
+		for(ContentObject item:results){
+			if(item instanceof Post)	postList.add((Post)item); 
+			if(item instanceof Comment) commentList.add((Comment)item); 
 		}
+		
 		model.addAttribute("postList", postList);
 		model.addAttribute("commentList", commentList);
-		//model.addAttribute("results",results);
+		
 		return "searchResults";
 	}
 }
