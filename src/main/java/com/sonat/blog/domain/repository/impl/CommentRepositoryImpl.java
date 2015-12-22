@@ -5,12 +5,16 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.Search;
+import org.hibernate.search.SearchException;
+import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.stereotype.Repository;
 import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.Post;
 import com.sonat.blog.domain.repository.CommentRepository;
 import com.sonat.blog.exception.CommentNotFoundException;
-import com.sonat.blog.util.HibernateUtil;
+import com.sonat.blog.util.database.HibernateUtil;
 
 @Repository
 public class CommentRepositoryImpl implements CommentRepository {
@@ -89,7 +93,20 @@ public class CommentRepositoryImpl implements CommentRepository {
 		if(query.list().size()==0) return null;
 		
 		return (List<Comment>)query.list();		
-	}	
+	}
+	
+	public Comment getChildCommentById(int postID,int commentID,int childCommentID){
+		Session session	=	HibernateUtil.getSessionFactory().openSession();
+		Query query		=	session.createQuery("FROM Comment C WHERE C.post.ID= :postID AND C.parent.ID= :commentID AND C.ID= :childCommentID order by C.datetime asc");
+		query.setParameter("postID", postID);
+		query.setParameter("commentID", commentID);
+		query.setParameter("childCommentID", childCommentID);
+		
+		if(query.list().size()==0
+		|| query.list()==null) throw new CommentNotFoundException(childCommentID);
+
+		return (Comment)query.uniqueResult();
+	}
 	
 	@SuppressWarnings("unchecked")
 	public List<Comment> getChildComments(int commentID) {
@@ -176,4 +193,30 @@ public class CommentRepositoryImpl implements CommentRepository {
 		Post post=comment.getPost();
 		return post;
 	}
+
+	public List<Comment> searchComments(String keyword) throws SearchException{
+		Session session=HibernateUtil.getSessionFactory().openSession();
+		FullTextSession fullTextSession = Search.getFullTextSession(session);
+     
+        QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(Comment.class).get();
+        org.apache.lucene.search.Query luceneQuery = queryBuilder.keyword().onFields("text").matching(keyword).createQuery();
+ 
+        // wrap Lucene query in a javax.persistence.Query
+        org.hibernate.Query fullTextQuery = fullTextSession.createFullTextQuery(luceneQuery, Comment.class);
+         
+        List<Comment> list = fullTextQuery.list();
+         
+        fullTextSession.close();
+        return list;
+	}
+
+	public void doIndex() throws InterruptedException {
+		 Session session = HibernateUtil.getSessionFactory().openSession();
+	        FullTextSession fullTextSession = Search.getFullTextSession(session);
+	        fullTextSession.createIndexer().startAndWait();
+	         
+	        fullTextSession.close();
+
+	}
+	
 }

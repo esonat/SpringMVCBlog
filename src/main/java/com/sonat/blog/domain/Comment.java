@@ -16,10 +16,16 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Store;
 
 @Entity
+@Indexed
 @Table(name="comment",catalog="blogDB")
-public class Comment{
+public class Comment extends ContentObject{
 	private Set<Comment> children;
 	private Date datetime;
 	private int depth;
@@ -87,6 +93,7 @@ public class Comment{
 	 //@JoinColumn(name="PARENT_ID", insertable = false, updatable = false)
 	//@ManyToOne(cascade={CascadeType.ALL})
 	
+	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
 	@Column(name="TEXT",nullable=false)
 	public String getText() {
 		return text;

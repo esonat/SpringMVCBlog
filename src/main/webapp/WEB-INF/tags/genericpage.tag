@@ -3,6 +3,8 @@
 <%@attribute name="header" fragment="true" %>
 <%@attribute name="footer" fragment="true" %>
 <%@attribute name="categories" fragment="true"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
 <html>
 <head>
 	<meta charset="utf-8">
@@ -89,16 +91,23 @@
                 <div class="well">
                     <h4>Blog Search</h4>
                     <div class="input-group">
-                        <input type="text" class="form-control">
+                    <form action="/blog/search?keyword=<% request.getParameter("text"); %>" method="GET">
+                        <input type="text" class="form-control" id="keyword" name="keyword"/>
                         <span class="input-group-btn">
                             <button class="btn btn-default" type="button">
                                 <span class="glyphicon glyphicon-search"></span>
                         </button>
-                        </span>
+                        </span>                        
+                     </form>
                     </div>
                     <!-- /.input-group -->
+                     <ul>
+                        	<li><a href="/blog/post?dateQuery=today">Today</a></li>
+                        	<li><a href="/blog/post?dateQuery=thisweek">This week</a></li>
+                        	<li><a href="/blog/post?dateQuery=thismonth">This month</a></li>
+                        	<li><a href="/blog/post?dateQuery=thisyear">This year</a></li>
+                        </ul>
                 </div>
-
                 <!-- Blog Categories Well -->
                 <div class="well">
                     <h4>Blog Categories</h4>

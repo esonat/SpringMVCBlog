@@ -20,5 +20,5 @@ public interface CommentService {
 	List<Comment>   getCommentsByDepth	(int postID,int depth);
 	List<Comment>   getChildCommentsByDepth(int commentID,int depth);
 	public List<Comment> getCommentTree(Post post);
-		
+	List<Comment> getChildCommentTree(Comment comment);
 }

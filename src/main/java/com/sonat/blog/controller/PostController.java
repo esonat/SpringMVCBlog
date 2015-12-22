@@ -1,11 +1,18 @@
 package com.sonat.blog.controller;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import javax.ws.rs.QueryParam;
+import com.sonat.blog.UI.model.*;
+import com.sonat.blog.UI.validator.DateQueryValidator;
+
+import org.hibernate.loader.custom.Return;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,10 +31,11 @@ import com.sonat.blog.domain.Post;
 import com.sonat.blog.domain.validator.PostValidator;
 import com.sonat.blog.exception.CategoryNotFoundException;
 import com.sonat.blog.exception.PostNotFoundException;
+import com.sonat.blog.exception.UserNotFoundException;
 import com.sonat.blog.service.CategoryService;
 import com.sonat.blog.service.CommentService;
 import com.sonat.blog.service.PostService;
-import com.sonat.blog.util.SecurityUtil;
+import com.sonat.blog.util.security.SecurityUtil;
 
 @Controller
 @RequestMapping("/post")
@@ -40,7 +48,7 @@ public class PostController {
 	private CommentService commentService;
 	@Autowired
 	private PostValidator postValidator;
-	
+		
 	@RequestMapping(value="/add", method=RequestMethod.POST)
     public String addPost(@ModelAttribute("post")Post post,
     					  Model model,
@@ -83,15 +91,23 @@ public class PostController {
 	    model.addAttribute("loggedUser",SecurityUtil.getCurrentUsername());
 	 
 	    return "addPost";
-	}
-	
+	}	
 	
 	@RequestMapping
 	public String getAllPosts(Model model,
-							  @ModelAttribute("comment") Comment comment){
-		
+							@ModelAttribute("comment") Comment comment,
+							@RequestParam(value="dateFrom",required=false)String dateFrom,
+							@RequestParam(value="dateTo",required=false)  String dateTo,
+							@RequestParam(value="dateQuery",required=false)DateQueryEnum dateQuery){
+
 		Map<Post,List<Comment>> postsMap=new LinkedHashMap<Post,List<Comment>>();
-		List<Post> postList=postService.getAll();
+		List<Post> postList=new ArrayList<Post>();
+				
+		boolean isDateParamsValid=DateQueryValidator.setDateValues(dateFrom, dateTo, dateQuery);
+		if(!isDateParamsValid) 
+			postList=postService.getAll();
+		else
+			postList=postService.getAllByDate(DateQueryValidator.from, DateQueryValidator.to);
 		
 		if(postList!=null){
 			for(Post post:postList){
@@ -111,16 +127,18 @@ public class PostController {
 
 	@RequestMapping("/{id}")
 	public String getPostById(Model model,
-							 @PathVariable("id")int id){
+							 @PathVariable("id")int id,
+							 @ModelAttribute("comment") Comment comment){
+		
 		Post post=postService.getPostById(id);
+		//if(post==null) return "redirect:/post";
+		List<Comment> commentList=commentService.getCommentTree(post);
+		List<Category> categories=categoryService.getAllCategories();
 		
-		if(post==null) return "redirect:/post";
-		
-		String username=post.getUser().getName();
-
 		model.addAttribute("returnURL","/post/"+id);
+		model.addAttribute("categories",categories);	
 		model.addAttribute("post",post);
-		model.addAttribute("username",username);
+		model.addAttribute("comments",commentList);
 		model.addAttribute("loggedUser",SecurityUtil.getCurrentUsername());
 		
 		return "post";
@@ -193,4 +211,14 @@ public class PostController {
 		 mav.setViewName("categoryNotFound");
 		 return mav;
 	}	
+	
+	@ExceptionHandler(UserNotFoundException.class)
+	public ModelAndView handleCategoryError(HttpServletRequest req, UserNotFoundException exception) {
+		 ModelAndView mav = new ModelAndView();
+		 mav.addObject("invalidUsername", exception.getUsername());
+		 mav.addObject("exception", exception);
+		 mav.addObject("url", req.getRequestURL()+"?"+req.getQueryString());
+		 mav.setViewName("userNotFound");
+		 return mav;
+	}
 }

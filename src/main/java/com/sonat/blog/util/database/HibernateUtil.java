@@ -1,4 +1,4 @@
-package com.sonat.blog.util;
+package com.sonat.blog.util.database;
  
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;

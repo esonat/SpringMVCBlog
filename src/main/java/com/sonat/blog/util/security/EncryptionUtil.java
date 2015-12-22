@@ -1,4 +1,4 @@
-package com.sonat.blog.util;
+package com.sonat.blog.util.security;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

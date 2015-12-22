@@ -24,7 +24,7 @@
     <jsp:body>
    <div class="form-group">
    		<p>${post.text}</p>
-	    <small>${username} - <span class="glyphicon glyphicon-time"></span> ${post.date}</small>
+	    <small>${post.user.username} - <span class="glyphicon glyphicon-time"></span> ${post.date}</small>
 	    	<sec:authorize access="hasRole('ROLE_ADMIN')">
 			  	<spring:url value="/post/${post.ID}/delete" var="deleteUrl" />
 			  	<form action="${deleteUrl}" method="POST">
@@ -32,6 +32,63 @@
 					<input type="hidden" name="${_csrf.parameterName}"   value="${_csrf.token}" />
 				</form>
 			</sec:authorize>
+							    		
+			<!-- ADD COMMENT TO POST -->	
+			<div class="well">
+				<form:form action="/blog/post/${post.ID}/comment/add?returnURL=${returnURL}" modelAttribute="comment" method="POST">
+				  <h4>Leave a Comment:</h4>
+                   <form:errors path="text" cssClass="alert alert-danger" element="div"/>
+						<table>
+						<tr>
+							<td><form:input class="form-control comment" type="text" id="text" path="text" size="300" name="text" placeholder="Comment..."/></td>
+						</tr>
+						</table>
+					</form:form>
+              </div>
+              <!-- COMMENTS -->
+              	<c:forEach items="${comments}" var="comment">
+					<div style="margin-left:${comment.depth*50};">
+						<!-- COMMENT TEXT -->
+						<p>${comment.text}</p>
+						<!-- COMMENT DATETIME -->
+						<small><span class="glyphicon glyphicon-time"></span> ${comment.datetime}</small>
+						 	<sec:authorize access="hasRole('ROLE_ADMIN')">
+									<!-- IF POST COMMENT -->
+									<c:if test="${comment.depth==0}">
+								  		<spring:url value="/post/${post.ID}/comment/${comment.ID}/delete?returnURL=${returnURL}" var="deleteCommentUrl" />
+									</c:if>				
+									<!-- IF CHILD -->		 
+									<c:if test="${comment.depth!=0}">
+								  		<spring:url value="/post/${post.ID}/comment/${comment.parent.ID}/comment/${comment.ID}/delete?returnURL=${returnURL}" var="deleteCommentUrl" />
+									</c:if>						 
+								  	<form action="${deleteCommentUrl}" method="POST">
+									<table>
+										<tr>
+											<td><button style="font-size:10px;" class="btn btn-danger">Delete</button></td>
+											<td><input type="hidden" name="${_csrf.parameterName}"   value="${_csrf.token}" /></td>
+										</tr>
+									</table>
+									</form>	
+							</sec:authorize>
+							
+									<c:if test="${comment.depth==0}">
+									  	<spring:url value="/post/${post.ID}/comment/${comment.ID}/add?returnURL=${returnURL}" var="addCommentUrl" />
+									</c:if>				
+									<!-- IF CHILD -->		 
+									<c:if test="${comment.depth!=0}">
+								  		<spring:url value="/post/${post.ID}/comment/${comment.parent.ID }/comment/${comment.ID}/add?returnURL=${returnURL}" var="addCommentUrl" />
+									</c:if>
+																													
+									<form:form action="/blog/post/${post.ID}/comment/${comment.ID}/comment/add?returnURL=${returnURL}" modelAttribute="comment" method="POST">
+									    <form:errors path="text" cssClass="alert alert-danger" element="div"/>
+										<table>
+										<tr>
+											<td><form:input class="comment form-control" type="text" id="text" path="text" size="300" name="text" placeholder="Comment..."/></td>
+										</tr>
+										</table>
+									</form:form>		
+							</div>
+					</c:forEach>
 	    <hr></hr>
 	</div>
     </jsp:body>

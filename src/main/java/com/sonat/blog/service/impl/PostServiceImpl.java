@@ -1,5 +1,6 @@
 package com.sonat.blog.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.sonat.blog.domain.Category;
 import com.sonat.blog.domain.Post;
 import com.sonat.blog.domain.repository.PostRepository;
+import com.sonat.blog.exception.PostNotFoundException;
 import com.sonat.blog.service.CategoryService;
 import com.sonat.blog.service.PostService;
 import com.sonat.blog.service.UserService;
@@ -23,8 +25,13 @@ public class PostServiceImpl implements PostService{
 	public List<Post> getAll() {
 		return postRepository.getAll();
 	}
+	
+	public List<Post> getAllByDate(Date dateFrom,Date dateTo) {
+		return postRepository.getAllByDate(dateFrom,dateTo);
+	} 
 
-	public Post getPostById(int ID) {
+	public Post getPostById(int ID)
+	throws PostNotFoundException{
 		return postRepository.getPostById(ID);
 	}
 	
