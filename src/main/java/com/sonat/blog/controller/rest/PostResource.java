@@ -43,13 +43,12 @@ public class PostResource {
 	private PostService postService;
 	@Autowired
 	private CategoryService categoryService;
-	
-	
+		
 	@POST
 	@Path("/post/add")
 	@Consumes("application/json")
     public Response addPost(Post post,
-    					  @QueryParam("categoryName")String categoryName){
+    					   @QueryParam("categoryName")String categoryName){
 		
 		try{
 			Category category=categoryService.getCategoryByName(categoryName);
