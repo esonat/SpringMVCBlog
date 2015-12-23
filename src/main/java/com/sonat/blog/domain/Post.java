@@ -13,13 +13,14 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.Store;
-
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.util.Date;
@@ -27,10 +28,12 @@ import java.util.Set;
 //uniqueConstraints={@UniqueConstraint(columnNames="TEXT")})
 //@Size(min=5,max=500,message="{Size.Post.text.validation}"
 
+@SuppressWarnings("serial")
 @Entity
 @Indexed
 @Table(name="post",catalog="blogDB")
-public class Post extends ContentObject{
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+public class Post extends ContentObject implements DomainObject {
 	private Category category;
 	private Set<Comment> comments;
 	private Date date;

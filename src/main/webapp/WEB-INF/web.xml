@@ -3,49 +3,27 @@
 			xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
 		 						 http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 
-<!-- <servlet> -->
-<!-- 	<servlet-name>DispatcherServlet</servlet-name> -->
-<!-- 	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class> -->
-<!-- 	<init-param> -->
-<!-- 		<param-name>contextConfigLocation</param-name> -->
-<!-- 		<param-value>/WEB-INF/spring/webcontext/DispatcherServlet-context.xml</param-value> -->
-<!-- 	</init-param> -->
-<!-- </servlet> -->
-<!-- <servlet-mapping> -->
-<!-- 	<servlet-name>DispatcherServlet</servlet-name> -->
-<!-- 	<url-pattern>/</url-pattern> -->
-<!-- </servlet-mapping> -->
-<!-- </web-app> -->
+	
+	 <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath*:META-INF/spring/spring-master.xml</param-value>
+    </context-param>
 
-
-<display-name>Spring Application</display-name>
-
-	<!-- Spring MVC -->
-	<servlet>
-		<servlet-name>DispatcherServlet</servlet-name>
-		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-	   <init-param>
-          <param-name>readonly</param-name>
-          <param-value>false</param-value>
-        </init-param>
-	<load-on-startup>1</load-on-startup>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>DispatcherServlet</servlet-name>
-		<url-pattern>/</url-pattern>
-	</servlet-mapping>
-	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
-	<!-- REST LISTENER -->
-	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>
-					/WEB-INF/spring/webcontext/blog-security.xml,
-					/WEB-INF/spring/webcontext/blog-database.xml
-		</param-value>
-	</context-param>
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+	
 	<filter>
+        <filter-name>OpenEntityManagerInViewFilter</filter-name>
+        <filter-class>org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-class>
+    </filter>
+    
+    <filter-mapping>
+        <filter-name>OpenEntityManagerInViewFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+	
+		<filter>
 		<filter-name>springSecurityFilterChain</filter-name>
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
 	</filter>
@@ -64,6 +42,34 @@
 	  <url-pattern>/*</url-pattern>
 	</filter-mapping>
 	
-<!--  FILTER METHODS -->
-		
+	<servlet>
+        <servlet-name>blogDispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath*:WEB-INF/spring/spring-web-master.xml</param-value>
+        </init-param>
+         <init-param>
+          <param-name>readonly</param-name>
+          <param-value>false</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>blogDispatcher</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+	
+	
+	
+	<!--  
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+					/WEB-INF/spring/webcontext/blog-security.xml,
+					/WEB-INF/spring/webcontext/blog-database.xml
+		</param-value>
+	</context-param>
+	-->
 </web-app>

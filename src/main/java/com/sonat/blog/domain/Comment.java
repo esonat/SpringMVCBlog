@@ -14,6 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
+
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.search.annotations.Analyze;
@@ -22,10 +24,12 @@ import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.Store;
 
+@SuppressWarnings("serial")
 @Entity
 @Indexed
 @Table(name="comment",catalog="blogDB")
-public class Comment extends ContentObject{
+public class Comment  extends ContentObject implements DomainObject{
+	
 	private Set<Comment> children;
 	private Date datetime;
 	private int depth;
@@ -33,7 +37,8 @@ public class Comment extends ContentObject{
 	private Comment parent;
 	private Post post;
 	private String text;
-	
+    private Integer version;
+
 	public Comment(){
 		super();
 	}
@@ -135,4 +140,12 @@ public class Comment extends ContentObject{
 	public void setText(String text) {
 		this.text = text;
 	}
+	@Version
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
 }

@@ -18,10 +18,11 @@ import com.sonat.blog.validator.Name;
 import com.sonat.blog.validator.Username;
 
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name="user",catalog="blogDB",uniqueConstraints={
 @UniqueConstraint(columnNames="NAME")})
-public class User {
+public class User implements DomainObject{
 	@Pattern(regexp="[a-zA-Z]+",message="{Pattern.User.Name.validation}")
 	@Name
 	private String name;

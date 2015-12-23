@@ -13,10 +13,11 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
+
+@SuppressWarnings("serial")
 @Entity
 @Table(name="user_roles",catalog="blogDB")
-public class UserRole {
-	
+public class UserRole implements DomainObject{
 	private Integer userRoleId;
 	private User user;
 	private String role;

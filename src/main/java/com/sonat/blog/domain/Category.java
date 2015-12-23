@@ -11,17 +11,21 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.persistence.Version;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name="category",catalog="blogDB",
 uniqueConstraints={@UniqueConstraint(columnNames="NAME")})
-public class Category {
+public class Category implements DomainObject{
+	
 	private int ID;
 	private String name;
 	private Set<Post> posts=new HashSet<Post>();
-	
+    private Integer version;
+
 	public Category(){
 		super();
 	}
@@ -60,4 +64,12 @@ public class Category {
 	public void setPosts(Set<Post> posts) {
 		this.posts = posts;
 	}
+	@Version
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
 }
