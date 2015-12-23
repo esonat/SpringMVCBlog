@@ -13,6 +13,7 @@ import com.sonat.blog.UI.model.*;
 import com.sonat.blog.UI.validator.DateQueryValidator;
 
 import org.hibernate.loader.custom.Return;
+import org.infinispan.io.MarshalledValueByteStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -50,26 +51,25 @@ public class PostController {
 	private PostValidator postValidator;
 		
 	@RequestMapping(value="/add", method=RequestMethod.POST)
-    public String addPost(@ModelAttribute("post")Post post,
+    public String addPost(@ModelAttribute("post")@Valid Post post,
     					  Model model,
     					  @RequestParam(value="categoryName")String categoryName,
     					  @RequestParam("returnURL")String returnURL,
     					  BindingResult result,
     					  HttpServletRequest request,
-    					  HttpServletResponse response){
+    					  HttpServletResponse response,
+    					  RedirectAttributes redir){
 		
-       // if(result.hasErrors()) return "posts";
 		postValidator.validate(post, result);
-
-        if (result.hasErrors()){
-    		return "redirect:"+returnURL;    
-        }
-        else {
+        
+		if(result.hasErrors()) {
+			return "redirect:"+returnURL;
+		}
+		else{
         	Category category=categoryService.getCategoryByName(categoryName);
          	postService.addPost(post,category);
+         	return "redirect:/post"; 
         }
-    	
-        return "redirect:/post"; 
     }
 	@RequestMapping(value = "/{postId}/delete", method = RequestMethod.POST)
 	public String deletePost(final RedirectAttributes redirectAttributes, @PathVariable("postId") int postId,
@@ -80,17 +80,19 @@ public class PostController {
 	}		
 	
 	@RequestMapping(value="/add", method=RequestMethod.GET)
-    public String getAddPostForm(@ModelAttribute("post") Post post,
+    public ModelAndView getAddPostForm(@ModelAttribute("post") Post post,
     							 Model model,
-    							 BindingResult result){
+    							 BindingResult result,
+    							 RedirectAttributes redir){
+		ModelAndView mav=new ModelAndView();
 		
 		List<Category> categories=categoryService.getAllCategories();
-		
-		model.addAttribute("returnURL","/post/add");
-		model.addAttribute("categories",categories);
-	    model.addAttribute("loggedUser",SecurityUtil.getCurrentUsername());
-	 
-	    return "addPost";
+		mav.addObject("returnURL","/post/add");
+		mav.addObject("categories",categories);
+		mav.addObject("loggedUser",SecurityUtil.getCurrentUsername());
+		mav.setViewName("addPost");
+	    
+		return mav;
 	}	
 	
 	@RequestMapping

@@ -35,7 +35,7 @@ public class Post extends ContentObject{
 	private Set<Comment> comments;
 	private Date date;
 	private int ID;
-	@Size(min=5,max=10000,message="{Size.Post.text.validation}")
+	@Size(min=5,max=1000000,message="{Size.Post.text.validation}")
 	private String text;
 	private User user;
 	

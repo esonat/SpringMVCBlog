@@ -21,7 +21,7 @@ public class PostValidator implements Validator{
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors,"text","error.text","Text is required");
 		Post post=(Post)target;
 		if(post.getText().length()<5
-		|| post.getText().length()>10000)
+		|| post.getText().length()>1000000)
 			errors.rejectValue("text","Size.Post.text.validation");
 		
 		if(postService.getAll()!=null){
