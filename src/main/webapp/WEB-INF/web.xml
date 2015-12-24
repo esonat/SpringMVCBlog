@@ -10,8 +10,8 @@
 	 <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath*:META-INF/spring/spring-master.xml,
-        						/WEB-INF/spring/spring-web-blog-database.xml,
-                    			/WEB-INF/spring/spring-web-security.xml</param-value>
+                    			/WEB-INF/spring/spring-web-security.xml,
+                    			/WEB-INF/spring/spring-web-blog-database.xml</param-value>
     </context-param>
 
     <listener>
