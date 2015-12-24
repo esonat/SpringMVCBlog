@@ -6,9 +6,9 @@ import java.util.Date;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.search.FullTextSession;
-import org.hibernate.search.Search;
-import org.hibernate.search.query.dsl.QueryBuilder;
+//import org.hibernate.search.FullTextSession;
+//import org.hibernate.search.Search;
+//import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,14 +31,14 @@ public class PostRepositoryImpl implements PostRepository{
 	public PostRepositoryImpl(){
 	}
 	
-	public void doIndex() throws InterruptedException {
+	/*public void doIndex() throws InterruptedException {
         Session session = HibernateUtil.getSessionFactory().openSession();
         FullTextSession fullTextSession = Search.getFullTextSession(session);
         fullTextSession.createIndexer().startAndWait();
          
         fullTextSession.close();
     }
-	
+	*/
 	public void addPost(Post post,Category category) {
 		Session session=HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
@@ -88,6 +88,20 @@ public class PostRepositoryImpl implements PostRepository{
 		return list;
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<Post> getAllByDate(Date dateFrom, Date dateTo){
+		Session session=HibernateUtil.getSessionFactory().openSession();
+		Query query = session.createQuery("FROM Post WHERE date <=:dateTo AND date >= :dateFrom");
+		
+		query.setParameter("dateFrom",new java.sql.Date(dateFrom.getTime()));
+		query.setParameter("dateTo", new java.sql.Date(dateTo.getTime()));
+		
+		if(query.list()==null ||
+			       query.list().size()==0) return null;
+				
+		return (List<Post>)query.list();		
+	}
+
 	public Post getPostById(int ID) {
 		Session session=HibernateUtil.getSessionFactory().openSession();
 		Query query=session.createQuery("FROM Post P WHERE P.ID= :postID");
@@ -110,7 +124,7 @@ public class PostRepositoryImpl implements PostRepository{
 			
 		return (List<Post>)query.list();
 	}
-
+	
 	@SuppressWarnings("unchecked")
 	public List<Post> getPostsByUsername(String username) {
 		Session session=HibernateUtil.getSessionFactory().openSession();
@@ -119,21 +133,7 @@ public class PostRepositoryImpl implements PostRepository{
 		return query.list();
 	}
 	
-	@SuppressWarnings("unchecked")
-	public List<Post> getAllByDate(Date dateFrom, Date dateTo){
-		Session session=HibernateUtil.getSessionFactory().openSession();
-		Query query = session.createQuery("FROM Post WHERE date <=:dateTo AND date >= :dateFrom");
-		
-		query.setParameter("dateFrom",new java.sql.Date(dateFrom.getTime()));
-		query.setParameter("dateTo", new java.sql.Date(dateTo.getTime()));
-		
-		if(query.list()==null ||
-			       query.list().size()==0) return null;
-				
-		return (List<Post>)query.list();		
-	}
-	
-	@SuppressWarnings("unchecked")
+	/*@SuppressWarnings("unchecked")
 	public List<Post> searchPosts(String keyword){
 		Session session=HibernateUtil.getSessionFactory().openSession();
 		FullTextSession fullTextSession = Search.getFullTextSession(session);
@@ -148,6 +148,6 @@ public class PostRepositoryImpl implements PostRepository{
          
         fullTextSession.close();
         return list;
-	}
+	}*/
 	
 }

@@ -45,18 +45,19 @@
             <value>5000000</value>
         </property>
     </bean>
-
+<!-- 
     <context:component-scan base-package="com.sonat.blog.controller.rest"/>
+-->
 <!-- 
     <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
 -->
     <!--
     <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/>
     --> 
-
+<!-- 
     <bean id="jaxbView" class="org.springframework.web.servlet.view.xml.MarshallingView">
         <constructor-arg ref="jaxbMarshaller"/>
-    </bean>
+    </bean> -->
 
     <!-- JAXB2 marshaller. Automagically turns beans into xml -->
 <!--     

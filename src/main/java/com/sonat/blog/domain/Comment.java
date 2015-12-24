@@ -15,13 +15,17 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
-
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.Cascade;
-import org.hibernate.search.annotations.Analyze;
+
+import org.hibernate.search.annotations.Boost;
+import org.hibernate.search.annotations.ContainedIn;
+import org.hibernate.search.annotations.DateBridge;
+import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Resolution;
 import org.hibernate.search.annotations.Store;
 
 @SuppressWarnings("serial")
@@ -98,7 +102,7 @@ public class Comment  extends ContentObject implements DomainObject{
 	 //@JoinColumn(name="PARENT_ID", insertable = false, updatable = false)
 	//@ManyToOne(cascade={CascadeType.ALL})
 	
-	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
+	@Field(index = Index.TOKENIZED, store = Store.NO)
 	@Column(name="TEXT",nullable=false)
 	public String getText() {
 		return text;

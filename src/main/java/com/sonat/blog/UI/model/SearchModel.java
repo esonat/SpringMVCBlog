@@ -1,9 +1,6 @@
 package com.sonat.blog.UI.model;
 
 import java.util.Date;
-
-import org.hibernate.type.StringClobType;
-
 import com.sonat.blog.domain.User;
 
 public class SearchModel {

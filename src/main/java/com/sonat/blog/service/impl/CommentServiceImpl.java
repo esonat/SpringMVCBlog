@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.sonat.blog.dao.CommentDao;
+import com.sonat.blog.dao.PostDao;
 import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.Post;
 import com.sonat.blog.domain.repository.CommentRepository;
@@ -13,12 +16,14 @@ import com.sonat.blog.exception.PostNotFoundException;
 import com.sonat.blog.service.CommentService;
 import com.sonat.blog.service.PostService;
 
-@Service
+@Service(value = "commentService")
 public class CommentServiceImpl implements CommentService {
 
-	@Autowired
+	/*@Autowired
 	private CommentRepository commentRepository;
 	@Autowired
+	private PostService postService;*/
+	private CommentDao commentDao;
 	private PostService postService;
 	
 	private List<Comment> visited;
@@ -29,28 +34,30 @@ public class CommentServiceImpl implements CommentService {
 	public void addChildComment(int postID,Comment parentComment,Comment childComment){
 		Post post			=	postService.getPostById(postID);
 		if(post==null) return;
-		
-		commentRepository.addChildComment(parentComment,childComment);
+			
+		commentDao.addChildComment(parentComment, childComment);
 	}
 	public void addPostComment(int postID, Comment comment) {
 		Post post=postService.getPostById(postID);
 		if(post==null) return;
 		
-		commentRepository.addPostComment(post,comment);
+		commentDao.addPostComment(post,comment);
 	}
 	
 	public void deleteChildComment(int postID,int commentID,int childCommentID){
 //		Post post			=	postService.getPostById(postID);
 //		if(post==null) return;
+		
 		Comment parentComment=getCommentById(commentID);
-		commentRepository.deleteChildComment(parentComment,childCommentID);
+		commentDao.deleteChildComment(parentComment,childCommentID);
 	}
 	
 	public void deleteComment(int postID, int commentID) {
 		Post post=postService.getPostById(postID);
 		if(post==null) return;
 		
-		commentRepository.deleteComment(commentID);
+		Comment comment=commentDao.get(commentID);
+		commentDao.delete(comment);
 	}
 
 	public void findNext(Comment comment,int depth){
@@ -72,21 +79,22 @@ public class CommentServiceImpl implements CommentService {
 
 	public List<Comment> getAllCommentsByPostId(int postID){
 	    postService.getPostById(postID);
-		return commentRepository.getAllCommentsByPostId(postID);
+		return commentDao.getAllCommentsByPostId(postID);
 	}	
 	public Comment getChildCommentById(int postID,int commentID,int childCommentID)
 	throws PostNotFoundException,CommentNotFoundException{
 		Post 	post		=	postService.getPostById(postID);
-		return commentRepository.getChildCommentById(postID,commentID,childCommentID);
+		//		return commentDao.getChildCommentById(postID,commentID,childCommentID);
+		return commentDao.get(childCommentID);
 	}
 	public List<Comment>   getChildComments	(int postID,int commentID){
 		Post post			=	postService.getPostById(postID);
 		if(post==null) return null;
 		
-		return commentRepository.getChildComments(commentID);		
+		return commentDao.getChildComments(commentID);		
 	}
 	public List<Comment>   getChildCommentsByDepth(int commentID,int depth){
-		return commentRepository.getChildCommentsByDepth(commentID,depth);
+		return commentDao.getChildCommentsByDepth(commentID,depth);
 	}
 	public List<Comment> getChildCommentTree(Comment comment){
 		//int postID=comment.getPost().getID();
@@ -103,11 +111,11 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	public Comment getCommentById(int commentID) {
-		return commentRepository.getCommentById(commentID);
+		return commentDao.get(commentID);
 	}
 	
 	public List<Comment> getCommentsByDepth(int postID,int depth){
-		return commentRepository.getCommentsByDepth(postID,depth);
+		return commentDao.getCommentsByDepth(postID,depth);
 	}
 	public List<Comment> getCommentTree(Post post){
 		int postID=post.getID();
@@ -128,17 +136,17 @@ public class CommentServiceImpl implements CommentService {
 		Post post=postService.getPostById(postID);
 		if(post==null) return null;
 		
-		return commentRepository.getPostCommentById(postID,commentID);
+		return commentDao.getPostCommentById(postID,commentID);
 	}	  
 	
 	public List<Comment> getPostComments(int postID) {
 		Post post	=	postService.getPostById(postID);
 		if(post==null) return null;
 		
-		return commentRepository.getPostComments(postID);
+		return commentDao.getPostComments(postID);
 	}
 	
 	public Post getPostOfComment(int commentID){
-		return commentRepository.getPostOfComment(commentID);
+		return commentDao.getPostOfComment(commentID);
 	}
 }

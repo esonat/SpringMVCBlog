@@ -1,4 +1,4 @@
-package com.sonat.blog.service.impl;
+/*package com.sonat.blog.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,3 +41,4 @@ public class SearchServiceImpl implements SearchService {
 		return results;
 	}
 }
+*/

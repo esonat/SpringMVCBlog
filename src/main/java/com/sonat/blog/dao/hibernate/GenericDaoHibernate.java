@@ -2,6 +2,15 @@ package com.sonat.blog.dao.hibernate;
 
 import com.sonat.blog.dao.GenericDao;
 import com.sonat.blog.domain.DomainObject;
+
+import java.util.List;
+
+import org.hibernate.ScrollMode;
+import org.hibernate.ScrollableResults;
+import org.hibernate.SessionFactory;
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.Search;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 public class GenericDaoHibernate<T extends DomainObject> extends HibernateDaoSupport implements GenericDao<T> {
@@ -12,7 +21,7 @@ public class GenericDaoHibernate<T extends DomainObject> extends HibernateDaoSup
         this.type = type;
     }
 
-    public T get(Long id) {
+    public T get(int id) {
         return (T) getHibernateTemplate().get(type, id);
     }
 
@@ -31,8 +40,8 @@ public class GenericDaoHibernate<T extends DomainObject> extends HibernateDaoSup
 
 
     public void indexEntity(T object) {
-        FullTextSession fullTextSession = Search.getFullTextSession(this.getSession());
-        fullTextSession.index(object);
+    	FullTextSession fullTextSession = Search.getFullTextSession(this.getSession()); 
+    	fullTextSession.index(object);
     }
 
     public void indexAllItems() {

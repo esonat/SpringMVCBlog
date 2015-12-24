@@ -47,7 +47,7 @@
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>classpath*:WEB-INF/spring/spring-web-master.xml</param-value>
+            <param-value>WEB-INF/spring/spring-web-master.xml</param-value>
         </init-param>
          <init-param>
           <param-name>readonly</param-name>

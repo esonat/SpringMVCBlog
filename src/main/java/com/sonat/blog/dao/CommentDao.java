@@ -6,7 +6,7 @@ import com.sonat.blog.domain.Category;
 import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.Post;
 
-public interface CommentDao extends GenericDao<Category> {
+public interface CommentDao extends GenericDao<Comment> {
 	void 			addChildComment			(Comment parentComment,Comment childComment);
 	void			addPostComment			(Post post,Comment comment);
 	void			deleteChildComment		(Comment parentComment,int childCommentID);
@@ -17,6 +17,5 @@ public interface CommentDao extends GenericDao<Category> {
 	Comment 		getPostCommentById		(int postID,int commentID);
 	List<Comment> 	getPostComments			(int postID);
 	Post 			getPostOfComment		(int commentID);
-	Comment			getChildCommentById		(int postID,int commentID,int childCommentID);
-	List<Comment> 	searchComments			(String keyword);
+	//List<Comment> 	searchComments			(String keyword);
 }

@@ -15,7 +15,6 @@ import javax.validation.constraints.Size;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.Cascade;
-import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
@@ -81,7 +80,7 @@ public class Post extends ContentObject implements DomainObject {
 		return ID;
 	}
 	
-	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
+	@Field(index = Index.TOKENIZED,store = Store.NO)
 	@Column(name="TEXT",length=10000,nullable=false)
 	public String getText() {
 		return text;

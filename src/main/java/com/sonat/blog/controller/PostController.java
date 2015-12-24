@@ -12,7 +12,7 @@ import javax.ws.rs.QueryParam;
 import com.sonat.blog.UI.model.*;
 import com.sonat.blog.UI.validator.DateQueryValidator;
 
-import org.hibernate.loader.custom.Return;
+//import org.hibernate.loader.custom.Return;
 import org.infinispan.io.MarshalledValueByteStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

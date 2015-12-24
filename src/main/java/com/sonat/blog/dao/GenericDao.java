@@ -5,7 +5,7 @@ import java.util.List;
 import com.sonat.blog.domain.DomainObject;
 
 public interface GenericDao<T extends DomainObject> {
-	public T get(Long id);
+	public T get(int id);
 
     public List<T> getAll();
 

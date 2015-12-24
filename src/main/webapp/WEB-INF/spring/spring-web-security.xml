@@ -28,4 +28,4 @@
 			<password-encoder hash="bcrypt"/>
 		</authentication-provider>
 	</authentication-manager>
-	</beans:beans>
+</beans:beans>
