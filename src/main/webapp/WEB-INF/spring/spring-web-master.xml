@@ -11,16 +11,17 @@
 
 <import resource="classpath:springmvc-resteasy.xml"/>
 
-
-<mvc:default-servlet-handler/>
+<context:component-scan base-package="com.sonat.blog"/>
+<!-- <mvc:default-servlet-handler/>-->
 <mvc:annotation-driven enable-matrix-variables="true" validator="validator"/>
 <!-- <mvc:resources location="/resources/" mapping="/resource/**"/>-->
-<context:component-scan base-package="com.sonat.blog"/>
 <!--  <context:include-filter type="annotation" 
                    expression="com.sonat.blog.controller.rest.filter.ValidateMethod" /> 
  <context:include-filter type="annotation" 
                    expression="com.sonat.blog.controller.rest.filter.AllowCORS" /> 
  -->
+ <!--  <bean id="userDao" class="com.sonat.blog.dao.hibernate.UserDaoHibernate"/>
+  -->
  
 
 
@@ -46,7 +47,6 @@
 	<property name="validationMessageSource" ref="messageSource"/>
 </bean>
 
-
   <import resource="spring-web-blog.xml"/>
-  <import resource="spring-web-security.xml"/>
+ <!--  <import resource="spring-web-security.xml"/>-->
 </beans>

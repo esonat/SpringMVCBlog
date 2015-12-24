@@ -11,16 +11,19 @@
                            http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
 <context:property-placeholder location="classpath*:META-INF/spring/*.properties"/>
-  <context:component-scan base-package="com.blog.sonat">
+<!--   <context:component-scan base-package="com.blog.sonat">
     <context:exclude-filter expression="org.springframework.stereotype.Controller" type="annotation"/>
     <context:exclude-filter expression="org.springframework.stereotype.Repository" type="annotation"/>
 </context:component-scan>
-            
-    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
-
-    <import resource="spring-datasource.xml"/>
-
-		<import resource="spring-hibernate.xml"/>
+ -->            
+<!-- 	 <context:component-scan base-package="com.sonat.blog"/>
+ --><!--      <bean id="myUserDetailsService" class="com.sonat.blog.users.service.MyUserDetailsService"/>
+ -->
+ <!--  <bean id="userDao" class="com.sonat.blog.dao.hibernate.UserDaoHibernate"/>
+  -->
+  	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+   	<import resource="spring-datasource.xml"/>
+	<import resource="spring-hibernate.xml"/>
         <!--  <import resource="spring-jpa.xml"/>-->
 
     <bean class="org.dozer.spring.DozerBeanMapperFactoryBean">
