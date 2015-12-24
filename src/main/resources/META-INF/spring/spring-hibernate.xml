@@ -16,19 +16,19 @@
     <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean"
           p:dataSource-ref="blogDataSource"
           p:lobHandler-ref="defaultLobHandler">
-        <property name="annotatedClasses">
+   <!--      <property name="annotatedClasses">
             <list>
-                <value>com.sonat.blog.domain.Category</value>
-                <value>com.sonat.blog.domain.Comment</value>
-                <value>com.sonat.blog.domain.Post</value>
-                <value>com.sonat.blog.domain.User</value>
-                <value>com.sonat.blog.domain.UserRole</value>
+                <value>domain.Category</value>
+                <value>domain.Comment</value>
+                <value>domain.Post</value>
+                <value>domain.User</value>
+                <value>domain.UserRole</value>
             </list>
-        </property>
-
+        </property> -->
+        <property name="packagesToScan" value="com.sonat.blog.domain"/>
         <property name="hibernateProperties">
             <value>
-                <!--hibernate.dialect=${hibernate.dialect}-->
+                <!--  hibernate.dialect=${hibernate.dialect}-->
                 hibernate.jdbc.batch_size=${hibernate.jdbc.batch_size}
                 hibernate.c3p0.max_size=${hibernate.c3p0.max_size}
                 hibernate.c3p0.min_size=${hibernate.c3p0.min_size}

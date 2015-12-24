@@ -41,15 +41,22 @@ import com.sonat.blog.util.security.SecurityUtil;
 @Controller
 @RequestMapping("/post")
 public class PostController {
-	@Autowired
+	/*@Autowired
 	private PostService postService;
 	@Autowired
 	private CategoryService categoryService;
 	@Autowired
 	private CommentService commentService;
 	@Autowired
+	*/
+	@Autowired
 	private PostValidator postValidator;
 		
+	private PostService postService;
+	private CategoryService categoryService;
+	private CommentService commentService;
+	
+	
 	@RequestMapping(value="/add", method=RequestMethod.POST)
     public String addPost(@ModelAttribute("post")@Valid Post post,
     					  Model model,
@@ -102,7 +109,7 @@ public class PostController {
 							@RequestParam(value="dateTo",required=false)  String dateTo,
 							@RequestParam(value="dateQuery",required=false)DateQueryEnum dateQuery){
 
-		Map<Post,List<Comment>> postsMap=new LinkedHashMap<Post,List<Comment>>();
+	/*	Map<Post,List<Comment>> postsMap=new LinkedHashMap<Post,List<Comment>>();
 		List<Post> postList=new ArrayList<Post>();
 				
 		boolean isDateParamsValid=DateQueryValidator.setDateValues(dateFrom, dateTo, dateQuery);
@@ -122,7 +129,7 @@ public class PostController {
 		model.addAttribute("returnURL","/post");
 		model.addAttribute("categories",categories);	
 		model.addAttribute("postsMap",postsMap);
-		model.addAttribute("loggedUser",SecurityUtil.getCurrentUsername());
+		model.addAttribute("loggedUser",SecurityUtil.getCurrentUsername());*/
 		
 		return "posts";
 	}

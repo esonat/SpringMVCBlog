@@ -20,8 +20,8 @@
 
     <import resource="spring-datasource.xml"/>
 
-    <!--<import resource="spring-hibernate.xml"/>-->
-    <import resource="spring-jpa.xml"/>
+		<import resource="spring-hibernate.xml"/>
+        <!--  <import resource="spring-jpa.xml"/>-->
 
     <bean class="org.dozer.spring.DozerBeanMapperFactoryBean">
         <property name="mappingFiles" value="classpath*:/*mapping.xml"/>
