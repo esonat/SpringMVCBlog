@@ -25,7 +25,7 @@ import com.sonat.blog.domain.UserRole;
 import com.sonat.blog.exception.UserNotFoundException;
 import com.sonat.blog.util.database.HibernateUtil;
 
-@Repository
+@Repository("userDao")
 public class UserDaoHibernate extends GenericDaoHibernate<User> implements UserDao{
 	 protected Log log = LogFactory.getLog(CommentDaoHibernate.class);
 	 public UserDaoHibernate() {
@@ -49,7 +49,7 @@ public class UserDaoHibernate extends GenericDaoHibernate<User> implements UserD
 		}
 	}
 	@Override
-	public User findUserByName(String name) {
+	public User getUserByName(String name) {
 		User user=null;
 		Session session=this.getHibernateTemplate().getSessionFactory().getCurrentSession();
 		Query query=session.createQuery("FROM User WHERE name =:name");
@@ -61,30 +61,4 @@ public class UserDaoHibernate extends GenericDaoHibernate<User> implements UserD
 		}		
 		return user;
 	}
-	
-	/** USER DETAILS SERVICE ****/
-	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
-
-		com.sonat.blog.domain.User user = findByUserName(username);
-		List<GrantedAuthority> authorities = buildUserAuthority(user.getUserRole());
-
-		return buildUserForAuthentication(user, authorities);
-	}
-
-	private org.springframework.security.core.userdetails.User buildUserForAuthentication(com.sonat.blog.domain.User user, List<GrantedAuthority> authorities) {
-		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.isEnabled(), true, true, true, authorities);
-	}
-
-	private List<GrantedAuthority> buildUserAuthority(Set<UserRole> userRoles) {
-
-		Set<GrantedAuthority> setAuths = new HashSet<GrantedAuthority>();
-
-		// Build user's authorities
-		for (UserRole userRole : userRoles) {
-			setAuths.add(new SimpleGrantedAuthority(userRole.getRole()));
-		}
-
-		List<GrantedAuthority> Result = new ArrayList<GrantedAuthority>(setAuths);
-		return Result;
-	}	 
 }
