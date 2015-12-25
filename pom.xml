@@ -68,25 +68,7 @@
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>
-        <!-- <dependency>
-	    <groupId>javax.servlet</groupId>
-	    <artifactId>servlet-api</artifactId>
-	    <version>2.5</version>
-	    <scope>provided</scope>
-	</dependency> -->
-	        
-<!-- LOGGING -->
-<!-- <dependency>
-	<groupId>org.apache.logging.log4j</groupId>
-	<artifactId>log4j-core</artifactId>
-	<version>2.5</version>
-</dependency>
- -->
-<!-- <dependency>
-	<groupId>log4j</groupId>
-	<artifactId>log4j</artifactId>
-	<version>1.2.17</version>
-</dependency> -->
+        
 <dependency>
     <groupId>log4j</groupId>
     <artifactId>log4j</artifactId>
@@ -112,12 +94,6 @@
     <artifactId>jcl-over-slf4j</artifactId>
     <version>1.6.0</version>
 </dependency>
-<!-- <dependency>
-    <groupId>org.slf4j</groupId>
-    <artifactId>slf4j-log4j12</artifactId>
-    <version>1.6.0</version>
-</dependency>
- -->
  <dependency>
 	<groupId>org.aspectj</groupId>
 	<artifactId>aspectjrt</artifactId>
@@ -130,11 +106,6 @@
       <artifactId>commons-fileupload</artifactId>
       <version>1.2.1</version>
   </dependency>
- <!--  <dependency>
-      <groupId>commons-lang</groupId>
-      <artifactId>commons-lang</artifactId>
-      <version>2.6</version>
-  </dependency> -->
 
         <!-- image processing dependencies -->
 		<!-- <dependency>
@@ -256,13 +227,23 @@
             <version>1.6.2</version>
         </dependency>
  -->
-        <!-- Hibernate dependencies -->
-<dependency>
+ <dependency>
 	<groupId>net.sf.ehcache</groupId>
 	<artifactId>ehcache</artifactId>
 	<version>2.10.1</version>
 </dependency>
-
+ 
+        <!-- Hibernate dependencies -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-search</artifactId>
+			<version>3.2.1.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>hibernate-commons-annotations</groupId>
+			<artifactId>hibernate-commons-annotations</artifactId>
+			<version>3.2.0.Final</version>
+		</dependency>
   <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
@@ -310,24 +291,14 @@
             </exclusions>
         </dependency>
         <dependency>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-validator</artifactId>
+		    <version>4.2.0.Final</version>
+		</dependency>
+        <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>
             <artifactId>hibernate-jpa-2.0-api</artifactId>
             <version>1.0.0.Final</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>5.2.2.Final</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>javax.xml.bind</groupId>
-                    <artifactId>jaxb-api</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.sun.xml.bind</groupId>
-                    <artifactId>jaxb-impl</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>javax.validation</groupId>
@@ -412,21 +383,7 @@
 			<artifactId>hibernate-search-orm</artifactId>
 			<version>5.5.1.Final</version>
 		</dependency> -->
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-search</artifactId>
-			<version>3.2.1.Final</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-annotations</artifactId>
-			<version>3.5.6-Final</version>
-		</dependency>
-		<dependency>
-			<groupId>hibernate-commons-annotations</groupId>
-			<artifactId>hibernate-commons-annotations</artifactId>
-			<version>3.2.0.Final</version>
-		</dependency>
+		
 				
 		<!-- <dependency>
 			<groupId>org.apache.lucene</groupId>

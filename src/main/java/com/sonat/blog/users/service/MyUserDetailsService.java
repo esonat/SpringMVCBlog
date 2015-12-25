@@ -22,7 +22,7 @@ import com.sonat.blog.domain.UserRole;
 
 @Component
 public class MyUserDetailsService implements UserDetailsService {
-	@Autowired
+	
 	private UserDao userDao;
 
 	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {

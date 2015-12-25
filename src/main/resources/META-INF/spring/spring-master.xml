@@ -18,11 +18,10 @@
 </context:component-scan>
  -->            
 
-<!-- <bean id="userDao" class="com.sonat.blog.dao.hibernate.UserDaoHibernate"/>
- -->
- <bean id="myUserDetailsService" class="com.sonat.blog.users.service.MyUserDetailsService"/>
-<!-- 	<property name="userDao" ref="userDao" />
- -->
+<bean id="userDao" class="com.sonat.blog.dao.hibernate.UserDaoHibernate"/>
+<bean id="myUserDetailsService" class="com.sonat.blog.users.service.MyUserDetailsService">
+	<property name="userDao" ref="userDao"/>
+</bean>
 
   	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
    	<import resource="spring-datasource.xml"/>
