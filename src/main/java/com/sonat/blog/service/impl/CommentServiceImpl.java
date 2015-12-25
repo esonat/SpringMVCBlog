@@ -23,7 +23,10 @@ public class CommentServiceImpl implements CommentService {
 	private CommentRepository commentRepository;
 	@Autowired
 	private PostService postService;*/
+	
+	@Autowired
 	private CommentDao commentDao;
+	@Autowired
 	private PostService postService;
 	
 	private List<Comment> visited;

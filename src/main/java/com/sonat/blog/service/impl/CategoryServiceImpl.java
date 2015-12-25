@@ -16,6 +16,7 @@ import com.sonat.blog.service.CategoryService;
 public class CategoryServiceImpl implements CategoryService{
 //	@Autowired
 //	private CategoryRepository categoryRepository;
+	@Autowired
 	private CategoryDao categoryDao;
 	
 	public Category getCategoryById	(int categoryID)

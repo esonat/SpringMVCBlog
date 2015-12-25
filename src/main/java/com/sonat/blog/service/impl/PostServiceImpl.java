@@ -15,9 +15,11 @@ import com.sonat.blog.service.UserService;
 
 @Service(value = "postService")
 public class PostServiceImpl implements PostService{
-
+	@Autowired
 	private PostDao postDao;
+	@Autowired
 	private CategoryService categoryService;
+	@Autowired
 	private UserService userService;
 	
 	public List<Post> getAll() {
