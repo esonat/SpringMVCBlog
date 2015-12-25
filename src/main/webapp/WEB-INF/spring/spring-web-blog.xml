@@ -22,7 +22,7 @@
                 <entry key="html" value="text/html"/>
             </map>
         </property> -->
-        <property name="contentNegotiationManager" ref="cnManager"/>
+      <!-- <property name="contentNegotiationManager" ref="cnManager"/>-->
         <property name="viewResolvers">
             <list>
                 <bean class="org.springframework.web.servlet.view.BeanNameViewResolver"/>

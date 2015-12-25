@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.sonat.blog.domain.ContentObject;
 
-public interface SearchService {
+/*public interface SearchService {
 	List<? extends ContentObject> getResults(String keyword);
 }
+*/

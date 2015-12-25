@@ -1,4 +1,4 @@
-package com.sonat.blog.controller;
+/*package com.sonat.blog.controller;
 
 import java.awt.event.ItemEvent;
 import java.util.ArrayList;
@@ -44,3 +44,4 @@ public class SearchController {
 		return "searchResults";
 	}
 }
+*/

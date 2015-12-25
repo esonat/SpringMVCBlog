@@ -9,7 +9,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
-import org.hibernate.search.SearchException;
+//import org.hibernate.search.SearchException;
 import org.springframework.stereotype.Repository;
 
 import com.sonat.blog.dao.CategoryDao;
