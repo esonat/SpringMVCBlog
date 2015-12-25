@@ -1,4 +1,4 @@
-package com.sonat.blog.controller.interceptor;
+/*package com.sonat.blog.controller.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,3 +26,4 @@ public class LoginInterceptor implements HandlerInterceptor{
 	}
 	
 }
+*/

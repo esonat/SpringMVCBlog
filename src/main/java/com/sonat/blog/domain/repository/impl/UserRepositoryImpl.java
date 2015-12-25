@@ -1,4 +1,4 @@
-package com.sonat.blog.domain.repository.impl;
+/*package com.sonat.blog.domain.repository.impl;
 
 import java.util.List;
 import org.hibernate.Query;
@@ -69,3 +69,4 @@ public class UserRepositoryImpl implements UserRepository {
 		return user;
 	}
 }
+*/

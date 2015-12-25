@@ -14,7 +14,7 @@ import com.sonat.blog.dao.PostDao;
 import com.sonat.blog.domain.Category;
 import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.Post;
-import com.sonat.blog.util.database.HibernateUtil;
+//import com.sonat.blog.util.database.HibernateUtil;
 
 @Repository("postDao")
 public class PostDaoHibernate extends GenericDaoHibernate<Post> implements PostDao{

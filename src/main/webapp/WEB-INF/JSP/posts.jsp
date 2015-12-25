@@ -33,7 +33,7 @@
 			  	<spring:url value="/post/${postItem.key.ID}/delete?returnURL=${returnURL}" var="deletePostUrl" />
 			  	<form action="${deletePostUrl}" method="POST">
 					<button style="font-size:10px;" class="btn btn-danger">Delete</button>
-					<input type="hidden" name="${_csrf.parameterName}"   value="${_csrf.token}" />
+					<!-- <input type="hidden" name="${_csrf.parameterName}"   value="${_csrf.token}" />-->
 				</form>
 			</sec:authorize>
 			 			    		
@@ -70,7 +70,7 @@
 									<table>
 										<tr>
 											<td><button style="font-size:10px;" class="btn btn-danger">Delete</button></td>
-											<td><input type="hidden" name="${_csrf.parameterName}"   value="${_csrf.token}" /></td>
+										<!-- <td><input type="hidden" name="${_csrf.parameterName}"   value="${_csrf.token}" /></td>-->
 										</tr>
 									</table>
 									</form>	

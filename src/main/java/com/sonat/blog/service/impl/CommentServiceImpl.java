@@ -10,7 +10,6 @@ import com.sonat.blog.dao.PostDao;
 import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.Post;
 import com.sonat.blog.domain.repository.CommentRepository;
-import com.sonat.blog.domain.repository.impl.CommentRepositoryImpl;
 import com.sonat.blog.exception.CommentNotFoundException;
 import com.sonat.blog.exception.PostNotFoundException;
 import com.sonat.blog.service.CommentService;
@@ -76,8 +75,8 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	public List<Comment> getAllComments(){
-		CommentRepository commentRepository=new CommentRepositoryImpl();
-		return commentRepository.getAllComments();
+		//CommentRepository commentRepository=new CommentRepositoryImpl();
+		return commentDao.getAll();
 	}
 
 	public List<Comment> getAllCommentsByPostId(int postID){

@@ -18,7 +18,7 @@ import com.sonat.blog.domain.Category;
 import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.Post;
 import com.sonat.blog.exception.CommentNotFoundException;
-import com.sonat.blog.util.database.HibernateUtil;
+//import com.sonat.blog.util.database.HibernateUtil;
 
 @Repository("commentDao")
 public class CommentDaoHibernate extends GenericDaoHibernate<Comment> implements CommentDao{

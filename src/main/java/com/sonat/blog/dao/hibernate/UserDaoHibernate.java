@@ -22,7 +22,7 @@ import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.User;
 import com.sonat.blog.domain.UserRole;
 import com.sonat.blog.exception.UserNotFoundException;
-import com.sonat.blog.util.database.HibernateUtil;
+//import com.sonat.blog.util.database.HibernateUtil;
 
 @Repository("userDao")
 public class UserDaoHibernate extends GenericDaoHibernate<User> implements UserDao{

@@ -1,4 +1,4 @@
-package com.sonat.blog.domain.repository.impl;
+/*package com.sonat.blog.domain.repository.impl;
 
 import java.util.List;
 
@@ -74,3 +74,4 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 
 
 }
+*/
