@@ -234,11 +234,12 @@
 </dependency>
  
         <!-- Hibernate dependencies -->
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-search</artifactId>
-			<version>3.2.1.Final</version>
-		</dependency>
+<dependency>
+	<groupId>org.hibernate</groupId>
+	<artifactId>hibernate-search</artifactId>
+	<version>5.5.2.Final</version>
+</dependency>
+
 		<dependency>
 			<groupId>hibernate-commons-annotations</groupId>
 			<artifactId>hibernate-commons-annotations</artifactId>

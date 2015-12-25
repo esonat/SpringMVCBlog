@@ -18,8 +18,8 @@
       JNDI DataSource for J2EE environments can be defined like so:
     <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
         <property name="jndiName"><value>java:comp/env/jdbc/gallery</value></property>
-    </bean>
-    -->
+ </bean>-->
+
 
     <!--
       Or you can use the much more concise way to express datasources using the Spring jee namespace:
