@@ -7,7 +7,7 @@
 <properties>
 	<spring.version>4.2.4.RELEASE</spring.version>
 	 <spring-security.version>4.0.3.RELEASE</spring-security.version>
-	<hibernate.version>3.5.0-Final</hibernate.version>
+	<hibernate.version>3.6.10.Final</hibernate.version>
 </properties>
  <repositories>
         <repository>
@@ -35,6 +35,11 @@
         </repository>
     </repositories>
  <dependencies>
+ <dependency>
+	<groupId>org.dom4j</groupId>
+	<artifactId>dom4j</artifactId>
+	<version>2.0.0-RC1</version>
+</dependency>
  
 <!-- SERVLET -->
 <dependency>
@@ -412,6 +417,17 @@
 			<artifactId>hibernate-search</artifactId>
 			<version>3.2.1.Final</version>
 		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-annotations</artifactId>
+			<version>3.5.6-Final</version>
+		</dependency>
+		<dependency>
+			<groupId>hibernate-commons-annotations</groupId>
+			<artifactId>hibernate-commons-annotations</artifactId>
+			<version>3.2.0.Final</version>
+		</dependency>
+				
 		<!-- <dependency>
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-core</artifactId>

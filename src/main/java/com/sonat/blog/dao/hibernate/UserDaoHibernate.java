@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.dom4j.util.UserDataAttribute;
+//import orgUserDataAttribute;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.security.core.GrantedAuthority;

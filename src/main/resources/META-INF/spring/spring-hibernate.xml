@@ -6,26 +6,26 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-                           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                           http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
                            http://www.springframework.org/schema/context
-                           http://www.springframework.org/schema/context/spring-context-3.0.xsd
+                           http://www.springframework.org/schema/context/spring-context-4.0.xsd
                            http://www.springframework.org/schema/tx
-                           http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+                           http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 
     <!-- Hibernate SessionFactory -->
     <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean"
           p:dataSource-ref="blogDataSource"
           p:lobHandler-ref="defaultLobHandler">
-   <!--      <property name="annotatedClasses">
+		<!-- <property name="annotatedClasses">
             <list>
-                <value>domain.Category</value>
-                <value>domain.Comment</value>
-                <value>domain.Post</value>
-                <value>domain.User</value>
-                <value>domain.UserRole</value>
+                <value>com.sonat.blog.domain.Category</value>
+                <value>com.sonat.blog.domain.Comment</value>
+                <value>com.sonat.blog.domain.Post</value>
+                <value>com.sonat.blog.domain.User</value>
+                <value>com.sonat.blog.domain.UserRole</value>
             </list>
         </property> -->
-        <property name="packagesToScan" value="com.sonat.blog.domain"/>
+		<property name="packagesToScan" value="com.sonat.blog.domain"/>
         <property name="hibernateProperties">
             <value>
                 <!--  hibernate.dialect=${hibernate.dialect}-->
@@ -65,3 +65,28 @@
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
 </beans>
+
+<!-- 
+
+<hibernate-configuration>
+	<session-factory>
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/blogDB</property>
+		<property name="hibernate.connection.username">root</property>
+		<property name="hibernate.connection.password">sonat</property>
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+		<property name="show_sql">true</property>
+	<property name="hbm2ddl.auto">create</property>
+		<property name="hbm2ddl.import_files">initial_data.sql</property>
+		
+		<property name="hibernate.hbm2ddl.auto">update</property>
+		<property name="hibernate.search.default.directory_provider">filesystem</property>
+        <property name="hibernate.search.default.indexBase">/home/sonat/Desktop/hibernateIndex</property>
+		<mapping class="com.sonat.blog.domain.Category"/>
+		<mapping class="com.sonat.blog.domain.Post"/>
+		<mapping class="com.sonat.blog.domain.User"/>
+		<mapping class="com.sonat.blog.domain.UserRole"/>
+		<mapping class="com.sonat.blog.domain.Comment"/>
+	</session-factory>
+</hibernate-configuration> 
+-->
