@@ -30,7 +30,13 @@ public class CategoryServiceImpl implements CategoryService{
 	}
 	public List<Category> getAllCategories(){
 		//return categoryRepository.getAllCategories();
-		return categoryDao.getAll();
+		List<Category> list;
+		try{
+			list=categoryDao.getAll();
+		}catch(Exception e){
+			return null;
+		}
+		return list;
 	}
 	public void	addCategory(Category category){
 		//categoryRepository.addCategory(category);

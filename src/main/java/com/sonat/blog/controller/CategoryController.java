@@ -13,11 +13,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.sonat.blog.domain.Category;
 import com.sonat.blog.service.CategoryService;
 import com.sonat.blog.util.security.SecurityUtil;
+import com.sonat.blog.util.security.SecurityUtilInterface;
 
 @Controller
 public class CategoryController {
 	@Autowired
 	private CategoryService categoryService;
+	@Autowired 
+	private SecurityUtilInterface SecurityUtil;
+	
 	
 	@RequestMapping(value="/category/add",method=RequestMethod.GET)
 	public String getAddCategoryForm(@ModelAttribute("category")Category category,

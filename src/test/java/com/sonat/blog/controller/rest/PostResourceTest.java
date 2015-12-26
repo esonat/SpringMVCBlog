@@ -1,4 +1,4 @@
-package com.sonat.blog.controller.rest;
+/*package com.sonat.blog.controller.rest;
 
 import java.util.Date;
 
@@ -73,3 +73,4 @@ public class PostResourceTest {
 		//if (response.getStatus() != 201) throw new RuntimeException("Failed to create");
 	}
 }
+*/

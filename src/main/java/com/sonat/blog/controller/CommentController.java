@@ -28,6 +28,7 @@ import com.sonat.blog.service.CategoryService;
 import com.sonat.blog.service.CommentService;
 import com.sonat.blog.service.PostService;
 import com.sonat.blog.util.security.SecurityUtil;
+import com.sonat.blog.util.security.SecurityUtilInterface;
 
 
 @Controller
@@ -39,6 +40,9 @@ public class CommentController {
 	private CategoryService categoryService;
 	@Autowired
 	private CommentValidator commentValidator;
+	@Autowired 
+	private SecurityUtilInterface SecurityUtil;
+	
 	
 	@RequestMapping(value="/post/{postId}/comment/{commentId}/comment/add",method=RequestMethod.POST)
 	public String addChildComment(@ModelAttribute("childComment")@Valid Comment childComment,

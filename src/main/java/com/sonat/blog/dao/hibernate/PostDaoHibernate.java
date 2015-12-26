@@ -23,6 +23,7 @@ public class PostDaoHibernate extends GenericDaoHibernate<Post> implements PostD
 		 super(Post.class);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Post> getAllByDate(Date dateFrom, Date dateTo) {
 		Session session=this.getHibernateTemplate().getSessionFactory().getCurrentSession();
@@ -36,6 +37,7 @@ public class PostDaoHibernate extends GenericDaoHibernate<Post> implements PostD
 				
 		return (List<Post>)query.list();		
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Post> getPostsByCategory(int categoryID) {
 		Session session=this.getHibernateTemplate().getSessionFactory().getCurrentSession();
@@ -47,6 +49,7 @@ public class PostDaoHibernate extends GenericDaoHibernate<Post> implements PostD
 			
 		return (List<Post>)query.list();
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Post> getPostsByUsername(String username) {
 		Session session=this.getHibernateTemplate().getSessionFactory().getCurrentSession();

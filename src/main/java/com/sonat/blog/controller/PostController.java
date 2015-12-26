@@ -37,20 +37,23 @@ import com.sonat.blog.service.CategoryService;
 import com.sonat.blog.service.CommentService;
 import com.sonat.blog.service.PostService;
 import com.sonat.blog.util.security.SecurityUtil;
+import com.sonat.blog.util.security.SecurityUtilInterface;
 
 @Controller
 @RequestMapping("/post")
 public class PostController {
 	@Autowired
 	private PostService postService;
-	@Autowired
+	@Autowired 
+	private SecurityUtilInterface SecurityUtil;
+	/*@Autowired
 	private CategoryService categoryService;
 	@Autowired
 	private CommentService commentService;
 	
-	@Autowired
+	*//*@Autowired
 	private PostValidator postValidator;
-	/*	
+	*//*	
 	private PostService postService;
 	private CategoryService categoryService;
 	private CommentService commentService;
@@ -66,7 +69,8 @@ public class PostController {
     					  HttpServletResponse response,
     					  RedirectAttributes redir){
 		
-		postValidator.validate(post, result);
+		return "addPost";
+	/*	postValidator.validate(post, result);
         
 		if(result.hasErrors()) {
 			return "redirect:"+returnURL;
@@ -76,7 +80,7 @@ public class PostController {
          	postService.addPost(post,category);
          	return "redirect:/post"; 
         }
-    }
+*/    }
 	@RequestMapping(value = "/{postId}/delete", method = RequestMethod.POST)
 	public String deletePost(final RedirectAttributes redirectAttributes, @PathVariable("postId") int postId,
 			@RequestParam("returnURL") String returnURL) {
@@ -92,9 +96,9 @@ public class PostController {
     							 RedirectAttributes redir){
 		ModelAndView mav=new ModelAndView();
 		
-		List<Category> categories=categoryService.getAllCategories();
+		//List<Category> categories=categoryService.getAllCategories();
 		mav.addObject("returnURL","/post/add");
-		mav.addObject("categories",categories);
+		//mav.addObject("categories",categories);
 		mav.addObject("loggedUser",SecurityUtil.getCurrentUsername());
 		mav.setViewName("addPost");
 	    
@@ -108,7 +112,7 @@ public class PostController {
 							@RequestParam(value="dateTo",required=false)  String dateTo,
 							@RequestParam(value="dateQuery",required=false)DateQueryEnum dateQuery){
 
-	Map<Post,List<Comment>> postsMap=new LinkedHashMap<Post,List<Comment>>();
+		Map<Post,List<Comment>> postsMap=new LinkedHashMap<Post,List<Comment>>();
 		List<Post> postList=new ArrayList<Post>();
 				
 		boolean isDateParamsValid=DateQueryValidator.setDateValues(dateFrom, dateTo, dateQuery);
@@ -119,14 +123,14 @@ public class PostController {
 		
 		if(postList!=null){
 			for(Post post:postList){
-				if(!postsMap.containsKey(post))	postsMap.put(post,commentService.getCommentTree(post));
+			//	if(!postsMap.containsKey(post))	postsMap.put(post,commentService.getCommentTree(post));
 			}
 		}
 		
-		List<Category> categories=categoryService.getAllCategories();
-	
+		//List<Category> categories=categoryService.getAllCategories();
+		
 		model.addAttribute("returnURL","/post");
-		model.addAttribute("categories",categories);	
+		//model.addAttribute("categories",categories);	
 		model.addAttribute("postsMap",postsMap);
 		model.addAttribute("loggedUser",SecurityUtil.getCurrentUsername());
 		
@@ -140,13 +144,13 @@ public class PostController {
 		
 		Post post=postService.getPostById(id);
 		//if(post==null) return "redirect:/post";
-		List<Comment> commentList=commentService.getCommentTree(post);
-		List<Category> categories=categoryService.getAllCategories();
+		//List<Comment> commentList=commentService.getCommentTree(post);
+	//	List<Category> categories=categoryService.getAllCategories();
 		
 		model.addAttribute("returnURL","/post/"+id);
-		model.addAttribute("categories",categories);	
+		//model.addAttribute("categories",categories);	
 		model.addAttribute("post",post);
-		model.addAttribute("comments",commentList);
+		//model.addAttribute("comments",commentList);
 		model.addAttribute("loggedUser",SecurityUtil.getCurrentUsername());
 		
 		return "post";
@@ -162,14 +166,14 @@ public class PostController {
 		
 		if(postList!=null){
 			for(Post post:postList){
-				if(!postsMap.containsKey(post))	postsMap.put(post,commentService.getCommentTree(post));
+			//	if(!postsMap.containsKey(post))	postsMap.put(post,commentService.getCommentTree(post));
 			}
 		}
 		
-		List<Category> categories=categoryService.getAllCategories();
+		//List<Category> categories=categoryService.getAllCategories();
 		
 		model.addAttribute("returnURL","/post/category/"+categoryId);
-		model.addAttribute("categories",categories);	
+		//model.addAttribute("categories",categories);	
 		model.addAttribute("postsMap",postsMap);
 		model.addAttribute("loggedUser",SecurityUtil.getCurrentUsername());
 		
@@ -186,14 +190,14 @@ public class PostController {
 		
 		if(postList!=null){
 			for(Post post:postList){
-				if(!postsMap.containsKey(post))	postsMap.put(post,commentService.getCommentTree(post));
+	//			if(!postsMap.containsKey(post))	postsMap.put(post,commentService.getCommentTree(post));
 			}
 		}		
 		
-		List<Category> categories=categoryService.getAllCategories();
+		//List<Category> categories=categoryService.getAllCategories();
 		
 		model.addAttribute("returnURL","/post/user/"+username);
-		model.addAttribute("categories",categories);	
+		//model.addAttribute("categories",categories);	
 		model.addAttribute("postsMap",postsMap);
 		model.addAttribute("user",username);
 		model.addAttribute("loggedUser",SecurityUtil.getCurrentUsername());

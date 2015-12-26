@@ -23,7 +23,13 @@ public class PostServiceImpl implements PostService{
 	private UserService userService;
 	
 	public List<Post> getAll() {
-		return postDao.getAll();
+		List<Post> list;
+		try{
+			list=postDao.getAll();
+		}catch(Exception e){
+			return null;
+		}
+		return list;
 	}
 	
 	public List<Post> getAllByDate(Date dateFrom,Date dateTo) {

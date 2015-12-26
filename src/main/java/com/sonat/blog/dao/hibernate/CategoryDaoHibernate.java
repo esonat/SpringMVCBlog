@@ -13,7 +13,7 @@ import org.apache.commons.logging.LogFactory;
 
 @Repository("categoryDao")
 public class CategoryDaoHibernate extends GenericDaoHibernate<Category> implements CategoryDao{
-    protected Log log = LogFactory.getLog(CategoryDaoHibernate.class);
+    //protected Log log = LogFactory.getLog(CategoryDaoHibernate.class);
 
     public CategoryDaoHibernate() {
        super(Category.class);
