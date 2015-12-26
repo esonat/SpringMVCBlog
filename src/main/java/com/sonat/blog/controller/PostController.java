@@ -46,18 +46,14 @@ public class PostController {
 	private PostService postService;
 	@Autowired 
 	private SecurityUtilInterface SecurityUtil;
-	/*@Autowired
+	@Autowired
 	private CategoryService categoryService;
 	@Autowired
 	private CommentService commentService;
-	
-	*//*@Autowired
+	@Autowired
 	private PostValidator postValidator;
-	*//*	
-	private PostService postService;
-	private CategoryService categoryService;
-	private CommentService commentService;
-	*/
+		
+	
 	
 	@RequestMapping(value="/add", method=RequestMethod.POST)
     public String addPost(@ModelAttribute("post")@Valid Post post,
@@ -69,8 +65,7 @@ public class PostController {
     					  HttpServletResponse response,
     					  RedirectAttributes redir){
 		
-		return "addPost";
-	/*	postValidator.validate(post, result);
+		postValidator.validate(post, result);
         
 		if(result.hasErrors()) {
 			return "redirect:"+returnURL;
@@ -80,7 +75,7 @@ public class PostController {
          	postService.addPost(post,category);
          	return "redirect:/post"; 
         }
-*/    }
+	}
 	@RequestMapping(value = "/{postId}/delete", method = RequestMethod.POST)
 	public String deletePost(final RedirectAttributes redirectAttributes, @PathVariable("postId") int postId,
 			@RequestParam("returnURL") String returnURL) {
@@ -123,14 +118,14 @@ public class PostController {
 		
 		if(postList!=null){
 			for(Post post:postList){
-			//	if(!postsMap.containsKey(post))	postsMap.put(post,commentService.getCommentTree(post));
+				if(!postsMap.containsKey(post))	postsMap.put(post,commentService.getCommentTree(post));
 			}
 		}
 		
-		//List<Category> categories=categoryService.getAllCategories();
+		List<Category> categories=categoryService.getAllCategories();
 		
 		model.addAttribute("returnURL","/post");
-		//model.addAttribute("categories",categories);	
+		model.addAttribute("categories",categories);	
 		model.addAttribute("postsMap",postsMap);
 		model.addAttribute("loggedUser",SecurityUtil.getCurrentUsername());
 		
@@ -143,14 +138,14 @@ public class PostController {
 							 @ModelAttribute("comment") Comment comment){
 		
 		Post post=postService.getPostById(id);
-		//if(post==null) return "redirect:/post";
-		//List<Comment> commentList=commentService.getCommentTree(post);
-	//	List<Category> categories=categoryService.getAllCategories();
+		if(post==null) return "redirect:/post";
+		List<Comment> commentList=commentService.getCommentTree(post);
+		List<Category> categories=categoryService.getAllCategories();
 		
 		model.addAttribute("returnURL","/post/"+id);
-		//model.addAttribute("categories",categories);	
+		model.addAttribute("categories",categories);	
 		model.addAttribute("post",post);
-		//model.addAttribute("comments",commentList);
+		model.addAttribute("comments",commentList);
 		model.addAttribute("loggedUser",SecurityUtil.getCurrentUsername());
 		
 		return "post";
@@ -166,14 +161,14 @@ public class PostController {
 		
 		if(postList!=null){
 			for(Post post:postList){
-			//	if(!postsMap.containsKey(post))	postsMap.put(post,commentService.getCommentTree(post));
+				if(!postsMap.containsKey(post))	postsMap.put(post,commentService.getCommentTree(post));
 			}
 		}
 		
-		//List<Category> categories=categoryService.getAllCategories();
+		List<Category> categories=categoryService.getAllCategories();
 		
 		model.addAttribute("returnURL","/post/category/"+categoryId);
-		//model.addAttribute("categories",categories);	
+		model.addAttribute("categories",categories);	
 		model.addAttribute("postsMap",postsMap);
 		model.addAttribute("loggedUser",SecurityUtil.getCurrentUsername());
 		
@@ -190,14 +185,14 @@ public class PostController {
 		
 		if(postList!=null){
 			for(Post post:postList){
-	//			if(!postsMap.containsKey(post))	postsMap.put(post,commentService.getCommentTree(post));
+				if(!postsMap.containsKey(post))	postsMap.put(post,commentService.getCommentTree(post));
 			}
 		}		
 		
-		//List<Category> categories=categoryService.getAllCategories();
+		List<Category> categories=categoryService.getAllCategories();
 		
 		model.addAttribute("returnURL","/post/user/"+username);
-		//model.addAttribute("categories",categories);	
+		model.addAttribute("categories",categories);	
 		model.addAttribute("postsMap",postsMap);
 		model.addAttribute("user",username);
 		model.addAttribute("loggedUser",SecurityUtil.getCurrentUsername());
