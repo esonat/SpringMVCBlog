@@ -116,24 +116,20 @@ public class CommentDaoHibernate extends GenericDaoHibernate<Comment> implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Comment> getPostComments(int postID) {
-		Query query=session.createQuery("FROM Comment C WHERE C.post.ID= :postID");
+		List<Comment> result=(List<Comment>)this.getHibernateTemplate().findByNamedParam("FROM Comment C WHERE C.post.ID= :postID",
+				"postID",postID);
 		
-		query.setParameter("postID", postID);
-		if(query.list().size()==0) return null;
 		
-		return (List<Comment>)query.list();
+		if(result.size()==0) return null;
+		
+		return result;
 	}
 	@Override
 	public Post getPostOfComment(int commentID) {
-
-		Session session=this.getHibernateTemplate().getSessionFactory().getCurrentSession();	
-		org.hibernate.Query query=session.createQuery("FROM Comment C WHERE C.ID= :commentID");
-		query.setParameter("commentID",commentID);
+		Post result=(Post)this.getHibernateTemplate().findByNamedParam("FROM Comment C WHERE C.ID= :commentID",
+				"commentID",commentID);
 		
-		Comment comment=(Comment)query.list().get(0);
-		
-		Post post=comment.getPost();
-		return post;
+		return result;
 	}
 	/*@Override
 	public List<Comment> searchComments(String keyword) {

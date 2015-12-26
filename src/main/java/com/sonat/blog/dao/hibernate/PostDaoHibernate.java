@@ -26,36 +26,33 @@ public class PostDaoHibernate extends GenericDaoHibernate<Post> implements PostD
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Post> getAllByDate(Date dateFrom, Date dateTo) {
-		Session session=this.getHibernateTemplate().getSessionFactory().getCurrentSession();
-		Query query = session.createQuery("FROM Post WHERE date <=:dateTo AND date >= :dateFrom");
+		List<Post> result= (List<Post>)this.getHibernateTemplate().findByNamedParam("FROM Post WHERE date <=:dateTo AND date >= :dateFrom",
+				new String[]{"dateFrom","dateTo"},new java.sql.Date[]{new java.sql.Date(dateFrom.getTime()),new java.sql.Date(dateTo.getTime())});
 		
-		query.setParameter("dateFrom",new java.sql.Date(dateFrom.getTime()));
-		query.setParameter("dateTo", new java.sql.Date(dateTo.getTime()));
 		
-		if(query.list()==null ||
-			       query.list().size()==0) return null;
+		if(result==null ||
+			       result.size()==0) return null;
 				
-		return (List<Post>)query.list();		
+		return (List<Post>)result;		
 	}
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Post> getPostsByCategory(int categoryID) {
-		Session session=this.getHibernateTemplate().getSessionFactory().getCurrentSession();
-		Query query=session.createQuery("FROM Post P WHERE P.category.ID= :categoryID order by date asc");
-		query.setParameter("categoryID",categoryID);
-	
-		if(query.list()==null ||
-	       query.list().size()==0) return null;
+		List<Post> result=(List<Post>)this.getHibernateTemplate().findByNamedParam("FROM Post P WHERE P.category.ID= :categoryID order by date asc",
+				"categoryID",categoryID);
+		
+		if(result==null ||
+	       result.size()==0) return null;
 			
-		return (List<Post>)query.list();
+		return result;
 	}
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Post> getPostsByUsername(String username) {
-		Session session=this.getHibernateTemplate().getSessionFactory().getCurrentSession();
-		Query query=session.createQuery("FROM Post P WHERE P.user.username= :username order by date asc");
-		query.setParameter("username",username);
-		return query.list();
+		List<Post> result=(List<Post>)this.getHibernateTemplate().findByNamedParam("FROM Post P WHERE P.user.username= :username order by date asc",
+				"username",username);
+		
+		return result;
 	}
 	
 

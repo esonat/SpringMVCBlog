@@ -34,30 +34,23 @@ public class UserDaoHibernate extends GenericDaoHibernate<User> implements UserD
 	 @Override
 	 @SuppressWarnings("unchecked")
 	 public User findByUserName(String username) {
-		List<User> users = new ArrayList<User>();
-		Session session=this.getHibernateTemplate().getSessionFactory().getCurrentSession();
-		Query query=session.createQuery("FROM User where username= :username");
-		query.setParameter("username",username);
+		List<User> result=(List<User>)this.getHibernateTemplate().findByNamedParam("FROM User where username= :username",
+				"username",username);
 		
-		users=query.list();
-		
-		if (users.size() > 0) {
-			return users.get(0);
+		if (result.size() > 0) {
+			return result.get(0);
 		} else {
 			return null;
 		}
 	}
 	@Override
 	public User getUserByName(String name) {
-		User user=null;
-		Session session=this.getHibernateTemplate().getSessionFactory().getCurrentSession();
-		Query query=session.createQuery("FROM User WHERE name =:name");
-		query.setParameter("name",name);
-		user=(User)query.uniqueResult();
+		User result=(User)this.getHibernateTemplate().findByNamedParam("FROM User WHERE name =:name",
+				"name",name);
 		
-		if(user==null) {	
+		if(result ==null) {	
 			throw new UserNotFoundException("No user found with the name: "+ name);
 		}		
-		return user;
+		return result;
 	}
 }
