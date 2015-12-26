@@ -71,6 +71,7 @@ public class CommentDaoHibernate extends GenericDaoHibernate<Comment> implements
 		session.getTransaction().commit();
 		
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Comment> getAllCommentsByPostId(int postID) {
 		Session session	=	this.getHibernateTemplate().getSessionFactory().getCurrentSession();
@@ -81,6 +82,7 @@ public class CommentDaoHibernate extends GenericDaoHibernate<Comment> implements
 		
 		return (List<Comment>)query.list();		
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Comment> getChildComments(int commentID) {
 		Session session=this.getHibernateTemplate().getSessionFactory().getCurrentSession();
@@ -89,8 +91,9 @@ public class CommentDaoHibernate extends GenericDaoHibernate<Comment> implements
 		
 		if(query.list()==null) return null;
 		
-		return query.list();
+		return	(List<Comment>)query.list();
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Comment> getChildCommentsByDepth(int commentID, int depth) {
 		Session session=this.getHibernateTemplate().getSessionFactory().getCurrentSession();
@@ -103,6 +106,7 @@ public class CommentDaoHibernate extends GenericDaoHibernate<Comment> implements
 		
 		return (List<Comment>)query.list();	
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Comment> getCommentsByDepth(int postID, int depth) {
 		Session session=this.getHibernateTemplate().getSessionFactory().getCurrentSession();	
@@ -128,6 +132,7 @@ public class CommentDaoHibernate extends GenericDaoHibernate<Comment> implements
 		
 		return (Comment)query.list().get(0);	
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Comment> getPostComments(int postID) {
 		Session session=this.getHibernateTemplate().getSessionFactory().getCurrentSession();

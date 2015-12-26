@@ -28,7 +28,7 @@
 		<property name="packagesToScan" value="com.sonat.blog.domain"/>
         <property name="hibernateProperties">
             <value>
-                <!--  hibernate.dialect=${hibernate.dialect}-->
+				hibernate.dialect=${hibernate.dialect}
                 hibernate.jdbc.batch_size=${hibernate.jdbc.batch_size}
                 hibernate.c3p0.max_size=${hibernate.c3p0.max_size}
                 hibernate.c3p0.min_size=${hibernate.c3p0.min_size}

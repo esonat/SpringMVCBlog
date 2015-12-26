@@ -43,9 +43,8 @@
 		<filter-name>springSecurityFilterChain</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	
-<!-- 
-	<filter>
+	 
+<!-- 	<filter>
         <filter-name>OpenEntityManagerInViewFilter</filter-name>
         <filter-class>org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-class>
     </filter>
@@ -53,8 +52,7 @@
     <filter-mapping>
         <filter-name>OpenEntityManagerInViewFilter</filter-name>
         <url-pattern>/*</url-pattern>
-    </filter-mapping>
- -->	
+    </filter-mapping> -->	
 	
 <!-- 	<filter>
 	  <filter-name>cors</filter-name>

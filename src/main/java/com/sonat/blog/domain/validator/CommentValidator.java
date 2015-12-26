@@ -13,6 +13,7 @@ public class CommentValidator implements Validator{
 	@Autowired
 	private CommentService commentService;
 	
+	@SuppressWarnings("rawtypes")
 	public boolean supports(Class clazz){
 		return Comment.class.isAssignableFrom(clazz);
 	}
