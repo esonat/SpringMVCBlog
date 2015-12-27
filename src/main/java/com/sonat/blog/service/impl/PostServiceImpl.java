@@ -15,13 +15,21 @@ import com.sonat.blog.service.UserService;
 
 @Service(value = "postService")
 public class PostServiceImpl implements PostService{
-
+	@Autowired
 	private PostDao postDao;
+	@Autowired
 	private CategoryService categoryService;
+	@Autowired
 	private UserService userService;
 	
 	public List<Post> getAll() {
-		return postDao.getAll();
+		List<Post> list;
+		try{
+			list=postDao.getAll();
+		}catch(Exception e){
+			return null;
+		}
+		return list;
 	}
 	
 	public List<Post> getAllByDate(Date dateFrom,Date dateTo) {
@@ -49,7 +57,6 @@ public class PostServiceImpl implements PostService{
 	}
 
 	public void deletePost(int ID) {
-		Post post=postDao.get(ID);
-		postDao.delete(post);
+		postDao.deleteById(ID);
 	}
 }

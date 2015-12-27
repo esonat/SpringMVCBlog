@@ -1,4 +1,4 @@
-package com.sonat.blog.controller.rest;
+/*package com.sonat.blog.controller.rest;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -59,7 +59,7 @@ public class UserResourceTest {
 		Assert.assertEquals(1,posts.size());
 		response.close();
 		
-		/*************************/
+		*//*************************//*
 		System.out.println("Get posts by username");
 		response=client.target("http://localhost:8080/blog/rest/post/user/a")
 				.request()
@@ -70,3 +70,4 @@ public class UserResourceTest {
 		response.close();
 	}
 }
+*/

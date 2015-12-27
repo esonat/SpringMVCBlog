@@ -1,4 +1,4 @@
-package com.sonat.blog.controller.rest.filter;
+/*package com.sonat.blog.controller.rest.filter;
 
 import java.io.IOException;
 
@@ -24,4 +24,4 @@ public class CORSFilter implements ContainerResponseFilter {
 		paramContainerResponseContext.getHeaders().add("Allow","GET ,POST");
 			
 	}
-}
+}*/

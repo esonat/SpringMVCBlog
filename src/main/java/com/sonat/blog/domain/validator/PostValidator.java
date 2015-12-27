@@ -14,6 +14,7 @@ public class PostValidator implements Validator{
 	@Autowired
 	private PostService postService;
 	
+	@SuppressWarnings("rawtypes")
 	public boolean supports(Class clazz){
 		return Post.class.isAssignableFrom(clazz);
 	}

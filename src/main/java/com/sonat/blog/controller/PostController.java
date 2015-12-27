@@ -37,24 +37,22 @@ import com.sonat.blog.service.CategoryService;
 import com.sonat.blog.service.CommentService;
 import com.sonat.blog.service.PostService;
 import com.sonat.blog.util.security.SecurityUtil;
+import com.sonat.blog.util.security.SecurityUtilInterface;
 
 @Controller
 @RequestMapping("/post")
 public class PostController {
-	/*@Autowired
+	@Autowired
 	private PostService postService;
+	@Autowired 
+	private SecurityUtilInterface SecurityUtil;
 	@Autowired
 	private CategoryService categoryService;
 	@Autowired
 	private CommentService commentService;
-	@Autowired
-	*/
 	@Autowired
 	private PostValidator postValidator;
 		
-	private PostService postService;
-	private CategoryService categoryService;
-	private CommentService commentService;
 	
 	
 	@RequestMapping(value="/add", method=RequestMethod.POST)
@@ -77,7 +75,7 @@ public class PostController {
          	postService.addPost(post,category);
          	return "redirect:/post"; 
         }
-    }
+	}
 	@RequestMapping(value = "/{postId}/delete", method = RequestMethod.POST)
 	public String deletePost(final RedirectAttributes redirectAttributes, @PathVariable("postId") int postId,
 			@RequestParam("returnURL") String returnURL) {
@@ -109,7 +107,7 @@ public class PostController {
 							@RequestParam(value="dateTo",required=false)  String dateTo,
 							@RequestParam(value="dateQuery",required=false)DateQueryEnum dateQuery){
 
-	/*	Map<Post,List<Comment>> postsMap=new LinkedHashMap<Post,List<Comment>>();
+		Map<Post,List<Comment>> postsMap=new LinkedHashMap<Post,List<Comment>>();
 		List<Post> postList=new ArrayList<Post>();
 				
 		boolean isDateParamsValid=DateQueryValidator.setDateValues(dateFrom, dateTo, dateQuery);
@@ -125,11 +123,11 @@ public class PostController {
 		}
 		
 		List<Category> categories=categoryService.getAllCategories();
-	
+		
 		model.addAttribute("returnURL","/post");
 		model.addAttribute("categories",categories);	
 		model.addAttribute("postsMap",postsMap);
-		model.addAttribute("loggedUser",SecurityUtil.getCurrentUsername());*/
+		model.addAttribute("loggedUser",SecurityUtil.getCurrentUsername());
 		
 		return "posts";
 	}
@@ -140,7 +138,7 @@ public class PostController {
 							 @ModelAttribute("comment") Comment comment){
 		
 		Post post=postService.getPostById(id);
-		//if(post==null) return "redirect:/post";
+		if(post==null) return "redirect:/post";
 		List<Comment> commentList=commentService.getCommentTree(post);
 		List<Category> categories=categoryService.getAllCategories();
 		

@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.dom4j.util.UserDataAttribute;
+//import orgUserDataAttribute;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.security.core.GrantedAuthority;
@@ -23,9 +22,9 @@ import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.User;
 import com.sonat.blog.domain.UserRole;
 import com.sonat.blog.exception.UserNotFoundException;
-import com.sonat.blog.util.database.HibernateUtil;
+//import com.sonat.blog.util.database.HibernateUtil;
 
-@Repository
+@Repository("userDao")
 public class UserDaoHibernate extends GenericDaoHibernate<User> implements UserDao{
 	 protected Log log = LogFactory.getLog(CommentDaoHibernate.class);
 	 public UserDaoHibernate() {
@@ -35,56 +34,23 @@ public class UserDaoHibernate extends GenericDaoHibernate<User> implements UserD
 	 @Override
 	 @SuppressWarnings("unchecked")
 	 public User findByUserName(String username) {
-		List<User> users = new ArrayList<User>();
-		Session session=this.getHibernateTemplate().getSessionFactory().getCurrentSession();
-		Query query=session.createQuery("FROM User where username= :username");
-		query.setParameter("username",username);
+		List<User> result=(List<User>)this.getHibernateTemplate().findByNamedParam("FROM User where username= :username",
+				"username",username);
 		
-		users=query.list();
-		
-		if (users.size() > 0) {
-			return users.get(0);
+		if (result.size() > 0) {
+			return result.get(0);
 		} else {
 			return null;
 		}
 	}
 	@Override
-	public User findUserByName(String name) {
-		User user=null;
-		Session session=this.getHibernateTemplate().getSessionFactory().getCurrentSession();
-		Query query=session.createQuery("FROM User WHERE name =:name");
-		query.setParameter("name",name);
-		user=(User)query.uniqueResult();
+	public User getUserByName(String name) {
+		User result=(User)this.getHibernateTemplate().findByNamedParam("FROM User WHERE name =:name",
+				"name",name);
 		
-		if(user==null) {	
+		if(result ==null) {	
 			throw new UserNotFoundException("No user found with the name: "+ name);
 		}		
-		return user;
+		return result;
 	}
-	
-	/** USER DETAILS SERVICE ****/
-	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
-
-		com.sonat.blog.domain.User user = findByUserName(username);
-		List<GrantedAuthority> authorities = buildUserAuthority(user.getUserRole());
-
-		return buildUserForAuthentication(user, authorities);
-	}
-
-	private org.springframework.security.core.userdetails.User buildUserForAuthentication(com.sonat.blog.domain.User user, List<GrantedAuthority> authorities) {
-		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.isEnabled(), true, true, true, authorities);
-	}
-
-	private List<GrantedAuthority> buildUserAuthority(Set<UserRole> userRoles) {
-
-		Set<GrantedAuthority> setAuths = new HashSet<GrantedAuthority>();
-
-		// Build user's authorities
-		for (UserRole userRole : userRoles) {
-			setAuths.add(new SimpleGrantedAuthority(userRole.getRole()));
-		}
-
-		List<GrantedAuthority> Result = new ArrayList<GrantedAuthority>(setAuths);
-		return Result;
-	}	 
 }

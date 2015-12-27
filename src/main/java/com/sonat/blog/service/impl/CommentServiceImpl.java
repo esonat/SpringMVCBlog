@@ -10,7 +10,6 @@ import com.sonat.blog.dao.PostDao;
 import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.Post;
 import com.sonat.blog.domain.repository.CommentRepository;
-import com.sonat.blog.domain.repository.impl.CommentRepositoryImpl;
 import com.sonat.blog.exception.CommentNotFoundException;
 import com.sonat.blog.exception.PostNotFoundException;
 import com.sonat.blog.service.CommentService;
@@ -23,7 +22,10 @@ public class CommentServiceImpl implements CommentService {
 	private CommentRepository commentRepository;
 	@Autowired
 	private PostService postService;*/
+	
+	@Autowired
 	private CommentDao commentDao;
+	@Autowired
 	private PostService postService;
 	
 	private List<Comment> visited;
@@ -53,9 +55,9 @@ public class CommentServiceImpl implements CommentService {
 	}
 	
 	public void deleteComment(int postID, int commentID) {
-		Post post=postService.getPostById(postID);
+		/*Post post=postService.getPostById(postID);
 		if(post==null) return;
-		
+		*/
 		Comment comment=commentDao.get(commentID);
 		commentDao.delete(comment);
 	}
@@ -73,8 +75,8 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	public List<Comment> getAllComments(){
-		CommentRepository commentRepository=new CommentRepositoryImpl();
-		return commentRepository.getAllComments();
+		//CommentRepository commentRepository=new CommentRepositoryImpl();
+		return commentDao.getAll();
 	}
 
 	public List<Comment> getAllCommentsByPostId(int postID){

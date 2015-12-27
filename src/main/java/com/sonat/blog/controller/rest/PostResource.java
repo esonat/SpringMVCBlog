@@ -59,7 +59,6 @@ import com.sonat.blog.service.UserService;
 
 @Resource
 @Controller
-@AllowCORS
 @Path("/rest/post")
 public class PostResource {
 	@Autowired

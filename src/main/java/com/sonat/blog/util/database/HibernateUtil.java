@@ -1,4 +1,4 @@
-package com.sonat.blog.util.database;
+/*package com.sonat.blog.util.database;
  
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -24,4 +24,4 @@ public class HibernateUtil {
 		getSessionFactory().close();
 	}
  
-}
+}*/

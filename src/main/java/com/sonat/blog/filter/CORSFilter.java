@@ -1,4 +1,4 @@
-package com.sonat.blog.filter;
+/*package com.sonat.blog.filter;
 
 import java.io.IOException;
 
@@ -11,7 +11,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-/**
+*//**
  * Enabling CORS support  - Access-Control-Allow-Origin
  * @author zeroows@gmail.com
  * 
@@ -27,7 +27,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 	  <url-pattern>/*</url-pattern>
 	</filter-mapping>
  * </code>
- */
+ *//*
 public class CORSFilter extends OncePerRequestFilter {
 	private static final Log LOG = LogFactory.getLog(CORSFilter.class);
 
@@ -50,4 +50,4 @@ public class CORSFilter extends OncePerRequestFilter {
 		filterChain.doFilter(request, response);
 	}
 
-}
+}*/

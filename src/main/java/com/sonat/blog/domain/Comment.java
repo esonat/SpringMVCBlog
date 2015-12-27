@@ -18,8 +18,11 @@ import javax.persistence.Version;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.Cascade;
 
-import org.hibernate.search.annotations.Boost;
-import org.hibernate.search.annotations.ContainedIn;
+import org.hibernate.annotations.IndexColumn;
+import org.hibernate.annotations.Index;
+
+import org.hibernate.search.*;
+/*import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.DateBridge;
 import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
@@ -27,10 +30,9 @@ import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.Resolution;
 import org.hibernate.search.annotations.Store;
-
+*/
 @SuppressWarnings("serial")
 @Entity
-@Indexed
 @Table(name="comment",catalog="blogDB")
 public class Comment  extends ContentObject implements DomainObject{
 	
@@ -41,7 +43,7 @@ public class Comment  extends ContentObject implements DomainObject{
 	private Comment parent;
 	private Post post;
 	private String text;
-    private Integer version;
+    //private Integer version;
 
 	public Comment(){
 		super();
@@ -102,7 +104,7 @@ public class Comment  extends ContentObject implements DomainObject{
 	 //@JoinColumn(name="PARENT_ID", insertable = false, updatable = false)
 	//@ManyToOne(cascade={CascadeType.ALL})
 	
-	@Field(index = Index.TOKENIZED, store = Store.NO)
+	//@Field(index = Index.TOKENIZED, store = Store.NO)
 	@Column(name="TEXT",nullable=false)
 	public String getText() {
 		return text;
@@ -144,12 +146,12 @@ public class Comment  extends ContentObject implements DomainObject{
 	public void setText(String text) {
 		this.text = text;
 	}
-	@Version
+/*	@Version
     public Integer getVersion() {
         return version;
     }
 
     public void setVersion(Integer version) {
         this.version = version;
-    }
+    }*/
 }

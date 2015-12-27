@@ -1,4 +1,4 @@
-package com.sonat.blog.domain.repository.impl;
+/*package com.sonat.blog.domain.repository.impl;
 
 import java.util.Date;
 import java.util.List;
@@ -7,9 +7,9 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
-/*import org.hibernate.search.SearchException;
+import org.hibernate.search.SearchException;
 import org.hibernate.search.query.dsl.QueryBuilder;
-*/
+
 import org.springframework.stereotype.Repository;
 import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.Post;
@@ -96,7 +96,7 @@ public class CommentRepositoryImpl implements CommentRepository {
 		return (List<Comment>)query.list();		
 	}
 	
-	/*public Comment getChildCommentById(int postID,int commentID,int childCommentID){
+	public Comment getChildCommentById(int postID,int commentID,int childCommentID){
 		Session session	=	HibernateUtil.getSessionFactory().openSession();
 		Query query		=	session.createQuery("FROM Comment C WHERE C.post.ID= :postID AND C.parent.ID= :commentID AND C.ID= :childCommentID order by C.datetime asc");
 		query.setParameter("postID", postID);
@@ -107,7 +107,7 @@ public class CommentRepositoryImpl implements CommentRepository {
 		|| query.list()==null) throw new CommentNotFoundException(childCommentID);
 
 		return (Comment)query.uniqueResult();
-	}*/
+	}
 	
 	@SuppressWarnings("unchecked")
 	public List<Comment> getChildComments(int commentID) {
@@ -201,7 +201,7 @@ public class CommentRepositoryImpl implements CommentRepository {
 		return null;
 	}
 
-/*	public List<Comment> searchComments(String keyword) throws SearchException{
+	public List<Comment> searchComments(String keyword) throws SearchException{
 		Session session=HibernateUtil.getSessionFactory().openSession();
 		FullTextSession fullTextSession = Search.getFullTextSession(session);
      
@@ -224,6 +224,7 @@ public class CommentRepositoryImpl implements CommentRepository {
 	         
 	        fullTextSession.close();
 
-	}*/
+	}
 	
 }
+*/

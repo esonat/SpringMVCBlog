@@ -13,11 +13,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.sonat.blog.domain.Category;
 import com.sonat.blog.service.CategoryService;
 import com.sonat.blog.util.security.SecurityUtil;
+import com.sonat.blog.util.security.SecurityUtilInterface;
 
 @Controller
 public class CategoryController {
 	@Autowired
 	private CategoryService categoryService;
+	@Autowired 
+	private SecurityUtilInterface SecurityUtil;
+	
 	
 	@RequestMapping(value="/category/add",method=RequestMethod.GET)
 	public String getAddCategoryForm(@ModelAttribute("category")Category category,
@@ -30,12 +34,14 @@ public class CategoryController {
 		return "addCategory";		
 	}
 	@RequestMapping(value="/category/add",method=RequestMethod.POST)
-	public String addCategory(@ModelAttribute("category")@Valid Category category,
+	public String addCategory(@ModelAttribute("category")Category category,
 							   Model model,
 							   BindingResult result){
 		if(result.hasErrors()) return "addCategory";
-
-		categoryService.addCategory(category);
+		
+		if(category.getName()!=null)
+			categoryService.addCategory(category);
+		
 		return "redirect:/post";		
 	}
 	@RequestMapping(value = "/category/{categoryId}/delete", method = RequestMethod.POST)

@@ -7,7 +7,7 @@
 <properties>
 	<spring.version>4.2.4.RELEASE</spring.version>
 	 <spring-security.version>4.0.3.RELEASE</spring-security.version>
-	<hibernate.version>3.5.0-Final</hibernate.version>
+	<hibernate.version>3.6.10.Final</hibernate.version>
 </properties>
  <repositories>
         <repository>
@@ -35,58 +35,31 @@
         </repository>
     </repositories>
  <dependencies>
+ <dependency>
+<groupId>org.hibernate</groupId>
+<artifactId>antlr</artifactId>
+<version>2.7.5H3</version>
+</dependency>
+<dependency>
+	<groupId>com.sun.el</groupId>
+	<artifactId>el-ri</artifactId>
+	<version>1.0</version>
+</dependency>
+
+ <dependency>
+	<groupId>org.dom4j</groupId>
+	<artifactId>dom4j</artifactId>
+	<version>2.0.0-RC1</version>
+</dependency>
  
 <!-- SERVLET -->
-<dependency>
-	  		<groupId>javax.servlet</groupId>
-	  		<artifactId>jstl</artifactId>
-	  		<version>1.2</version>
-	  	</dependency>
 	  	
-  	<dependency>
-  		<groupId>javax.servlet</groupId>
-  		<artifactId>javax.servlet-api</artifactId>
-  		<version>3.1.0</version>
-  	</dependency>
-  	<dependency>
-        <groupId>javax.servlet.jsp</groupId>
-        <artifactId>jsp-api</artifactId>
-        <version>2.1</version>
-    </dependency>
-        <dependency>
+        <!-- <dependency>
 		    <groupId>javax.servlet.jsp</groupId>
 		    <artifactId>javax.servlet.jsp-api</artifactId>
 		    <version>2.3.1</version>
-		</dependency>
-		<dependency>
-	  		<groupId>javax.servlet</groupId>
-	  		<artifactId>jstl</artifactId>
-	  		<version>1.2</version>
-	  	</dependency>
-        <dependency>
-            <groupId>jstl</groupId>
-            <artifactId>jstl</artifactId>
-            <version>1.2</version>
-        </dependency>
-        <!-- <dependency>
-	    <groupId>javax.servlet</groupId>
-	    <artifactId>servlet-api</artifactId>
-	    <version>2.5</version>
-	    <scope>provided</scope>
-	</dependency> -->
-	        
-<!-- LOGGING -->
-<!-- <dependency>
-	<groupId>org.apache.logging.log4j</groupId>
-	<artifactId>log4j-core</artifactId>
-	<version>2.5</version>
-</dependency>
- -->
-<!-- <dependency>
-	<groupId>log4j</groupId>
-	<artifactId>log4j</artifactId>
-	<version>1.2.17</version>
-</dependency> -->
+		</dependency> -->
+        
 <dependency>
     <groupId>log4j</groupId>
     <artifactId>log4j</artifactId>
@@ -103,15 +76,11 @@
     </exclusions>
 </dependency>
 <dependency>
-     <groupId>org.slf4j</groupId>
-    <artifactId>slf4j-api</artifactId>
-    <version>1.6.0</version>
-</dependency>
-<dependency>
     <groupId>org.slf4j</groupId>
     <artifactId>jcl-over-slf4j</artifactId>
     <version>1.6.0</version>
 </dependency>
+
 <!-- <dependency>
     <groupId>org.slf4j</groupId>
     <artifactId>slf4j-log4j12</artifactId>
@@ -129,11 +98,6 @@
       <groupId>commons-fileupload</groupId>
       <artifactId>commons-fileupload</artifactId>
       <version>1.2.1</version>
-  </dependency>
-  <dependency>
-      <groupId>commons-lang</groupId>
-      <artifactId>commons-lang</artifactId>
-      <version>2.6</version>
   </dependency>
 
         <!-- image processing dependencies -->
@@ -185,7 +149,6 @@
           <groupId>org.springframework</groupId>
           <artifactId>spring-aspects</artifactId>
           <version>${spring.version}</version>
-          <scope>provided</scope>
       </dependency>
       <dependency>
           <groupId>org.springframework</groupId>
@@ -256,14 +219,27 @@
             <version>1.6.2</version>
         </dependency>
  -->
-        <!-- Hibernate dependencies -->
+ <dependency>
+	<groupId>net.sf.ehcache</groupId>
+	<artifactId>ehcache</artifactId>
+	<version>2.10.1</version>
+</dependency>
 <dependency>
 	<groupId>net.sf.ehcache</groupId>
 	<artifactId>ehcache</artifactId>
 	<version>2.10.1</version>
 </dependency>
-
-  <dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-search-orm</artifactId>
+			<version>4.0.0.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>hibernate-commons-annotations</groupId>
+			<artifactId>hibernate-commons-annotations</artifactId>
+			<version>3.2.0.Final</version>
+		</dependency>
+		<dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>${hibernate.version}</version>
@@ -309,25 +285,15 @@
                 </exclusion>
             </exclusions>
         </dependency>
+       <dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>4.3.1.Final</version>
+		</dependency>
         <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>
             <artifactId>hibernate-jpa-2.0-api</artifactId>
             <version>1.0.0.Final</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>5.2.2.Final</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>javax.xml.bind</groupId>
-                    <artifactId>jaxb-api</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.sun.xml.bind</groupId>
-                    <artifactId>jaxb-impl</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>javax.validation</groupId>
@@ -392,6 +358,11 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2.2</version>
+		</dependency>
         
         	<dependency>
   		<groupId>org.springframework.webflow</groupId>
@@ -412,11 +383,8 @@
 			<artifactId>hibernate-search-orm</artifactId>
 			<version>5.5.1.Final</version>
 		</dependency> -->
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-search</artifactId>
-			<version>3.2.1.Final</version>
-		</dependency>
+		
+				
 		<!-- <dependency>
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-core</artifactId>
@@ -509,11 +477,11 @@
             <artifactId>resteasy-jaxb-provider</artifactId>
             <version>3.0.5.Final</version>
         </dependency>
-        <dependency>
+      <!--   <dependency>
         <groupId>org.jboss.resteasy</groupId>
         	<artifactId>resteasy-spring</artifactId>
         	<version>3.0.5.Final</version>
-    	</dependency>
+    	</dependency> -->
     	<dependency>
 		<groupId>org.jboss.resteasy</groupId>
 		<artifactId>resteasy-jackson-provider</artifactId>
@@ -524,8 +492,57 @@
 		<artifactId>resteasy-cache-core</artifactId>
 		<version>3.0.5.Final</version>
 	</dependency>
-  	
-    </dependencies>
+
+	<dependency>
+		<groupId>org.slf4j</groupId>
+		<artifactId>slf4j-api</artifactId>
+		<version>1.6.1</version>
+	</dependency>
+	<dependency>
+		<groupId>org.slf4j</groupId>
+		<artifactId>slf4j-simple</artifactId>
+		<version>1.6.1</version>
+	</dependency>
+	<!-- <dependency>
+		<groupId>javax.servlet.jsp</groupId>
+		<artifactId>jsp-api</artifactId>
+		<version>2.2</version>
+	</dependency>
+	 -->
+	
+	<dependency>
+  		<groupId>javax.servlet</groupId>
+  		<artifactId>jstl</artifactId>
+  		<version>1.2</version>
+  	</dependency>
+  	<dependency>
+			<groupId>javassist</groupId>
+			<artifactId>javassist</artifactId>
+			<version>3.12.1.GA</version>
+		</dependency>
+
+  	<dependency>
+  		<groupId>javax</groupId>
+  		<artifactId>javaee-api</artifactId>
+  		<version>7.0</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>javax.servlet.jsp</groupId>
+  		<artifactId>javax.servlet.jsp-api</artifactId>
+  		<version>2.3.1</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>javax.servlet.jsp</groupId>
+  		<artifactId>jsp-api</artifactId>
+  		<version>2.2</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>javax.el</groupId>
+  		<artifactId>el-api</artifactId>
+  		<version>2.2</version>
+  		<scope>provided</scope>
+  	</dependency>
+ </dependencies>
 
     <build>
         <plugins>
