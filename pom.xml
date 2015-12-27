@@ -112,12 +112,13 @@
     <artifactId>jcl-over-slf4j</artifactId>
     <version>1.6.0</version>
 </dependency>
-<dependency>
+<!-- <dependency>
     <groupId>org.slf4j</groupId>
     <artifactId>slf4j-log4j12</artifactId>
     <version>1.6.0</version>
 </dependency>
-<dependency>
+ -->
+ <dependency>
 	<groupId>org.aspectj</groupId>
 	<artifactId>aspectjrt</artifactId>
 	<version>1.8.7</version>
@@ -249,13 +250,19 @@
         </dependency> 
  -->
         <!-- ehcache dependencies -->
-        <dependency>
+<!--         <dependency>
             <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache</artifactId>
             <version>1.6.2</version>
         </dependency>
-
+ -->
         <!-- Hibernate dependencies -->
+<dependency>
+	<groupId>net.sf.ehcache</groupId>
+	<artifactId>ehcache</artifactId>
+	<version>2.10.1</version>
+</dependency>
+
   <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
