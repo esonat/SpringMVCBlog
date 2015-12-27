@@ -18,7 +18,16 @@ public class CategoryDaoHibernate extends GenericDaoHibernate<Category> implemen
     public CategoryDaoHibernate() {
        super(Category.class);
     }
+    
+    /*@Override
+    public void save(Category category) {
+        //getHibernateTemplate().save(object);
+    	Category result=new Category(category.getName());
+        this.getHibernateTemplate().save(result);
+    	this.getHibernateTemplate().flush();
+    }*/
 
+    
 	@Override
 	@SuppressWarnings("unchecked")
 	public Category getCategoryByName(String categoryName)  throws DataAccessException {

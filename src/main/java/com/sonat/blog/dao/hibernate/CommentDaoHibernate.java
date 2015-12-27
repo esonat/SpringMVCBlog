@@ -84,7 +84,7 @@ public class CommentDaoHibernate extends GenericDaoHibernate<Comment> implements
 	@Override
 	public List<Comment> getChildCommentsByDepth(int commentID, int depth) {
 		List<Comment> result=(List<Comment>)this.getHibernateTemplate().findByNamedParam("FROM Comment as C WHERE C.parent.ID= :commentID AND C.depth= :depth order by C.datetime asc",
-				new String[]{"commentID","depth"},new String[]{String.valueOf(commentID),String.valueOf(depth)});
+				new String[]{"commentID","depth"},new Object[]{commentID,depth});
 		
 		if(result ==null
 		|| result.size()==0) return null;
@@ -96,7 +96,7 @@ public class CommentDaoHibernate extends GenericDaoHibernate<Comment> implements
 	public List<Comment> getCommentsByDepth(int postID, int depth) {
 		
 		List<Comment> result=(List<Comment>)this.getHibernateTemplate().findByNamedParam("FROM Comment as C WHERE C.post.ID=:postID AND C.depth=:depth order by C.datetime asc",
-				new String[]{"postID","depth"},new String[]{String.valueOf(postID),String.valueOf(depth)});
+				new String[]{"postID","depth"},new Object[]{postID,depth});
 		
 		if(result==null
 		|| result.size()==0) return null;
@@ -106,7 +106,7 @@ public class CommentDaoHibernate extends GenericDaoHibernate<Comment> implements
 	@Override
 	public Comment getPostCommentById(int postID, int commentID) {
 		Comment result=(Comment)this.getHibernateTemplate().findByNamedParam("FROM Comment where ID= :commentID and POST_ID= :postID",
-				new String[]{"commentID","postID"},new String[]{String.valueOf(commentID),String.valueOf(postID)});
+				new String[]{"commentID","postID"},new Object[]{commentID,postID});
 		
 		if(result==null)
 			throw new CommentNotFoundException(commentID);

@@ -8,8 +8,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+
+import net.sf.ehcache.constructs.scheduledrefresh.ScheduledRefreshJobStorePropertiesFactory;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -21,8 +24,11 @@ public class UserRole implements DomainObject{
 	private Integer userRoleId;
 	private User user;
 	private String role;
-
+	private Integer version;
+	
+	
 	public UserRole() {
+		super();
 	}
 
 	public UserRole(User user, String role) {
@@ -59,5 +65,13 @@ public class UserRole implements DomainObject{
 	public void setRole(String role) {
 		this.role = role;
 	}
+	@Version
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
 
 }

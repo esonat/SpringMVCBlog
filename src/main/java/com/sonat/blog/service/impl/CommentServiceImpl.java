@@ -55,9 +55,9 @@ public class CommentServiceImpl implements CommentService {
 	}
 	
 	public void deleteComment(int postID, int commentID) {
-		Post post=postService.getPostById(postID);
+		/*Post post=postService.getPostById(postID);
 		if(post==null) return;
-		
+		*/
 		Comment comment=commentDao.get(commentID);
 		commentDao.delete(comment);
 	}

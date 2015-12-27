@@ -43,7 +43,7 @@ public class Comment  extends ContentObject implements DomainObject{
 	private Comment parent;
 	private Post post;
 	private String text;
-    private Integer version;
+    //private Integer version;
 
 	public Comment(){
 		super();
@@ -146,12 +146,12 @@ public class Comment  extends ContentObject implements DomainObject{
 	public void setText(String text) {
 		this.text = text;
 	}
-	@Version
+/*	@Version
     public Integer getVersion() {
         return version;
     }
 
     public void setVersion(Integer version) {
         this.version = version;
-    }
+    }*/
 }

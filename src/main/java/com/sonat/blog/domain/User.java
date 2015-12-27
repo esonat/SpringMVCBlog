@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.persistence.Version;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -35,8 +36,9 @@ public class User implements DomainObject{
 	private String password;
 	private boolean enabled;
 	private Set<UserRole> 	userRole = new HashSet<UserRole>(0);
+    private Integer version;
 
-	public User() {
+    public User() {
 		super();
 	}
 	public User(String name) {
@@ -102,13 +104,22 @@ public class User implements DomainObject{
 		this.enabled = enabled;
 	}
 	
-	@OneToMany(fetch=FetchType.LAZY,mappedBy="user")
+	@OneToMany(fetch=FetchType.EAGER,mappedBy="user")
 	public Set<UserRole> getUserRole() {
 		return userRole;
 	}
 	public void setUserRole(Set<UserRole> userRole) {
 		this.userRole = userRole;
 	}
+	
+	@Version
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
 	
 	
 }

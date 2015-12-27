@@ -3,6 +3,8 @@ package com.sonat.blog.domain;
 import static javax.persistence.GenerationType.IDENTITY;
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,19 +14,20 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
+import javax.validation.constraints.Null;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name="category",catalog="blogDB",
-uniqueConstraints={@UniqueConstraint(columnNames="NAME")})
+@Table(name="category",catalog="blogDB")
+//uniqueConstraints={@UniqueConstraint(columnNames="NAME")})
 public class Category implements DomainObject{
 	
 	private int ID;
 	private String name;
 	private Set<Post> posts=new HashSet<Post>();
-    private Integer version;
+    //private Integer version;
 
 	public Category(){
 		super();
@@ -39,7 +42,7 @@ public class Category implements DomainObject{
 	
 	@Id
 	@GeneratedValue(strategy=IDENTITY)
-	@Column(name="CATEGORY_ID",unique=true,nullable=false)
+	@Column(name="CATEGORY_ID",nullable=false,unique=true)
 	@JsonIgnore
 	public int getID() {
 		return ID;
@@ -64,12 +67,12 @@ public class Category implements DomainObject{
 	public void setPosts(Set<Post> posts) {
 		this.posts = posts;
 	}
-	@Version
+/*	@Version
     public Integer getVersion() {
         return version;
     }
 
     public void setVersion(Integer version) {
         this.version = version;
-    }
+    }*/
 }

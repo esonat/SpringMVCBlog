@@ -11,6 +11,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 import javax.validation.constraints.Size;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.Cache;
@@ -41,6 +42,7 @@ public class Post extends ContentObject implements DomainObject {
 	@Size(min=5,max=1000000,message="{Size.Post.text.validation}")
 	private String text;
 	private User user;
+    //private Integer version;
 	
 	public Post(){
 		super();
@@ -112,6 +114,15 @@ public class Post extends ContentObject implements DomainObject {
 	public void setUser(User user) {
 		this.user = user;
 	}	
+	
+/*	@Version
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }*/
 	 @Override
      public String toString() {
         StringBuilder stringBuilder = new StringBuilder("Id: ").append(this.getID()).append(" | Text:").append(this.getText()).append(" | Date:").append(this.getDate().toString());

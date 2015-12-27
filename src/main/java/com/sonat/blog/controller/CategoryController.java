@@ -34,12 +34,14 @@ public class CategoryController {
 		return "addCategory";		
 	}
 	@RequestMapping(value="/category/add",method=RequestMethod.POST)
-	public String addCategory(@ModelAttribute("category")@Valid Category category,
+	public String addCategory(@ModelAttribute("category")Category category,
 							   Model model,
 							   BindingResult result){
 		if(result.hasErrors()) return "addCategory";
-
-		categoryService.addCategory(category);
+		
+		if(category.getName()!=null)
+			categoryService.addCategory(category);
+		
 		return "redirect:/post";		
 	}
 	@RequestMapping(value = "/category/{categoryId}/delete", method = RequestMethod.POST)

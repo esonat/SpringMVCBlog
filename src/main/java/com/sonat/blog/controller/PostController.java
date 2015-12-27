@@ -91,9 +91,9 @@ public class PostController {
     							 RedirectAttributes redir){
 		ModelAndView mav=new ModelAndView();
 		
-		//List<Category> categories=categoryService.getAllCategories();
+		List<Category> categories=categoryService.getAllCategories();
 		mav.addObject("returnURL","/post/add");
-		//mav.addObject("categories",categories);
+		mav.addObject("categories",categories);
 		mav.addObject("loggedUser",SecurityUtil.getCurrentUsername());
 		mav.setViewName("addPost");
 	    

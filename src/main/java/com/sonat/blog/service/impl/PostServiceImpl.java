@@ -57,7 +57,6 @@ public class PostServiceImpl implements PostService{
 	}
 
 	public void deletePost(int ID) {
-		Post post=postDao.get(ID);
-		postDao.delete(post);
+		postDao.deleteById(ID);
 	}
 }
