@@ -3,7 +3,9 @@ package config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.sonat.blog.dao.CategoryDao;
 import com.sonat.blog.dao.PostDao;
+import com.sonat.blog.dao.hibernate.CategoryDaoHibernate;
 import com.sonat.blog.dao.hibernate.PostDaoHibernate;
 import com.sonat.blog.service.CategoryService;
 import com.sonat.blog.service.UserService;
