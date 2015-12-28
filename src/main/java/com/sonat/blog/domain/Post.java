@@ -88,7 +88,8 @@ public class Post extends ContentObject implements DomainObject {
 	public String getText() {
 		return text;
 	}
-	@ManyToOne(fetch=FetchType.EAGER)
+	
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="USER_ID",nullable=false)
 	public User getUser() {
 		return user;

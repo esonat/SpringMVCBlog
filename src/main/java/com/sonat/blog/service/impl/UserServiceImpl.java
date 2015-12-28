@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getUserByUsername(String username) 
 	throws UserNotFoundException{
-		return userDao.findByUserName(username);
+		return userDao.getUserByUserName(username);
 	}
 	
 }

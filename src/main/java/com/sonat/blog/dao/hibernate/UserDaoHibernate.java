@@ -33,7 +33,7 @@ public class UserDaoHibernate extends GenericDaoHibernate<User> implements UserD
 	 
 	 @Override
 	 @SuppressWarnings("unchecked")
-	 public User findByUserName(String username) {
+	 public User getUserByUserName(String username) {
 		List<User> result=(List<User>)this.getHibernateTemplate().findByNamedParam("FROM User where username= :username",
 				"username",username);
 		
@@ -43,14 +43,16 @@ public class UserDaoHibernate extends GenericDaoHibernate<User> implements UserD
 			return null;
 		}
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public User getUserByName(String name) {
-		User result=(User)this.getHibernateTemplate().findByNamedParam("FROM User WHERE name =:name",
+		List<User> result=(List<User>)this.getHibernateTemplate().findByNamedParam("FROM User WHERE name =:name",
 				"name",name);
 		
-		if(result ==null) {	
+		if(result ==null
+		|| result.size()==0) {	
 			throw new UserNotFoundException("No user found with the name: "+ name);
 		}		
-		return result;
+		return result.get(0);
 	}
 }

@@ -22,7 +22,7 @@ public class MyUserDetailsService implements UserDetailsService {
 
 	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
 		
-		com.sonat.blog.domain.User user = userDao.findByUserName(username);
+		com.sonat.blog.domain.User user = userDao.getUserByUserName(username);
 		List<GrantedAuthority> authorities = buildUserAuthority(user.getUserRole());
 
 		return buildUserForAuthentication(user, authorities);

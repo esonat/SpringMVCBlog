@@ -21,9 +21,9 @@ import com.sonat.blog.service.CategoryService;
 import com.sonat.blog.service.PostService;
 import com.sonat.blog.service.UserService;
 import com.sonat.blog.util.security.SecurityUtil;
+import com.sonat.blog.util.security.SecurityUtilInterface;
 
 @Service(value = "postService")
-@Transactional
 public class PostServiceImpl implements PostService{
 	@Autowired
 	private PostDao postDao;
@@ -32,7 +32,7 @@ public class PostServiceImpl implements PostService{
 	@Autowired
 	private UserService userService;
 	@Autowired
-	private SecurityUtil securityUtil;
+	private SecurityUtilInterface securityUtil;
 	
 	public List<Post> getAll() {
 		List<Post> list;
@@ -63,15 +63,9 @@ public class PostServiceImpl implements PostService{
 		return postDao.getPostsByUsername(username);
 	}
 	
-	@Transactional(rollbackFor=DataAccessException.class, readOnly=false, timeout=30, propagation=Propagation.SUPPORTS, isolation=Isolation.DEFAULT)
+	//@Transactional(rollbackFor=DataAccessException.class, readOnly=false, timeout=30, propagation=Propagation.SUPPORTS, isolation=Isolation.DEFAULT)
 	public void addPost(Post post,Category category) {
-		post.setCategory(category);
-		post.setDate(new Date());
-		post.setUser(securityUtil.getCurrentUser());	
-	
-		post.getUser().getPosts().add(post);
-		
-		postDao.save(post);
+		postDao.addPost(post, category);
 	}
 
 	public void deletePost(int ID) {
