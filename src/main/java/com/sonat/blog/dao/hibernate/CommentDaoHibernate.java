@@ -9,10 +9,8 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
-import org.jgroups.stack.StaticInterval;
 //import org.hibernate.search.SearchException;
 import org.springframework.stereotype.Repository;
-
 import com.sonat.blog.dao.CategoryDao;
 import com.sonat.blog.dao.CommentDao;
 import com.sonat.blog.domain.Category;

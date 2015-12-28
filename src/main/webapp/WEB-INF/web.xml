@@ -1,62 +1,55 @@
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
-			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-			xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
 		 						 http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 
 	<servlet>
-        <servlet-name>blogDispatcher</servlet-name>
-        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<servlet-name>blogDispatcher</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
-            <param-name>contextConfigLocation</param-name>
-            <param-value>/WEB-INF/spring/spring-web-master.xml</param-value>
-        </init-param>
-	 <!--  <init-param>
-          <param-name>readonly</param-name>
-          <param-value>false</param-value>
-        </init-param> -->
-        <load-on-startup>1</load-on-startup>
-    </servlet>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/spring-web-master.xml</param-value>
+		</init-param>
+		<!-- <init-param> <param-name>readonly</param-name> <param-value>false</param-value> 
+			</init-param> -->
+		<load-on-startup>1</load-on-startup>
+	</servlet>
 
-    <servlet-mapping>
-        <servlet-name>blogDispatcher</servlet-name>
-        <url-pattern>/</url-pattern>
-    </servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>blogDispatcher</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
 
-    <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
-		
-    	
-	 <context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>classpath*:META-INF/spring/spring-master.xml,
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath*:META-INF/spring/spring-master.xml,
                     			/WEB-INF/spring/spring-web-security.xml,
                     			/WEB-INF/spring/spring-web-blog-database.xml</param-value>
-    </context-param>
-
-    <servlet-mapping>
-        <servlet-name>blogDispatcher</servlet-name>
-        <url-pattern>/</url-pattern>
-    </servlet-mapping>
+	</context-param>
 
 	<filter>
-        <filter-name>OpenEntityManagerInViewFilter</filter-name>
-        <filter-class>org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-class>
-    </filter>
-    <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
-		
-    	
-	 <context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>classpath*:META-INF/spring/spring-master.xml,
+		<filter-name>OpenEntityManagerInViewFilter</filter-name>
+		<filter-class>org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-class>
+	</filter>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath*:META-INF/spring/spring-master.xml,
         						/WEB-INF/spring/spring-web-blog-database.xml,
         						/WEB-INF/spring/spring-web-security.xml
                  </param-value>
-    </context-param>
- 
-    <filter>
+	</context-param>
+
+	<filter>
 		<filter-name>springSecurityFilterChain</filter-name>
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
 	</filter>
@@ -64,36 +57,22 @@
 		<filter-name>springSecurityFilterChain</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	 
-<!-- 	<filter>
-        <filter-name>OpenEntityManagerInViewFilter</filter-name>
-        <filter-class>org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-class>
-    </filter>
-    
-    <filter-mapping>
-        <filter-name>OpenEntityManagerInViewFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping> -->	
-	
-<!-- 	<filter>
-	  <filter-name>cors</filter-name>
-	  <filter-class>com.sonat.blog.filter.CORSFilter</filter-class>
-	</filter>  
+
+	<!-- <filter> <filter-name>OpenEntityManagerInViewFilter</filter-name> <filter-class>org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-class> 
+		</filter> -->
+
 	<filter-mapping>
-	  <filter-name>cors</filter-name>
-	  <url-pattern>/*</url-pattern>
+		<filter-name>OpenEntityManagerInViewFilter</filter-name>
+		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	 -->
-	
-	
-	
-	<!--  
-	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>
-					/WEB-INF/spring/webcontext/blog-security.xml,
-					/WEB-INF/spring/webcontext/blog-database.xml
-		</param-value>
-	</context-param>
-	-->
+
+	<!-- <filter> <filter-name>cors</filter-name> <filter-class>com.sonat.blog.filter.CORSFilter</filter-class> 
+		</filter> <filter-mapping> <filter-name>cors</filter-name> <url-pattern>/*</url-pattern> 
+		</filter-mapping> -->
+
+
+
+	<!-- <context-param> <param-name>contextConfigLocation</param-name> <param-value> 
+		/WEB-INF/spring/webcontext/blog-security.xml, /WEB-INF/spring/webcontext/blog-database.xml 
+		</param-value> </context-param> -->
 </web-app>
