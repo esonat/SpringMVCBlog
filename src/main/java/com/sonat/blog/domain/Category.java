@@ -17,6 +17,7 @@ import javax.persistence.Version;
 import javax.validation.constraints.Null;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.hibernate.annotations.Cascade;
 
 @SuppressWarnings("serial")
 @Entity
@@ -61,6 +62,7 @@ public class Category implements DomainObject{
 	
 	@OneToMany(fetch=FetchType.LAZY,mappedBy="category")
 	@JsonIgnore
+	@Cascade(org.hibernate.annotations.CascadeType.DELETE)
 	public Set<Post> getPosts() {
 		return posts;
 	}

@@ -1,6 +1,6 @@
 package com.sonat.blog.dao.hibernate;
 
-import com.sonat.blog.domain.*;
+import com.sonat.blog.domain.Category;
 
 import junit.framework.Assert;
 import org.apache.taglibs.standard.lang.jstl.test.beans.PublicInterface2;
@@ -24,11 +24,8 @@ public class testCategoryDaoHibernate {
 	@Autowired
 	private CategoryDao categoryDao;
 		
-	private static final String VALID_CATEGORY_NAME		="java";
 	private static final String INVALID_CATEGORY_NAME	="example";
-	private static final int 	VALID_CATEGORY_ID=1;
 	private static final int 	INVALID_CATEGORY_ID=1000;
-	
 	
 	
 	@Ignore
@@ -43,6 +40,11 @@ public class testCategoryDaoHibernate {
 		if(categoryDao.getAll()==null) return -1;
 		return categoryDao.getAll().get(0).getID();
 	}
+	@Ignore 
+	public String getValidCategoryName(){
+		if(categoryDao.getAll()==null) return null;
+		return categoryDao.getAll().get(0).getName();
+	}	
 	
 	@Test
 	public void testAddCategory(){
@@ -62,20 +64,42 @@ public class testCategoryDaoHibernate {
 		Assert.assertNotNull(category);
 		Assert.assertEquals(validID,category.getID());
 	}
-	@Test(expected=DataAccessException.class)
+	@Test
 	public void testInvalidGetCategory(){
-		Category category=categoryDao.get(INVALID_CATEGORY_ID);
-		
+		Category category=categoryDao.get(2000);
 		Assert.assertNull(category);
 	}
 	@Test
 	public void testValidDelete(){
-		int old=getCategoryCount();
+		int oldcount=getCategoryCount();
 		Category category=categoryDao.get(getValidCategoryID());
 		
 		categoryDao.delete(category);
+		int newcount=getCategoryCount();
+		Assert.assertEquals(newcount, oldcount-1);		
 	}
-	
-
-
+	@Test(expected=DataAccessException.class)
+	public void testInvalidDelete(){
+		int oldcount=getCategoryCount();
+		
+		Category category=categoryDao.get(INVALID_CATEGORY_ID);
+		categoryDao.delete(category);
+		
+		int newcount=getCategoryCount();
+		Assert.assertEquals(newcount, oldcount);
+	}
+	@Test
+	public void testValidGetCategoryByName(){
+		String validName=getValidCategoryName();
+		Category category=categoryDao.getCategoryByName(validName);
+		
+		Assert.assertNotNull(category);
+		Assert.assertEquals(validName,category.getName());
+	}
+	@Test
+	public void testInvalidGetCategoryByName(){
+		Category category=categoryDao.getCategoryByName(INVALID_CATEGORY_NAME);
+		
+		Assert.assertNull(category);
+	}
 }
