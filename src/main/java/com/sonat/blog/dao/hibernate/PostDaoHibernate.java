@@ -121,6 +121,9 @@ public class PostDaoHibernate extends GenericDaoHibernate<Post> implements PostD
 		List<Post> result=(List<Post>)this.getHibernateTemplate().findByNamedParam("FROM Post P WHERE P.user.username= :username order by date asc",
 				"username",username);
 		
+		if(result==null
+			|| result.size()==0) return null;
+		
 		return result;
 	}
 	
