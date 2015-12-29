@@ -10,15 +10,101 @@
 	<hibernate.version>3.6.10.Final</hibernate.version>
 </properties>
  <repositories>
-        <repository>
+<!--  <repository>
+   <id>repository.springframework.maven.release</id>
+   <name>Spring Framework Maven Release Repository</name>
+   <url>http://maven.springframework.org/release</url>
+</repository> 
+ <repository>
+    <id>MavenCentral</id>
+    <name>Maven repository</name>
+    <url>http://repo1.maven.org/maven2</url>
+    <releases>
+        <enabled>true</enabled>
+    </releases>
+    <snapshots>
+        <enabled>false</enabled>
+    </snapshots>
+</repository>
+<repository>
+    <id>objectweb</id>
+    <name>Objectweb repository</name>
+    <url>http://maven.objectweb.org/maven2</url>
+    <releases>
+        <enabled>true</enabled>
+    </releases>
+    <snapshots>
+        <enabled>false</enabled>
+    </snapshots>
+</repository>
+<repository>
+    <id>jboss</id>
+    <name>JBoss Maven2 repository</name>
+    <url>http://repository.jboss.com/maven2/</url>
+    <snapshots>
+        <enabled>false</enabled>
+    </snapshots>
+    <releases>
+        <enabled>true</enabled>
+    </releases>
+</repository>
+<repository>
+    <id>glassfish</id>
+    <name>Glassfish repository</name>
+    <url>http://download.java.net/maven/1</url>
+    <layout>legacy</layout>
+    <releases>
+        <enabled>true</enabled>
+    </releases>
+    <snapshots>
+        <enabled>false</enabled>
+    </snapshots>
+</repository>
+<repository>
+    <id>apache.snapshots</id>
+    <name>Apache Snapshot Repository</name>
+    <url>
+        http://people.apache.org/repo/m2-snapshot-repository
+    </url>
+    <releases>
+        <enabled>false</enabled>
+    </releases>
+    <snapshots>
+        <enabled>true</enabled>
+    </snapshots>
+</repository>
+<repository>
+    <id>ops4j.repository</id>
+    <name>OPS4J Repository</name>
+    <url>http://repository.ops4j.org/maven2</url>
+    <releases>
+        <enabled>true</enabled>
+    </releases>
+    <snapshots>
+        <enabled>false</enabled>
+    </snapshots>
+</repository>
+<repository>
+    <id>Codehaus Snapshots</id>
+    <url>http://snapshots.repository.codehaus.org/</url>
+    <snapshots>
+        <enabled>true</enabled>
+    </snapshots>
+    <releases>
+        <enabled>false</enabled>
+    </releases>
+</repository>
+ -->
+ 		<repository>
             <id>JBoss Repo</id>
             <url>http://repository.jboss.com/maven2</url>
             <name>JBoss Repo</name>
-        </repository>
-        <repository>
+        </repository> 
+		 <repository>
             <id>ibiblio mirror</id>
             <url>http://mirrors.ibiblio.org/pub/mirrors/maven2/</url>
         </repository>
+
         <repository>
             <id>jboss-public-repository-group</id>
             <name>JBoss Public Maven Repository Group</name>
@@ -32,6 +118,10 @@
                 <enabled>true</enabled>
                 <updatePolicy>never</updatePolicy>
             </snapshots>
+        </repository>
+          <repository>
+            <id>jboss</id>
+            <url>http://repository.jboss.org/nexus/content/groups/public-jboss/</url>
         </repository>
     </repositories>
  <dependencies>
@@ -181,17 +271,26 @@
         </exclusions>
     </dependency>
     
+    <dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-expression</artifactId>
+		<version>4.2.4.RELEASE</version>
+	</dependency>	    
         <dependency>
-    <groupId>org.springframework</groupId>
-	    <artifactId>spring-dao</artifactId>
-	    <version>2.0.8</version>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-dao</artifactId>
+		    <version>2.0.8</version>
 	</dependency>
         <dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-oxm</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>4.2.4.RELEASE</version>
+		</dependency>
         <!--Spring OXM-->
        <!--  <dependency>
 		    <groupId>org.springframework.ws</groupId>
@@ -415,6 +514,13 @@
             <version>2.5.1</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>4.0.3.RELEASE</version>
+		</dependency>
+		        
+        
         	<dependency>
   		<groupId>org.springframework.security</groupId>
   		<artifactId>spring-security-config</artifactId>
@@ -492,6 +598,11 @@
 		<artifactId>resteasy-cache-core</artifactId>
 		<version>3.0.5.Final</version>
 	</dependency>
+	<dependency>
+	<groupId>org.jboss.logging</groupId>
+	<artifactId>jboss-logging</artifactId>
+	<version>3.2.0.Final</version>
+</dependency>
 
 	<dependency>
 		<groupId>org.slf4j</groupId>
@@ -542,8 +653,22 @@
   		<version>2.2</version>
   		<scope>provided</scope>
   	</dependency>
+  	<dependency>
+  		<groupId>org.codehaus.jackson</groupId>
+  		<artifactId>jackson-core-asl</artifactId>
+  		<version>1.9.10</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.jboss.resteasy</groupId>
+  		<artifactId>resteasy-multipart-provider</artifactId>
+  		<version>3.0.5.Final</version>
+  	</dependency>
+  	<dependency>
+	<groupId>org.scannotation</groupId>
+	<artifactId>scannotation</artifactId>
+	<version>1.0.3</version>
+</dependency>
  </dependencies>
-
     <build>
         <plugins>
             <plugin>
