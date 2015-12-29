@@ -9,6 +9,7 @@ import org.apache.xmlbeans.impl.common.ResolverUtil;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.omg.CORBA.UnknownUserException;
+import org.springframework.aop.ThrowsAdvice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.Authentication;
@@ -30,6 +31,7 @@ import com.sonat.blog.domain.Post;
 import com.sonat.blog.domain.User;
 //import com.sonat.blog.util.database.HibernateUtil;
 import com.sonat.blog.domain.repository.CommentRepository;
+import com.sonat.blog.exception.PostNotFoundException;
 import com.sonat.blog.service.UserService;
 import com.sonat.blog.util.security.SecurityUtilInterface;
 
@@ -58,22 +60,14 @@ public class PostDaoHibernate extends GenericDaoHibernate<Post> implements PostD
 		
 		Authentication auth = 	SecurityContextHolder.getContext().getAuthentication();
 	    String username = 		auth.getName(); 
-		User user		=		userService.getUserByUsername("engin");
+		User user	=		userService.getUserByUsername(username);
 
-		//user.getPosts().add(post);
-		//session.update(user);
 		post.setUser(user);
 		post.getUser().getPosts().add(post);
-		session.save(post);
-		//user.getPosts().add(post);
-		//this.getHibernateTemplate().initialize(user);
-		//post.getUser().getPosts().add(post);
 		
+		session.save(post);
 		session.getTransaction().commit();
 		session.close();
-		
-		post.setUser(user);
-		post.getUser().getPosts().add(post);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -83,9 +77,10 @@ public class PostDaoHibernate extends GenericDaoHibernate<Post> implements PostD
 		Query query	= session.createQuery("FROM Post WHERE ID= :ID");
 		query.setParameter("ID", ID);
 		
-		session.beginTransaction();
-		
 		Post post=(Post)query.uniqueResult();
+		if(post==null) throw new PostNotFoundException(ID);
+				
+		session.beginTransaction();
 		
 		for(Comment comment:post.getComments()){
 			comment.setPost(null);
