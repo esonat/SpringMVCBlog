@@ -20,7 +20,7 @@ public class SecurityUtil implements SecurityUtilInterface {
 		
 	    User currentUser=null;
 	    try{
-			currentUser=userService.getUserByName(name);
+			currentUser=userService.getUserByUsername(name);
 		}catch(Exception e){
 			return null;
 		}

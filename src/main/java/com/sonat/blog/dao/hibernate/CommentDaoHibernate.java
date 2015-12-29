@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.xmlbeans.impl.common.ResolverUtil;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.search.FullTextSession;
@@ -28,7 +29,7 @@ public class CommentDaoHibernate extends GenericDaoHibernate<Comment> implements
 	 
 	@Override
 	public void addChildComment(Comment parentComment, Comment childComment) {
-		Session session=this.getHibernateTemplate().getSessionFactory().getCurrentSession();
+	/*	Session session=this.getHibernateTemplate().getSessionFactory().getCurrentSession();
 		session.beginTransaction();
 		
 		Date date = new Date();	
@@ -40,7 +41,16 @@ public class CommentDaoHibernate extends GenericDaoHibernate<Comment> implements
 		childComment.setParent(parentComment);
 		
 		session.save(childComment);
-		session.getTransaction().commit();
+		session.getTransaction().commit();*/
+		Date date = new Date();	
+		Post post =parentComment.getPost();
+		
+		childComment.setDatetime(date);
+		childComment.setDepth(parentComment.getDepth()+1);
+		childComment.setPost(post);
+		childComment.setParent(parentComment);
+		
+		this.getHibernateTemplate().save(childComment);
 		
 	}
 	@Override
@@ -53,15 +63,20 @@ public class CommentDaoHibernate extends GenericDaoHibernate<Comment> implements
 		
 		this.getHibernateTemplate().save(comment);	
 	}
+	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void deleteChildComment(Comment parentComment, int childCommentID) {
-		Comment child=(Comment)this.getHibernateTemplate().findByNamedParam("FROM Comment C  where C.ID= :childCommentID","childCommentID",childCommentID);
-		this.getHibernateTemplate().delete(child);
+		List<Comment> result=(List<Comment>)this.getHibernateTemplate().findByNamedParam("FROM Comment C  where C.ID= :childCommentID","childCommentID",childCommentID);
+		
+		if(result==null
+		|| result.size()==0) return;
+		
+		this.getHibernateTemplate().delete(result.get(0));
 	}
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Comment> getAllCommentsByPostId(int postID) {
-		
 		List<Comment> result =	(List<Comment>)this.getHibernateTemplate().findByNamedParam("FROM Comment C WHERE C.post.ID= :postID order by C.datetime asc",
 				"postID",postID);
 		
@@ -69,6 +84,7 @@ public class CommentDaoHibernate extends GenericDaoHibernate<Comment> implements
 		
 		return result;
 	}
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Comment> getChildComments(int commentID) {
@@ -78,6 +94,7 @@ public class CommentDaoHibernate extends GenericDaoHibernate<Comment> implements
 		
 		return	(List<Comment>)result;
 	}
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Comment> getChildCommentsByDepth(int commentID, int depth) {
@@ -89,7 +106,8 @@ public class CommentDaoHibernate extends GenericDaoHibernate<Comment> implements
 		
 		return (List<Comment>)result;	
 	}
-	@SuppressWarnings({ "unchecked", "deprecation" })
+	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Comment> getCommentsByDepth(int postID, int depth) {
 		

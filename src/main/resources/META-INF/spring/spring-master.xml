@@ -1,36 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:util="http://www.springframework.org/schema/util"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
                            http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
                            http://www.springframework.org/schema/context
                            http://www.springframework.org/schema/context/spring-context-4.0.xsd
                            http://www.springframework.org/schema/util
                            http://www.springframework.org/schema/util/spring-util-4.0.xsd">
- <context:annotation-config />
- <context:component-scan base-package="com.sonat.blog"/>
-<context:property-placeholder location="classpath*:META-INF/spring/*.properties"/>
-<!--   <context:component-scan base-package="com.blog.sonat">
-    <context:exclude-filter expression="org.springframework.stereotype.Controller" type="annotation"/>
-    <context:exclude-filter expression="org.springframework.stereotype.Repository" type="annotation"/>
-</context:component-scan>
- -->            
+	<context:annotation-config />
+	<context:component-scan base-package="com.sonat.blog" />
+	<context:property-placeholder location="classpath*:META-INF/spring/*.properties" />
+	<!-- <context:component-scan base-package="com.blog.sonat"> <context:exclude-filter 
+		expression="org.springframework.stereotype.Controller" type="annotation"/> 
+		<context:exclude-filter expression="org.springframework.stereotype.Repository" 
+		type="annotation"/> </context:component-scan> -->
 
-<bean id="userDao" class="com.sonat.blog.dao.hibernate.UserDaoHibernate"/>
-<bean id="myUserDetailsService" class="com.sonat.blog.users.service.MyUserDetailsService">
-	<property name="userDao" ref="userDao"/>
-</bean>
+	<bean id="userDao" class="com.sonat.blog.dao.hibernate.UserDaoHibernate" />
+	<bean id="myUserDetailsService" class="com.sonat.blog.users.service.MyUserDetailsService">
+		<property name="userDao" ref="userDao" />
+	</bean>
 
-  	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
-   	<import resource="spring-datasource.xml"/>
-	<import resource="spring-hibernate.xml"/>
-	<import resource="spring-jpa.xml"/>
+	<bean
+		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+	<import resource="spring-datasource.xml" />
+	<import resource="spring-hibernate.xml" />
+	<import resource="spring-jpa.xml" />
 
-    <bean class="org.dozer.spring.DozerBeanMapperFactoryBean">
-        <property name="mappingFiles" value="classpath*:/*mapping.xml"/>
-    </bean>
- </beans>
+	<bean class="org.dozer.spring.DozerBeanMapperFactoryBean">
+		<property name="mappingFiles" value="classpath*:/*mapping.xml" />
+	</bean>
+</beans>
            
                        

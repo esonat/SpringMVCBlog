@@ -35,17 +35,20 @@ public class GenericDaoHibernate<T extends DomainObject> extends HibernateDaoSup
     }
     
     public void save(T object) {
-    	Session session=getHibernateTemplate().getSessionFactory().openSession();
+    	/*Session session=getHibernateTemplate().getSessionFactory().openSession();
     	session.beginTransaction();
     	
     	session.save(object);
     	//session.flush();
     	
     	session.getTransaction().commit();
-/*		getHibernateTemplate().save(object);
+		getHibernateTemplate().save(object);
 		getHibernateTemplate().flush();
-*/
     	session.close();
+
+*/
+    	getHibernateTemplate().save(object);
+		getHibernateTemplate().flush();
     	}
 
     public void delete(T object) {
