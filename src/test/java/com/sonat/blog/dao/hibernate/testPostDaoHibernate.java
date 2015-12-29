@@ -3,6 +3,8 @@ package com.sonat.blog.dao.hibernate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import org.hibernate.event.PostCollectionRecreateEvent;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -52,7 +54,7 @@ private static final String INVALID_USERNAME	="user";
 
 	@Ignore
 	public int getValidPostID(){
-		return postDao.getAll()==null?null:postDao.getAll().get(0).getID();
+		return getPostCount()==0?0:postDao.getAll().get(0).getID();
 	}
 	@Ignore
 	public int getPostCount(){
@@ -93,6 +95,8 @@ private static final String INVALID_USERNAME	="user";
 	}	
 	@Test
 	public void testValidGetPost(){
+		if(getValidPostID()==0) return;
+		
 		Post post=postDao.get(getValidPostID());
 		Assert.assertNotNull(post);
 	}
@@ -104,6 +108,8 @@ private static final String INVALID_USERNAME	="user";
 	
 	@Test
 	public void testValidDelete(){
+		if(getValidPostID()==0) return;
+		
 		int validPostID=getValidPostID();
 		int oldcount=getPostCount();
 		
@@ -116,6 +122,8 @@ private static final String INVALID_USERNAME	="user";
 	
 	@Test(expected=DataAccessException.class)
 	public void testInvalidDelete(){
+		if(getPostCount()==0) return;
+		
 		int oldcount=getPostCount();
 		
 		Post post=postDao.get(INVALID_POST_ID);
@@ -128,6 +136,8 @@ private static final String INVALID_USERNAME	="user";
 
 	@Test
 	public void testValidDeleteById(){
+		if(getPostCount()==0) return;
+		
 		int oldcount=getPostCount();
 		postDao.deleteById(getValidPostID());
 		
@@ -137,6 +147,8 @@ private static final String INVALID_USERNAME	="user";
 	
 	@Test(expected=RuntimeException.class)
 	public void testInvalidDeleteById(){
+		if(getPostCount()==0) return;
+		
 		int oldcount=getPostCount();
 		postDao.deleteById(INVALID_POST_ID);
 		
