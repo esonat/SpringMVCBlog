@@ -8,6 +8,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.xmlbeans.impl.common.ResolverUtil;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.omg.CORBA.UnknownUserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.Authentication;
@@ -33,7 +34,7 @@ import com.sonat.blog.service.UserService;
 import com.sonat.blog.util.security.SecurityUtilInterface;
 
 @Repository("postDao")
-//@Transactional
+@Transactional
 public class PostDaoHibernate extends GenericDaoHibernate<Post> implements PostDao{
 	
 	@Autowired
@@ -47,7 +48,7 @@ public class PostDaoHibernate extends GenericDaoHibernate<Post> implements PostD
 		 super(Post.class);
 	}
 
-	//@Transactional(rollbackFor=DataAccessException.class, readOnly=false, timeout=30, propagation=Propagation.SUPPORTS, isolation=Isolation.DEFAULT)
+	@Transactional(rollbackFor=DataAccessException.class, readOnly=false, timeout=30, propagation=Propagation.SUPPORTS, isolation=Isolation.DEFAULT)
 	public void addPost(Post post,Category category){
 		Session session=this.getHibernateTemplate().getSessionFactory().openSession();
 		session.beginTransaction();
@@ -57,20 +58,22 @@ public class PostDaoHibernate extends GenericDaoHibernate<Post> implements PostD
 		
 		Authentication auth = 	SecurityContextHolder.getContext().getAuthentication();
 	    String username = 		auth.getName(); 
-		User user		=		userService.getUserByUsername(username);
-		
+		User user		=		userService.getUserByUsername("engin");
+
+		//user.getPosts().add(post);
+		//session.update(user);
 		post.setUser(user);
-		user.getPosts().add(post);
-		session.update(user);
-		
+		post.getUser().getPosts().add(post);
 		session.save(post);
-		
 		//user.getPosts().add(post);
 		//this.getHibernateTemplate().initialize(user);
 		//post.getUser().getPosts().add(post);
 		
 		session.getTransaction().commit();
 		session.close();
+		
+		post.setUser(user);
+		post.getUser().getPosts().add(post);
 	}
 	
 	@SuppressWarnings("unchecked")

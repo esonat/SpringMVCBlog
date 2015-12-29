@@ -16,6 +16,7 @@ import javax.validation.constraints.Size;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 /*import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
@@ -90,7 +91,8 @@ public class Post extends ContentObject implements DomainObject {
 	}
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="USER_ID",nullable=false)
+	@JoinColumn(name="USER_ID")
+	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	public User getUser() {
 		return user;
 	}

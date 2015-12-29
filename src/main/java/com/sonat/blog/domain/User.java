@@ -36,7 +36,7 @@ public class User implements DomainObject{
 	private String password;
 	private boolean enabled;
 	private Set<UserRole> 	userRole = new HashSet<UserRole>(0);
-    private Integer version;
+    //private Integer version;
 
     public User() {
 		super();
@@ -112,14 +112,14 @@ public class User implements DomainObject{
 		this.userRole = userRole;
 	}
 	
-	@Version
+/*	@Version
     public Integer getVersion() {
         return version;
     }
 
     public void setVersion(Integer version) {
         this.version = version;
-    }
+    }*/
 	
 	
 }
