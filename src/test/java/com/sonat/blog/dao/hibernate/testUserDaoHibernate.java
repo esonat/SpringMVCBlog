@@ -2,7 +2,6 @@ package com.sonat.blog.dao.hibernate;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,9 +12,6 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.sonat.blog.dao.CommentDao;
-import com.sonat.blog.dao.PostDao;
 import com.sonat.blog.dao.UserDao;
 import com.sonat.blog.domain.User;
 import com.sonat.blog.domain.UserRole;
@@ -31,10 +27,6 @@ import junit.framework.Assert;
 @Rollback(true)
 public class testUserDaoHibernate {
 
-	@Autowired
-	private PostDao postDao;
-	@Autowired
-	private CommentDao commentDao;
 	@Autowired
 	private UserDao userDao;
 
