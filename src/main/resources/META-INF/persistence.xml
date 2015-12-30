@@ -15,7 +15,7 @@
 				to modify an existing database; value='create-drop' means the same as 'create' 
 				but also drops tables when Hibernate closes; value='validate' makes no changes 
 				to the database -->
-		<!-- 	<property name="hibernate.hbm2ddl.auto" value="create"/>-->
+			<!-- <property name="hibernate.hbm2ddl.auto" value="create"/>-->
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.cache.use_second_level_cache"
 				value="true" />

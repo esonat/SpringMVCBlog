@@ -173,8 +173,10 @@ private static final String INVALID_USERNAME	="user";
 	@Test
 	public void testValidGetPostsByCategory(){
 		List<Post> list=postDao.getPostsByCategory(VALID_CATEGORY_ID);
+		String categoryName=categoryDao.get(VALID_CATEGORY_ID).getName();
+		
 		for(Post item:list)
-			Assert.assertEquals(VALID_CATEGORY_NAME,item.getCategory().getName());
+			Assert.assertEquals(categoryName,item.getCategory().getName());
 		
 		Assert.assertNotNull(list);
 		Assert.assertFalse(list.size()==0);
