@@ -29,8 +29,8 @@ import junit.framework.Assert;
 @ContextConfiguration(locations={"classpath:/META-INF/spring/spring-master.xml",
 								 "classpath:/META-INF/spring/spring-datasource.xml",
 								 "classpath:/META-INF/spring/spring-hibernate.xml"})
-/*@Transactional
-@Rollback(true)*/
+@Transactional
+@Rollback(true)
 public class testUserDaoHibernate {
 
 	@Autowired
@@ -58,15 +58,13 @@ public class testUserDaoHibernate {
 		sequential.unlock();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Test
-	@Ignore
-	/*@Transactional
-	@Rollback(true)*/
+	@Transactional
+	@Rollback(true)
 	public void testAddUser_validUser(){
 		User user			= new User();
 		user.setName("testUser");
-		user.setUsername("jackdaniels");
+		user.setUsername("testUser");
 		user.setPassword("sonat");
 		user.setEnabled(true);
 
@@ -86,11 +84,38 @@ public class testUserDaoHibernate {
 	@Test
 	@Transactional
 	@Rollback(true)
+	public void testDeleteUser_validUser(){
+		User user=userDao.getUserByUserName(VALID_USERNAME);
+		user.setUsername(VALID_USERNAME);
+
+		int oldcount=userDao.getAll().size();
+		userDao.delete(user);
+		int newcount=userDao.getAll().size();
+		Assert.assertEquals(oldcount-1,newcount);
+	}
+
+	@Test
+	@Transactional
+	@Rollback(true)
+	public void testDeleteUser_invalidUser(){
+		User user=userDao.getUserByUserName(INVALID_USERNAME);
+
+		int oldcount=userDao.getAll().size();
+		userDao.delete(user);
+		int newcount=userDao.getAll().size();
+
+		Assert.assertEquals(oldcount,newcount);
+	}
+
+	@Test
+	@Transactional
+	@Rollback(true)
 	public void testGetUserByName_validName(){
 		User user=userDao.getUserByName(VALID_NAME);
 		Assert.assertNotNull(user);
 		Assert.assertEquals(user.getName(),VALID_NAME);
 	}
+
 	@Test(expected=UserNotFoundException.class)
 	@Transactional
 	@Rollback(true)
@@ -107,6 +132,7 @@ public class testUserDaoHibernate {
 		Assert.assertNotNull(user);
 		Assert.assertEquals(user.getUsername(),VALID_USERNAME);
 	}
+
 	@Test(expected=UserNotFoundException.class)
 	@Transactional
 	@Rollback(true)

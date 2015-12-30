@@ -47,7 +47,6 @@ public class UserRole implements DomainObject{
 	}
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="USERNAME",nullable=false)
-	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	@JsonIgnore
 	public User getUser() {
 		return this.user;
