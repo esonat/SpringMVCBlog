@@ -13,23 +13,24 @@ import com.sonat.blog.service.UserService;
 public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserDao userDao;
-	
+
 	@Override
 	public List<User> getAll() {
 		return userDao.getAll();
 	}
 	@Override
 	public void addUser(User user) {
-		userDao.save(user);		
+		userDao.save(user);
 	}
 	@Override
-	public User getUserByName(String name){
+	public User getUserByName(String name)
+	throws UserNotFoundException{
 		return userDao.getUserByName(name);
 	}
 	@Override
-	public User getUserByUsername(String username) 
+	public User getUserByUsername(String username)
 	throws UserNotFoundException{
 		return userDao.getUserByUserName(username);
 	}
-	
+
 }

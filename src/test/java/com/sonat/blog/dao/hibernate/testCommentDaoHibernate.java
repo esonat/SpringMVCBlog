@@ -10,6 +10,7 @@ import javax.resource.spi.RetryableUnavailableException;
 import javax.security.auth.Destroyable;
 import javax.sound.sampled.LineListener;
 
+import org.hibernate.stat.SecondLevelCacheStatistics;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -20,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,21 +46,10 @@ import com.sonat.blog.domain.Comment;
 @Rollback(true)
 public class testCommentDaoHibernate {
 
-
-	@Autowired
-	private UserDao userDao;
-	@Autowired
-	private CategoryDao categoryDao;
 	@Autowired
 	private PostDao postDao;
 	@Autowired
 	private CommentDao commentDao;
-
-
-	private User user;
-	private Category category;
-	private Post post;
-	private static int totalcount;
 
 	private static final int INVALID_COMMENT_ID=1000;
 	private static final int VALID_POST_ID=1;
@@ -69,11 +60,9 @@ public class testCommentDaoHibernate {
 	private static final int INVALID_CHILD_COMMENT_ID=1000;
 	private static final int VALID_DEPTH=1;
 	private static final int INVALID_DEPTH=1000;
-
+	private static final int VALID_POST_COMMENT_SIZE=11;
 
 	Lock sequential = new ReentrantLock();
-
-
 
 	@Ignore
 	public Post getValidPost(){
@@ -304,4 +293,93 @@ public class testCommentDaoHibernate {
 		List<Comment> list=commentDao.getChildCommentsByDepth(INVALID_PARENT_COMMENT_ID,INVALID_DEPTH);
 		Assert.assertNull(list);
 	}
+	@Test
+	@Transactional
+	@Rollback(true)
+	public void testGetCommentsByDepth_validPost_validDepth()
+	{
+		List<Comment> list=commentDao.getCommentsByDepth(VALID_POST_ID,VALID_DEPTH);
+		Assert.assertNotNull(list);
+		Assert.assertEquals(list.size(),3);
+	}
+
+	@Test
+	@Transactional
+	@Rollback(true)
+	public void testGetCommentsByDepth_validPost_invalidDepth()
+	{
+		List<Comment> list=commentDao.getCommentsByDepth(VALID_POST_ID,INVALID_DEPTH);
+		Assert.assertNull(list);
+	}
+
+	@Test
+	@Transactional
+	@Rollback(true)
+	public void testGetCommentsByDepth_invalidPost_validDepth()
+	{
+		List<Comment> list=commentDao.getCommentsByDepth(INVALID_POST_ID,VALID_DEPTH);
+		Assert.assertNull(list);
+	}
+	@Test
+	@Transactional
+	@Rollback(true)
+	public void testGetCommentsByDepth_invalidPost_invalidDepth()
+	{
+		List<Comment> list=commentDao.getCommentsByDepth(INVALID_POST_ID,INVALID_DEPTH);
+		Assert.assertNull(list);
+	}
+
+	@Test
+	@Transactional
+	@Rollback(true)
+	public void testGetPostCommentById_validPost_validComment()
+	{
+		Comment comment=commentDao.getPostCommentById(VALID_POST_ID,VALID_PARENT_COMMENT_ID);
+		Assert.assertNotNull(comment);
+		Assert.assertEquals(comment.getPost().getID(),VALID_POST_ID);
+	}
+
+	@Test(expected=CommentNotFoundException.class)
+	@Transactional
+	@Rollback(true)
+	public void testGetPostCommentById_validPost_invalidComment()
+	{
+		Comment comment=commentDao.getPostCommentById(VALID_POST_ID,INVALID_PARENT_COMMENT_ID);
+		Assert.assertNull(comment);
+	}
+
+	@Test(expected=CommentNotFoundException.class)
+	@Transactional
+	@Rollback(true)
+	public void testGetPostCommentById_invalidPost_validComment()
+	{
+		Comment comment=commentDao.getPostCommentById(INVALID_POST_ID,VALID_PARENT_COMMENT_ID);
+		Assert.assertNull(comment);
+	}
+
+	@Test(expected=CommentNotFoundException.class)
+	@Transactional
+	@Rollback(true)
+	public void testGetPostCommentById_invalidPost_invalidComment()
+	{
+		Comment comment=commentDao.getPostCommentById(INVALID_POST_ID,INVALID_PARENT_COMMENT_ID);
+		Assert.assertNull(comment);
+	}
+
+	@Test
+	@Transactional
+	@Rollback(true)
+	 public void testGetPostComments_validPost(){
+		 List<Comment> list=commentDao.getPostComments(VALID_POST_ID);
+		 Assert.assertNotNull(list);
+		 Assert.assertEquals(list.size(),VALID_POST_COMMENT_SIZE);
+	 }
+
+	@Test
+	@Transactional
+	@Rollback(true)
+	 public void testGetPostComments_invalidPost(){
+		 List<Comment> list=commentDao.getPostComments(INVALID_POST_ID);
+		 Assert.assertNull(list);
+	 }
 }

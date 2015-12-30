@@ -11,6 +11,7 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.hibernate.annotations.Cascade;
 
 import net.sf.ehcache.constructs.scheduledrefresh.ScheduledRefreshJobStorePropertiesFactory;
 
@@ -24,9 +25,7 @@ public class UserRole implements DomainObject{
 	private Integer userRoleId;
 	private User user;
 	private String role;
-	private Integer version;
-	
-	
+
 	public UserRole() {
 		super();
 	}
@@ -48,6 +47,7 @@ public class UserRole implements DomainObject{
 	}
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="USERNAME",nullable=false)
+	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	@JsonIgnore
 	public User getUser() {
 		return this.user;
@@ -56,7 +56,7 @@ public class UserRole implements DomainObject{
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
+
 	@Column(name="ROLE",nullable=false)
 	public String getRole() {
 		return this.role;
@@ -65,13 +65,4 @@ public class UserRole implements DomainObject{
 	public void setRole(String role) {
 		this.role = role;
 	}
-	@Version
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
-
 }

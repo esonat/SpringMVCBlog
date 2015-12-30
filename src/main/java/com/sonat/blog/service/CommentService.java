@@ -5,20 +5,20 @@ import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.Post;
 
 public interface CommentService {
-	Post 			getPostOfComment(int commentID);
+	void 			addChildComment		(int postID,Comment parentComment,Comment childComment);
+	void			addPostComment		(int postID,Comment comment);
+	void			deleteChildComment	(int postID,int commentID,int childCommentID);
+	void			deleteComment		(int postID,int commentID);
 	List<Comment>	getAllComments();
 	List<Comment> 	getAllCommentsByPostId(int postID);
-	Comment 		getCommentById		(int commentID);
-	List<Comment> 	getPostComments		(int postID);
-	Comment 		getPostCommentById	(int postID,int commentID);
-	void			addPostComment		(int postID,Comment comment);
-	void			deleteComment		(int postID,int commentID);
-	List<Comment>   getChildComments	(int postID,int commentID);
 	Comment 		getChildCommentById	(int postID,int commentID,int childCommentID);
-	void 			addChildComment		(int postID,Comment parentComment,Comment childComment);
-	void			deleteChildComment	(int postID,int commentID,int childCommentID);
-	List<Comment>   getCommentsByDepth	(int postID,int depth);
+	List<Comment>   getChildComments	(int postID,int commentID);
 	List<Comment>   getChildCommentsByDepth(int commentID,int depth);
+	List<Comment> 	getChildCommentTree(Comment comment);
+	Comment 		getCommentById		(int commentID);
+	List<Comment>   getCommentsByDepth	(int postID,int depth);
 	public List<Comment> getCommentTree(Post post);
-	List<Comment> getChildCommentTree(Comment comment);
+	Comment 		getPostCommentById	(int postID,int commentID);
+	List<Comment> 	getPostComments		(int postID);
+	//Post 			getPostOfComment(int commentID);
 }

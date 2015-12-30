@@ -31,7 +31,7 @@ public class User implements DomainObject{
 	@Pattern(regexp="[a-zA-Z]+",message="{Pattern.User.username.validation}")
 	@Username
 	private String username;
-	//@Pattern(regexp="^[A-Za-z0-9_.]+$",message="{Pattern.User.password.validation}")	
+	//@Pattern(regexp="^[A-Za-z0-9_.]+$",message="{Pattern.User.password.validation}")
 	@Size(min=5,max=150,message="{Size.User.password.validation}")
 	private String password;
 	private boolean enabled;
@@ -43,7 +43,7 @@ public class User implements DomainObject{
 	}
 	public User(String name) {
 		this.name=name;
-	}	
+	}
 	public User(String name,String username, String password, boolean enabled) {
 		this.username = username;
 		this.password = password;
@@ -65,7 +65,7 @@ public class User implements DomainObject{
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	@OneToMany(fetch=FetchType.EAGER,mappedBy="user")
 	@Cascade(org.hibernate.annotations.CascadeType.DELETE)
 	@JsonIgnore
@@ -75,7 +75,7 @@ public class User implements DomainObject{
 	public void setPosts(Set<Post> posts) {
 		this.posts = posts;
 	}
-	
+
 	@Id
 	@Column(name="USERNAME",unique=true,nullable=false)
 	@JsonIgnore
@@ -85,7 +85,7 @@ public class User implements DomainObject{
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	
+
 	@Column(name="PASSWORD",nullable=false)
 	@JsonIgnore
 	public String getPassword() {
@@ -94,7 +94,7 @@ public class User implements DomainObject{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 	@Column(name="ENABLED",nullable=false)
 	@JsonIgnore
 	public boolean isEnabled() {
@@ -103,15 +103,16 @@ public class User implements DomainObject{
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
-	
+
 	@OneToMany(fetch=FetchType.EAGER,mappedBy="user")
+	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	public Set<UserRole> getUserRole() {
 		return userRole;
 	}
 	public void setUserRole(Set<UserRole> userRole) {
 		this.userRole = userRole;
 	}
-	
+
 /*	@Version
     public Integer getVersion() {
         return version;
@@ -120,6 +121,6 @@ public class User implements DomainObject{
     public void setVersion(Integer version) {
         this.version = version;
     }*/
-	
-	
+
+
 }

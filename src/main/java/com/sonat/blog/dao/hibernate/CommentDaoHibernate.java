@@ -121,15 +121,16 @@ public class CommentDaoHibernate extends GenericDaoHibernate<Comment> implements
 
 		return (List<Comment>)result;
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public Comment getPostCommentById(int postID, int commentID) {
-		Comment result=(Comment)this.getHibernateTemplate().findByNamedParam("FROM Comment where ID= :commentID and POST_ID= :postID",
+		List<Comment> result=(List<Comment>)this.getHibernateTemplate().findByNamedParam("FROM Comment where ID= :commentID and POST_ID= :postID",
 				new String[]{"commentID","postID"},new Object[]{commentID,postID});
 
-		if(result==null)
-			throw new CommentNotFoundException(commentID);
+		if(result==null
+		|| result.size()==0) throw new CommentNotFoundException(commentID);
 
-		return result;
+		return result.get(0);
 	}
 	@SuppressWarnings("unchecked")
 	@Override
@@ -143,15 +144,16 @@ public class CommentDaoHibernate extends GenericDaoHibernate<Comment> implements
 
 		return result;
 	}
-	@Override
-	public Post getPostOfComment(int commentID) {
-		Post result=(Post)this.getHibernateTemplate().findByNamedParam("FROM Comment C WHERE C.ID= :commentID",
-				"commentID",commentID);
-		if(result==null)
-			return null;
-
-		return result;
-	}
+//	@SuppressWarnings("unchecked")
+//	@Override
+//	public Post getPostOfComment(int commentID) {
+//		List<Post> result=(List<Post>)this.getHibernateTemplate().findByNamedParam("FROM Post P WHERE P.ID= :commentID",
+//				"commentID",commentID);
+//		if(result==null
+//		|| result.size()==0) return null;
+//
+//		return result.get(0);
+//	}
 
 
 
