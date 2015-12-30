@@ -51,8 +51,9 @@ public class PostServiceImpl implements PostService{
 		return postDao.getAllByDate(dateFrom,dateTo);
 	}
 
-	public Post getPostById(int ID)
-	throws PostNotFoundException{
+	public Post getPostById(int ID){
+		if(postDao.get(ID)==null) throw new PostNotFoundException(ID);
+
 		return postDao.get(ID);
 	}
 
@@ -73,7 +74,8 @@ public class PostServiceImpl implements PostService{
 		postDao.addPost(post, category);
 	}
 
-	public void deletePost(int ID) {
+	public void deletePost(int ID)
+	throws PostNotFoundException{
 		postDao.deleteById(ID);
 	}
 }

@@ -3,6 +3,7 @@ package com.sonat.blog.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.sonat.blog.dao.CommentDao;
@@ -33,10 +34,9 @@ public class CommentServiceImpl implements CommentService {
 	public CommentServiceImpl(){
 		visited=new ArrayList<Comment>();
 	}
-	public void addChildComment(int postID,Comment parentComment,Comment childComment){
+	public void addChildComment(int postID,Comment parentComment,Comment childComment)
+	throws DataAccessException,PostNotFoundException{
 		Post post			=	postService.getPostById(postID);
-		if(post==null) return;
-
 		commentDao.addChildComment(parentComment, childComment);
 	}
 	public void addPostComment(int postID, Comment comment) {

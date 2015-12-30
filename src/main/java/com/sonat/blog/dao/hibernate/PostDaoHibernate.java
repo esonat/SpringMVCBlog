@@ -38,14 +38,14 @@ import com.sonat.blog.util.security.SecurityUtilInterface;
 @Repository("postDao")
 @Transactional
 public class PostDaoHibernate extends GenericDaoHibernate<Post> implements PostDao{
-	
+
 	@Autowired
 	private SecurityUtilInterface securityUtil;
 	@Autowired
 	private UserService userService;
-	
+
 	protected Log log = LogFactory.getLog(CommentDaoHibernate.class);
-	
+
 	public PostDaoHibernate() {
 		 super(Post.class);
 	}
@@ -54,65 +54,65 @@ public class PostDaoHibernate extends GenericDaoHibernate<Post> implements PostD
 	public void addPost(Post post,Category category){
 		Session session=this.getHibernateTemplate().getSessionFactory().openSession();
 		session.beginTransaction();
-		
+
 		post.setCategory(category);
 		post.setDate(new Date());
-		
+
 		Authentication auth = 	SecurityContextHolder.getContext().getAuthentication();
-	    String username = 		auth.getName(); 
+	    String username = 		auth.getName();
 		User user	=		userService.getUserByUsername(username);
 
 		post.setUser(user);
 		post.getUser().getPosts().add(post);
-		
+
 		session.save(post);
 		session.getTransaction().commit();
 		session.close();
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public void deleteById(int ID) {
 		Session session=this.getHibernateTemplate().getSessionFactory().openSession();
 		Query query	= session.createQuery("FROM Post WHERE ID= :ID");
 		query.setParameter("ID", ID);
-		
+
 		Post post=(Post)query.uniqueResult();
 		if(post==null) throw new PostNotFoundException(ID);
-				
+
 		session.beginTransaction();
-		
+
 		for(Comment comment:post.getComments()){
 			comment.setPost(null);
 			session.save(comment);
 		}
-		
+
 		session.delete(post);
 		session.getTransaction().commit();
 		session.close();
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Post> getAllByDate(Date dateFrom, Date dateTo) {
 		List<Post> result= (List<Post>)this.getHibernateTemplate().findByNamedParam("FROM Post WHERE date <=:dateTo AND date >= :dateFrom",
 				new String[]{"dateFrom","dateTo"},new java.sql.Date[]{new java.sql.Date(dateFrom.getTime()),new java.sql.Date(dateTo.getTime())});
-		
-		
+
+
 		if(result==null ||
 			       result.size()==0) return null;
-				
-		return (List<Post>)result;		
+
+		return (List<Post>)result;
 	}
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Post> getPostsByCategory(int categoryID) {
 		List<Post> result=(List<Post>)this.getHibernateTemplate().findByNamedParam("FROM Post P WHERE P.category.ID= :categoryID order by date asc",
 				"categoryID",categoryID);
-		
+
 		if(result==null ||
 	       result.size()==0) return null;
-			
+
 		return result;
 	}
 	@SuppressWarnings("unchecked")
@@ -120,13 +120,13 @@ public class PostDaoHibernate extends GenericDaoHibernate<Post> implements PostD
 	public List<Post> getPostsByUsername(String username) {
 		List<Post> result=(List<Post>)this.getHibernateTemplate().findByNamedParam("FROM Post P WHERE P.user.username= :username order by date asc",
 				"username",username);
-		
+
 		if(result==null
 			|| result.size()==0) return null;
-		
+
 		return result;
 	}
-	
 
-	 
+
+
 }
