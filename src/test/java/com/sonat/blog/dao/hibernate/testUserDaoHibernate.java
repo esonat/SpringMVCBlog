@@ -1,18 +1,16 @@
 package com.sonat.blog.dao.hibernate;
 
-import java.util.Set;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,7 +38,7 @@ public class testUserDaoHibernate {
 	@Autowired
 	private UserDao userDao;
 
-	private static final int	VALID_USER_ID=1;
+	private static final int	VALID_USER_ID=2;
 	private static final String VALID_NAME="engin";
 	private static final String VALID_USERNAME="engin";
 	private static final int 	INVALID_USER_ID=1000;
@@ -85,20 +83,23 @@ public class testUserDaoHibernate {
 	@Transactional
 	@Rollback(true)
 	public void testDeleteUser_validUser(){
-		User user=userDao.getUserByUserName(VALID_USERNAME);
-		user.setUsername(VALID_USERNAME);
-
+		User user=userDao.get(VALID_USER_ID);
 		int oldcount=userDao.getAll().size();
 		userDao.delete(user);
-		int newcount=userDao.getAll().size();
+
+		int newcount;
+		if(userDao.getAll()==null) newcount=0;
+		else
+			newcount=userDao.getAll().size();
+
 		Assert.assertEquals(oldcount-1,newcount);
 	}
 
-	@Test
+	@Test(expected=DataAccessException.class)
 	@Transactional
 	@Rollback(true)
 	public void testDeleteUser_invalidUser(){
-		User user=userDao.getUserByUserName(INVALID_USERNAME);
+		User user=userDao.get(INVALID_USER_ID);
 
 		int oldcount=userDao.getAll().size();
 		userDao.delete(user);
@@ -140,10 +141,4 @@ public class testUserDaoHibernate {
 		User user=userDao.getUserByName(INVALID_USERNAME);
 		Assert.assertNull(user);
 	}
-
-
-
-
-
-
 }

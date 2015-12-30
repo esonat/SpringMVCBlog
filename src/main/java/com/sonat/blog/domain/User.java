@@ -1,10 +1,14 @@
 package com.sonat.blog.domain;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -21,9 +25,9 @@ import com.sonat.blog.validator.Username;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name="user",catalog="blogDB",uniqueConstraints={
-@UniqueConstraint(columnNames="NAME")})
+@Table(name="user",catalog="blogDB")
 public class User implements DomainObject{
+	private int ID;
 	@Pattern(regexp="[a-zA-Z]+",message="{Pattern.User.Name.validation}")
 	@Name
 	private String name;
@@ -58,6 +62,14 @@ public class User implements DomainObject{
 		this.userRole = userRole;
 	}
 
+	@Id
+	@GeneratedValue(strategy=IDENTITY)
+	@Column(name="USER_ID",unique=true,nullable=false)
+	@JsonIgnore
+	public int getID() {
+		return ID;
+	}
+
 	@Column(name="NAME",unique=true,nullable=false)
 	public String getName() {
 		return name;
@@ -76,9 +88,7 @@ public class User implements DomainObject{
 		this.posts = posts;
 	}
 
-	@Id
 	@Column(name="USERNAME",unique=true,nullable=false)
-	@JsonIgnore
 	public String getUsername() {
 		return username;
 	}
@@ -105,12 +115,16 @@ public class User implements DomainObject{
 	}
 
 	@OneToMany(fetch=FetchType.EAGER,mappedBy="user")
-	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+	@Cascade(org.hibernate.annotations.CascadeType.ALL)
 	public Set<UserRole> getUserRole() {
 		return userRole;
 	}
 	public void setUserRole(Set<UserRole> userRole) {
 		this.userRole = userRole;
+	}
+
+	public void setID(int iD) {
+		ID = iD;
 	}
 
 /*	@Version

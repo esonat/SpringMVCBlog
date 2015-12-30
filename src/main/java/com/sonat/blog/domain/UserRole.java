@@ -8,13 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Version;
-
 import org.codehaus.jackson.annotate.JsonIgnore;
-import org.hibernate.annotations.Cascade;
-
-import net.sf.ehcache.constructs.scheduledrefresh.ScheduledRefreshJobStorePropertiesFactory;
-
 import static javax.persistence.GenerationType.IDENTITY;
 
 
@@ -34,6 +28,7 @@ public class UserRole implements DomainObject{
 		this.user = user;
 		this.role = role;
 	}
+
 	@Id
 	@GeneratedValue(strategy=IDENTITY)
 	@Column(name="USER_ROLE_ID",unique=true,nullable=false)
@@ -45,8 +40,9 @@ public class UserRole implements DomainObject{
 	public void setUserRoleId(Integer userRoleId) {
 		this.userRoleId = userRoleId;
 	}
+
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="USERNAME",nullable=false)
+	@JoinColumn(name="USER_ID",nullable=false)
 	@JsonIgnore
 	public User getUser() {
 		return this.user;
