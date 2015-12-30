@@ -20,6 +20,7 @@ import com.sonat.blog.dao.CategoryDao;
 import com.sonat.blog.dao.PostDao;
 import com.sonat.blog.dao.UserDao;
 import com.sonat.blog.domain.Category;
+import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.Post;
 import com.sonat.blog.domain.User;
 import com.sonat.blog.service.CategoryService;
@@ -93,6 +94,8 @@ private static final String INVALID_USERNAME	="user";
 		postDao.addPost(post, category);
 		
 	}	
+	
+	
 	@Test
 	public void testValidGetPost(){
 		if(getValidPostID()==0) return;
@@ -204,4 +207,6 @@ private static final String INVALID_USERNAME	="user";
 		
 		Assert.assertNull(list);
 	}	
+	
+	
 }

@@ -26,52 +26,52 @@ public class CommentDaoHibernate extends GenericDaoHibernate<Comment> implements
 	 public CommentDaoHibernate() {
 		 super(Comment.class);
 	 }
-	 
+
 	@Override
 	public void addChildComment(Comment parentComment, Comment childComment) {
 	/*	Session session=this.getHibernateTemplate().getSessionFactory().getCurrentSession();
 		session.beginTransaction();
-		
-		Date date = new Date();	
+
+		Date date = new Date();
 		Post post =parentComment.getPost();
-		
+
 		childComment.setDatetime(date);
 		childComment.setDepth(parentComment.getDepth()+1);
 		childComment.setPost(post);
 		childComment.setParent(parentComment);
-		
+
 		session.save(childComment);
 		session.getTransaction().commit();*/
-		Date date = new Date();	
+		Date date = new Date();
 		Post post =parentComment.getPost();
-		
+
 		childComment.setDatetime(date);
 		childComment.setDepth(parentComment.getDepth()+1);
 		childComment.setPost(post);
 		childComment.setParent(parentComment);
-		
+
 		this.getHibernateTemplate().save(childComment);
-		
+
 	}
 	@Override
 	public void addPostComment(Post post, Comment comment) {
-		Date date = new Date();	
-		
+		Date date = new Date();
+
 		comment.setDatetime(date);
 		comment.setPost(post);
 		comment.setDepth(0);
-		
-		this.getHibernateTemplate().save(comment);	
+
+		this.getHibernateTemplate().save(comment);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public void deleteChildComment(Comment parentComment, int childCommentID) {
 		List<Comment> result=(List<Comment>)this.getHibernateTemplate().findByNamedParam("FROM Comment C  where C.ID= :childCommentID","childCommentID",childCommentID);
-		
+
 		if(result==null
-		|| result.size()==0) return;
-		
+		|| result.size()==0) throw new CommentNotFoundException(childCommentID);
+
 		this.getHibernateTemplate().delete(result.get(0));
 	}
 	@SuppressWarnings("unchecked")
@@ -79,54 +79,56 @@ public class CommentDaoHibernate extends GenericDaoHibernate<Comment> implements
 	public List<Comment> getAllCommentsByPostId(int postID) {
 		List<Comment> result =	(List<Comment>)this.getHibernateTemplate().findByNamedParam("FROM Comment C WHERE C.post.ID= :postID order by C.datetime asc",
 				"postID",postID);
-		
-		if(result.size()==0) return null;
-		
+
+		if(result==null
+		|| result.size()==0) return null;
+
 		return result;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Comment> getChildComments(int commentID) {
 		List<Comment> result=(List<Comment>) this.getHibernateTemplate().findByNamedParam("FROM Comment C WHERE C.parent.ID= :commentID order by C.datetime asc","commentID",commentID);
-		
-		if(result==null) return null;
-		
+
+		if(result==null
+		|| result.size()==0) return null;
+
 		return	(List<Comment>)result;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Comment> getChildCommentsByDepth(int commentID, int depth) {
 		List<Comment> result=(List<Comment>)this.getHibernateTemplate().findByNamedParam("FROM Comment as C WHERE C.parent.ID= :commentID AND C.depth= :depth order by C.datetime asc",
 				new String[]{"commentID","depth"},new Object[]{commentID,depth});
-		
+
 		if(result ==null
 		|| result.size()==0) return null;
-		
-		return (List<Comment>)result;	
+
+		return (List<Comment>)result;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Comment> getCommentsByDepth(int postID, int depth) {
-		
+
 		List<Comment> result=(List<Comment>)this.getHibernateTemplate().findByNamedParam("FROM Comment as C WHERE C.post.ID=:postID AND C.depth=:depth order by C.datetime asc",
 				new String[]{"postID","depth"},new Object[]{postID,depth});
-		
+
 		if(result==null
 		|| result.size()==0) return null;
-		
-		return (List<Comment>)result;		
+
+		return (List<Comment>)result;
 	}
 	@Override
 	public Comment getPostCommentById(int postID, int commentID) {
 		Comment result=(Comment)this.getHibernateTemplate().findByNamedParam("FROM Comment where ID= :commentID and POST_ID= :postID",
 				new String[]{"commentID","postID"},new Object[]{commentID,postID});
-		
+
 		if(result==null)
 			throw new CommentNotFoundException(commentID);
-		
+
 		return result;
 	}
 	@SuppressWarnings("unchecked")
@@ -134,32 +136,38 @@ public class CommentDaoHibernate extends GenericDaoHibernate<Comment> implements
 	public List<Comment> getPostComments(int postID) {
 		List<Comment> result=(List<Comment>)this.getHibernateTemplate().findByNamedParam("FROM Comment C WHERE C.post.ID= :postID",
 				"postID",postID);
-		
-		
-		if(result.size()==0) return null;
-		
+
+
+		if(result==null
+		|| result.size()==0) return null;
+
 		return result;
 	}
 	@Override
 	public Post getPostOfComment(int commentID) {
 		Post result=(Post)this.getHibernateTemplate().findByNamedParam("FROM Comment C WHERE C.ID= :commentID",
 				"commentID",commentID);
-		
+		if(result==null)
+			return null;
+
 		return result;
 	}
+
+
+
 	/*@Override
 	public List<Comment> searchComments(String keyword) {
-		Session session=this.getHibernateTemplate().getSessionFactory().getCurrentSession();	
+		Session session=this.getHibernateTemplate().getSessionFactory().getCurrentSession();
 		FullTextSession fullTextSession = Search.getFullTextSession(session);
-     
+
         org.hibernate.search.query.dsl.v2.QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(Comment.class).get();
         org.apache.lucene.search.Query luceneQuery = queryBuilder.keyword().onFields("text").matching(keyword).createQuery();
-        
+
         // wrap Lucene query in a javax.persistence.Query
         org.hibernate.Query fullTextQuery = fullTextSession.createFullTextQuery(luceneQuery, Comment.class);
-       
+
         List<Comment> list = fullTextQuery.list();
-         
+
         fullTextSession.close();
         return list;
 	}	   */
