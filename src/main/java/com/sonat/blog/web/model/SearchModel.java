@@ -1,7 +1,7 @@
 package com.sonat.blog.web.model;
 
 import java.util.Date;
-import com.sonat.blog.domain.User;
+import com.sonat.blog.domain.BlogUser;
 
 public class SearchModel {
 //	private String type;

@@ -1,6 +1,7 @@
 package com.sonat.blog.dao.hibernate;
 
 import com.sonat.blog.domain.Category;
+import com.sonat.blog.exception.CategoryNotFoundException;
 
 import junit.framework.Assert;
 import org.apache.taglibs.standard.lang.jstl.test.beans.PublicInterface2;
@@ -10,8 +11,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.sonat.blog.dao.CategoryDao;
 import com.sonat.blog.dao.PostDao;
 import com.sonat.blog.dao.UserDao;
@@ -20,6 +24,8 @@ import com.sonat.blog.dao.UserDao;
 @ContextConfiguration(locations={"classpath:/META-INF/spring/spring-master.xml",
 								 "classpath:/META-INF/spring/spring-datasource.xml",
 								 "classpath:/META-INF/spring/spring-hibernate.xml"})
+@Transactional
+@Rollback(true)
 public class testCategoryDaoHibernate {
 	@Autowired
 	private CategoryDao categoryDao;
@@ -47,6 +53,8 @@ public class testCategoryDaoHibernate {
 	}	
 	
 	@Test
+	@Transactional
+	@Rollback(true)
 	public void testAddCategory(){
 		Category category=new Category("newcategory");
 		int oldcount=getCategoryCount();
@@ -57,6 +65,8 @@ public class testCategoryDaoHibernate {
 		Assert.assertEquals(newcount,oldcount+1);		
 	}
 	@Test
+	@Transactional
+	@Rollback(true)
 	public void testValidGetCategory(){
 		int validID=getValidCategoryID();
 		Category category=categoryDao.get(validID);
@@ -65,11 +75,15 @@ public class testCategoryDaoHibernate {
 		Assert.assertEquals(validID,category.getID());
 	}
 	@Test
+	@Transactional
+	@Rollback(true)
 	public void testInvalidGetCategory(){
 		Category category=categoryDao.get(2000);
 		Assert.assertNull(category);
 	}
 	@Test
+	@Transactional
+	@Rollback(true)
 	public void testValidDelete(){
 		int oldcount=getCategoryCount();
 		Category category=categoryDao.get(getValidCategoryID());
@@ -79,6 +93,8 @@ public class testCategoryDaoHibernate {
 		Assert.assertEquals(newcount, oldcount-1);		
 	}
 	@Test(expected=DataAccessException.class)
+	@Transactional
+	@Rollback(true)
 	public void testInvalidDelete(){
 		int oldcount=getCategoryCount();
 		
@@ -89,6 +105,8 @@ public class testCategoryDaoHibernate {
 		Assert.assertEquals(newcount, oldcount);
 	}
 	@Test
+	@Transactional
+	@Rollback(true)
 	public void testValidGetCategoryByName(){
 		String validName=getValidCategoryName();
 		Category category=categoryDao.getCategoryByName(validName);
@@ -96,7 +114,9 @@ public class testCategoryDaoHibernate {
 		Assert.assertNotNull(category);
 		Assert.assertEquals(validName,category.getName());
 	}
-	@Test
+	@Test(expected=CategoryNotFoundException.class)
+	@Transactional
+	@Rollback(true)
 	public void testInvalidGetCategoryByName(){
 		Category category=categoryDao.getCategoryByName(INVALID_CATEGORY_NAME);
 		

@@ -22,7 +22,7 @@ import com.sonat.blog.dao.UserDao;
 import com.sonat.blog.domain.Category;
 import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.Post;
-import com.sonat.blog.domain.User;
+import com.sonat.blog.domain.BlogUser;
 import com.sonat.blog.service.CategoryService;
 import com.sonat.blog.service.UserService;
 import junit.framework.Assert;
@@ -40,7 +40,7 @@ private CategoryDao categoryDao;
 @Autowired
 private PostDao postDao;
 
-private User user;
+private BlogUser user;
 private Category category;
 private Post post;
 

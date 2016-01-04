@@ -39,13 +39,13 @@ public class UserRepositoryImpl implements UserRepository {
 	@SuppressWarnings("unchecked")
 	public List<User> getAll(){
 		Session session=HibernateUtil.getSessionFactory().openSession();
-		Query query=session.createQuery("FROM User");
+		Query query=session.createQuery("From BlogUser");
 		return query.list();
 	}
 	public User getUserByName(String name){
 		User user=null;
 		Session session=HibernateUtil.getSessionFactory().openSession();
-		Query query=session.createQuery("FROM User WHERE name =:name");
+		Query query=session.createQuery("From BlogUser WHERE name =:name");
 		query.setParameter("name",name);
 		user=(User)query.uniqueResult();
 		
@@ -58,7 +58,7 @@ public class UserRepositoryImpl implements UserRepository {
 		User user=null;
 		
 		Session session=HibernateUtil.getSessionFactory().openSession();
-		Query query=session.createQuery("FROM User WHERE username =:username");
+		Query query=session.createQuery("From BlogUser WHERE username =:username");
 		query.setParameter("username",username);
 		user=(User)query.uniqueResult();
 		

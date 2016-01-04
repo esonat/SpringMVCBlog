@@ -3,7 +3,7 @@ package com.sonat.blog.validator;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.sonat.blog.domain.User;
+import com.sonat.blog.domain.BlogUser;
 import com.sonat.blog.service.UserService;
 
 public class UsernameValidator implements ConstraintValidator<Username,String>{
@@ -14,7 +14,7 @@ public class UsernameValidator implements ConstraintValidator<Username,String>{
 	}
 	
 	public boolean isValid(String value,ConstraintValidatorContext context){
-		User user=null;
+		BlogUser user=null;
 		try{
 			user=userService.getUserByUsername(value);
 		}catch(Exception e){

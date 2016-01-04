@@ -28,7 +28,7 @@ import com.sonat.blog.dao.UserDao;
 import com.sonat.blog.domain.Category;
 import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.Post;
-import com.sonat.blog.domain.User;
+import com.sonat.blog.domain.BlogUser;
 //import com.sonat.blog.util.database.HibernateUtil;
 import com.sonat.blog.domain.repository.CommentRepository;
 import com.sonat.blog.exception.PostNotFoundException;
@@ -60,7 +60,7 @@ public class PostDaoHibernate extends GenericDaoHibernate<Post> implements PostD
 
 		Authentication auth = 	SecurityContextHolder.getContext().getAuthentication();
 	    String username = 		auth.getName();
-		User user	=		userService.getUserByUsername(username);
+		BlogUser user	=		userService.getUserByUsername(username);
 
 		post.setUser(user);
 		post.getUser().getPosts().add(post);

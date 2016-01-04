@@ -17,14 +17,14 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Table(name="user_roles",catalog="blogDB")
 public class UserRole implements DomainObject{
 	private Integer userRoleId;
-	private User user;
+	private BlogUser user;
 	private String role;
 
 	public UserRole() {
 		super();
 	}
 
-	public UserRole(User user, String role) {
+	public UserRole(BlogUser user, String role) {
 		this.user = user;
 		this.role = role;
 	}
@@ -44,11 +44,11 @@ public class UserRole implements DomainObject{
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="USER_ID",nullable=false)
 	@JsonIgnore
-	public User getUser() {
+	public BlogUser getUser() {
 		return this.user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(BlogUser user) {
 		this.user = user;
 	}
 

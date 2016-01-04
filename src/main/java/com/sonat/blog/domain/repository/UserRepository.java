@@ -4,9 +4,9 @@ package com.sonat.blog.domain.repository;
 import java.util.List;
 
 import com.sonat.blog.domain.Post;
-import com.sonat.blog.domain.User;
+import com.sonat.blog.domain.BlogUser;
 
 public interface UserRepository {
-	User getUserByName(String name); 
-	User getUserByUsername(String username);
+	BlogUser getUserByName(String name); 
+	BlogUser getUserByUsername(String username);
 }

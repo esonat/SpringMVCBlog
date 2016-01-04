@@ -5,7 +5,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-import com.sonat.blog.domain.User;
+import com.sonat.blog.domain.BlogUser;
 import com.sonat.blog.domain.UserRole;
 import com.sonat.blog.service.UserService;
 
@@ -14,11 +14,11 @@ public class SecurityUtil implements SecurityUtilInterface {
 	@Autowired
 	private UserService userService;
 	
-	public User getCurrentUser(){
+	public BlogUser getCurrentUser(){
 		Authentication 	auth 		= SecurityContextHolder.getContext().getAuthentication();
 	    String 			name 		= auth.getName(); 
 		
-	    User currentUser=null;
+	    BlogUser currentUser=null;
 	    try{
 			currentUser=userService.getUserByUsername(name);
 		}catch(Exception e){
@@ -33,7 +33,7 @@ public class SecurityUtil implements SecurityUtilInterface {
 		return username;
 	}
 	public boolean isCurrentUserAdmin(){
-		User currentUser=  getCurrentUser();
+		BlogUser currentUser=  getCurrentUser();
 		if(currentUser	== null) return false;
 	
 		for(UserRole role:getCurrentUser().getUserRole()){

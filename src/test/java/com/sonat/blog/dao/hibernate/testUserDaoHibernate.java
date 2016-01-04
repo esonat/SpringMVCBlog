@@ -13,7 +13,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 import com.sonat.blog.dao.UserDao;
-import com.sonat.blog.domain.User;
+import com.sonat.blog.domain.BlogUser;
 import com.sonat.blog.domain.UserRole;
 import com.sonat.blog.exception.UserNotFoundException;
 
@@ -30,7 +30,7 @@ public class testUserDaoHibernate {
 	@Autowired
 	private UserDao userDao;
 
-	private static final int	VALID_USER_ID=2;
+	private static final int	VALID_USER_ID=1;
 	private static final String VALID_NAME="engin";
 	private static final String VALID_USERNAME="engin";
 	private static final int 	INVALID_USER_ID=1000;
@@ -52,7 +52,7 @@ public class testUserDaoHibernate {
 	@Transactional
 	@Rollback(true)
 	public void testAddUser_validUser(){
-		User user			= new User();
+		BlogUser user			= new BlogUser();
 		user.setName("testUser");
 		user.setUsername("testUser");
 		user.setPassword("sonat");
@@ -75,7 +75,7 @@ public class testUserDaoHibernate {
 	@Transactional
 	@Rollback(true)
 	public void testDeleteUser_validUser(){
-		User user=userDao.get(VALID_USER_ID);
+		BlogUser user=userDao.get(VALID_USER_ID);
 		int oldcount=userDao.getAll().size();
 		userDao.delete(user);
 
@@ -91,7 +91,7 @@ public class testUserDaoHibernate {
 	@Transactional
 	@Rollback(true)
 	public void testDeleteUser_invalidUser(){
-		User user=userDao.get(INVALID_USER_ID);
+		BlogUser user=userDao.get(INVALID_USER_ID);
 
 		int oldcount=userDao.getAll().size();
 		userDao.delete(user);
@@ -104,7 +104,7 @@ public class testUserDaoHibernate {
 	@Transactional
 	@Rollback(true)
 	public void testGetUserByName_validName(){
-		User user=userDao.getUserByName(VALID_NAME);
+		BlogUser user=userDao.getUserByName(VALID_NAME);
 		Assert.assertNotNull(user);
 		Assert.assertEquals(user.getName(),VALID_NAME);
 	}
@@ -113,7 +113,7 @@ public class testUserDaoHibernate {
 	@Transactional
 	@Rollback(true)
 	public void testGetUserByName_invalidName(){
-		User user=userDao.getUserByName(INVALID_NAME);
+		BlogUser user=userDao.getUserByName(INVALID_NAME);
 		Assert.assertNull(user);
 	}
 
@@ -121,7 +121,7 @@ public class testUserDaoHibernate {
 	@Transactional
 	@Rollback(true)
 	public void testGetUserByUsername_validUsername(){
-		User user=userDao.getUserByName(VALID_USERNAME);
+		BlogUser user=userDao.getUserByName(VALID_USERNAME);
 		Assert.assertNotNull(user);
 		Assert.assertEquals(user.getUsername(),VALID_USERNAME);
 	}
@@ -130,7 +130,7 @@ public class testUserDaoHibernate {
 	@Transactional
 	@Rollback(true)
 	public void testGetUserByName_invalidUsername(){
-		User user=userDao.getUserByName(INVALID_USERNAME);
+		BlogUser user=userDao.getUserByName(INVALID_USERNAME);
 		Assert.assertNull(user);
 	}
 }

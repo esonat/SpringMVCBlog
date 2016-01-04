@@ -31,7 +31,7 @@ import com.sonat.blog.dao.PostDao;
 import com.sonat.blog.dao.UserDao;
 import com.sonat.blog.domain.Category;
 import com.sonat.blog.domain.Post;
-import com.sonat.blog.domain.User;
+import com.sonat.blog.domain.BlogUser;
 import com.sonat.blog.exception.CommentNotFoundException;
 
 import junit.framework.Assert;
@@ -200,7 +200,7 @@ public class testCommentDaoHibernate {
 	@Rollback(true)
 	public void testDeleteValidComment()
 	{
-		Comment comment=commentDao.get(21);
+		Comment comment=getValidComment();
 		commentDao.delete(comment);
 	}
 
@@ -235,7 +235,8 @@ public class testCommentDaoHibernate {
 	@Transactional
 	@Rollback(true)
 	public void testGetAllCommentsByValidPostId(){
-		List<Comment> list=commentDao.getAllCommentsByPostId(VALID_POST_ID);
+		int validPostID=getValidComment().getPost().getID();
+		List<Comment> list=commentDao.getAllCommentsByPostId(validPostID);
 		Assert.assertNotNull(list);
 		Assert.assertFalse(list.size()==0);
 	}

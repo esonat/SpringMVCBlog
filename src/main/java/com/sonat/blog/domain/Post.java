@@ -42,17 +42,17 @@ public class Post extends ContentObject implements DomainObject {
 	private int ID;
 	@Size(min=5,max=1000000,message="{Size.Post.text.validation}")
 	private String text;
-	private User user;
+	private BlogUser user;
     //private Integer version;
 	
 	public Post(){
 		super();
 	}
-	public Post(String text,User user){
+	public Post(String text,BlogUser user){
 		this.text=text;
 		this.user=user;
 	}
-	public Post(int ID,String text,Date date,Category category,Set<Comment> comments,User user){
+	public Post(int ID,String text,Date date,Category category,Set<Comment> comments,BlogUser user){
 		this.ID=ID;
 		this.text=text;
 		this.date=date;
@@ -90,10 +90,10 @@ public class Post extends ContentObject implements DomainObject {
 		return text;
 	}
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="USER_ID")
 	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
-	public User getUser() {
+	public BlogUser getUser() {
 		return user;
 	}
 	
@@ -114,7 +114,7 @@ public class Post extends ContentObject implements DomainObject {
 	public void setText(String text) {
 		this.text = text;
 	}
-	public void setUser(User user) {
+	public void setUser(BlogUser user) {
 		this.user = user;
 	}	
 	

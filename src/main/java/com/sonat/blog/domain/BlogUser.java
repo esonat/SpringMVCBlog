@@ -26,7 +26,7 @@ import com.sonat.blog.validator.Username;
 @SuppressWarnings("serial")
 @Entity
 @Table(name="user",catalog="blogDB")
-public class User implements DomainObject{
+public class BlogUser implements DomainObject{
 	private int ID;
 	@Pattern(regexp="[a-zA-Z]+",message="{Pattern.User.Name.validation}")
 	@Name
@@ -42,19 +42,19 @@ public class User implements DomainObject{
 	private Set<UserRole> 	userRole = new HashSet<UserRole>(0);
     //private Integer version;
 
-    public User() {
+    public BlogUser() {
 		super();
 	}
-	public User(String name) {
+	public BlogUser(String name) {
 		this.name=name;
 	}
-	public User(String name,String username, String password, boolean enabled) {
+	public BlogUser(String name,String username, String password, boolean enabled) {
 		this.username = username;
 		this.password = password;
 		this.enabled = enabled;
 	}
 
-	public User(String name,String username, String password, boolean enabled, Set<UserRole> userRole) {
+	public BlogUser(String name,String username, String password, boolean enabled, Set<UserRole> userRole) {
 		this.name=name;
 		this.username = username;
 		this.password = password;

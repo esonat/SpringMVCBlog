@@ -45,7 +45,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sonat.blog.domain.Category;
 import com.sonat.blog.domain.Post;
-import com.sonat.blog.domain.User;
+import com.sonat.blog.domain.BlogUser;
 import com.sonat.blog.exception.CategoryNotFoundException;
 import com.sonat.blog.exception.PostNotFoundException;
 import com.sonat.blog.exception.UserNotFoundException;

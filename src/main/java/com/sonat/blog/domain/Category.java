@@ -60,7 +60,7 @@ public class Category implements DomainObject{
 		this.name = name;
 	}
 	
-	@OneToMany(fetch=FetchType.LAZY,mappedBy="category")
+	@OneToMany(fetch=FetchType.EAGER,mappedBy="category")
 	@JsonIgnore
 	@Cascade(org.hibernate.annotations.CascadeType.DELETE)
 	public Set<Post> getPosts() {

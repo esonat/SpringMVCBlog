@@ -1,9 +1,9 @@
 package com.sonat.blog.util.security;
 
-import com.sonat.blog.domain.User;
+import com.sonat.blog.domain.BlogUser;
 
 public interface SecurityUtilInterface {
-	User getCurrentUser();
+	BlogUser getCurrentUser();
 	String getCurrentUsername();
 	boolean isCurrentUserAdmin();
 	

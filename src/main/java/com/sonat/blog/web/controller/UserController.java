@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.sonat.blog.domain.User;
+import com.sonat.blog.domain.BlogUser;
 import com.sonat.blog.service.UserService;
 
 @Controller
@@ -23,7 +23,7 @@ public class UserController {
 	private UserService userService;
 	
 	@RequestMapping(value="/add",method=RequestMethod.GET)
-	public String addUser(Model model,@ModelAttribute("user") User user){
+	public String addUser(Model model,@ModelAttribute("user") BlogUser user){
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	    String name = auth.getName();
@@ -33,7 +33,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/add", method=RequestMethod.POST)
-    public String addUser(@ModelAttribute("user") @Valid User userToBeAdded, BindingResult result, Model model)
+    public String addUser(@ModelAttribute("user") @Valid BlogUser userToBeAdded, BindingResult result, Model model)
     {
         if( ! result.hasErrors() ){
              userService.addUser(userToBeAdded);
