@@ -35,13 +35,14 @@ public class CommentServiceImpl implements CommentService {
 		visited=new ArrayList<Comment>();
 	}
 	public void addChildComment(int postID,Comment parentComment,Comment childComment)
-	throws DataAccessException,PostNotFoundException{
+	throws DataAccessException{
 		Post post			=	postService.getPostById(postID);
 		commentDao.addChildComment(parentComment, childComment);
 	}
-	public void addPostComment(int postID, Comment comment) {
+	public void addPostComment(int postID, Comment comment) 
+	throws PostNotFoundException{
 		Post post=postService.getPostById(postID);
-		if(post==null) return;
+//		if(post==null) return;
 
 		commentDao.addPostComment(post,comment);
 	}

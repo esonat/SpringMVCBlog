@@ -33,7 +33,7 @@ public class testCommentService {
 	@Autowired
 	private CommentService commentService;
 
-	private static final int VALID_POST_ID=3;
+	private static final int VALID_POST_ID=18;
 	private static final int INVALID_POST_ID=1000;
 
 
