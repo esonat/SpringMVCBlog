@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.ws.rs.QueryParam;
-import com.sonat.blog.UI.model.*;
-import com.sonat.blog.UI.validator.DateQueryValidator;
 
 //import org.hibernate.loader.custom.Return;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +35,8 @@ import com.sonat.blog.service.CommentService;
 import com.sonat.blog.service.PostService;
 import com.sonat.blog.util.security.SecurityUtil;
 import com.sonat.blog.util.security.SecurityUtilInterface;
+import com.sonat.blog.web.model.*;
+import com.sonat.blog.web.validator.DateQueryValidator;
 
 @Controller
 @RequestMapping("/post")

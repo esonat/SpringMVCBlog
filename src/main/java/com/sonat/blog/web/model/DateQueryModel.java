@@ -1,4 +1,4 @@
-package com.sonat.blog.UI.model;
+package com.sonat.blog.web.model;
 
 import javax.validation.constraints.NotNull;
 

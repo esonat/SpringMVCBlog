@@ -1,10 +1,11 @@
-package com.sonat.blog.UI.validator;
+package com.sonat.blog.web.validator;
 
 import java.util.Date;
-import com.sonat.blog.UI.model.DateQueryEnum;
+
 import com.sonat.blog.util.datetime.DateFormatValidator;
 import com.sonat.blog.util.datetime.DateTimeConstants;
 import com.sonat.blog.util.datetime.DateTimeInfo;
+import com.sonat.blog.web.model.DateQueryEnum;
 
 public class DateQueryValidator {
 	public static Date from;
