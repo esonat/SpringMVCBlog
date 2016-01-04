@@ -1,4 +1,4 @@
-package com.sonat.blog.controller.rest;
+package com.sonat.blog.rest.resource;
 
 public class ErrorMessages {
 	public static final String POST_NOT_FOUND		="Post not found";

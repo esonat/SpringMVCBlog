@@ -1,4 +1,4 @@
-package com.sonat.blog.controller.rest.util;
+package com.sonat.blog.rest.util;
 
 import java.io.IOException;
 

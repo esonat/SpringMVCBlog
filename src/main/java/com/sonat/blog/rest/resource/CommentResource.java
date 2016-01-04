@@ -1,4 +1,4 @@
-package com.sonat.blog.controller.rest;
+package com.sonat.blog.rest.resource;
 
 import java.util.List;
 import javax.annotation.Resource;

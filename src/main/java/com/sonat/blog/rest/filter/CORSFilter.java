@@ -1,3 +1,4 @@
+package com.sonat.blog.rest.filter;
 /*package com.sonat.blog.controller.rest.filter;
 
 import java.io.IOException;

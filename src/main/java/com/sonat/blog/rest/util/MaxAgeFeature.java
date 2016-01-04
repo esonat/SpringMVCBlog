@@ -1,4 +1,4 @@
-package com.sonat.blog.controller.rest.util;
+package com.sonat.blog.rest.util;
 
 import javax.ws.rs.container.DynamicFeature;
 import javax.ws.rs.container.ResourceInfo;

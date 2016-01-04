@@ -1,4 +1,4 @@
-package com.sonat.blog.controller.rest.filter;
+package com.sonat.blog.rest.filter;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;

@@ -1,3 +1,4 @@
+package com.sonat.blog.rest.interceptor;
 //package com.sonat.blog.controller.rest.interceptor;
 //
 //import java.util.HashSet;

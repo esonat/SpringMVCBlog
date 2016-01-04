@@ -1,4 +1,4 @@
-package com.sonat.blog.controller.rest;
+package com.sonat.blog.rest.resource;
 
 import java.io.IOException;
 import java.util.List;
@@ -43,15 +43,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.sonat.blog.controller.rest.filter.AllowCORS;
-import com.sonat.blog.controller.rest.filter.ValidateMethod;
-import com.sonat.blog.controller.rest.util.MaxAge;
 import com.sonat.blog.domain.Category;
 import com.sonat.blog.domain.Post;
 import com.sonat.blog.domain.User;
 import com.sonat.blog.exception.CategoryNotFoundException;
 import com.sonat.blog.exception.PostNotFoundException;
 import com.sonat.blog.exception.UserNotFoundException;
+import com.sonat.blog.rest.filter.AllowCORS;
+import com.sonat.blog.rest.filter.ValidateMethod;
+import com.sonat.blog.rest.util.MaxAge;
 import com.sonat.blog.service.CategoryService;
 import com.sonat.blog.service.PostService;
 import com.sonat.blog.service.UserService;

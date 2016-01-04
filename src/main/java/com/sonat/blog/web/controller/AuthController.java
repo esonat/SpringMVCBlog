@@ -1,4 +1,4 @@
-package com.sonat.blog.controller;
+package com.sonat.blog.web.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

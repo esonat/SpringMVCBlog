@@ -1,4 +1,4 @@
-package com.sonat.blog.controller;
+package com.sonat.blog.web.controller;
 
 import javax.validation.Valid;
 

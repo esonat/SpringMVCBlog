@@ -1,3 +1,4 @@
+package com.sonat.blog.web.interceptor;
 /*package com.sonat.blog.controller.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
