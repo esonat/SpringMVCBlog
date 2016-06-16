@@ -30,14 +30,6 @@
   				<p>${comment.text}</p>
     		<small>${comment.post.user.username} - <span
 					class="glyphicon glyphicon-time"></span> ${comment.datetime}</small>
-    		<%-- 
-			<sec:authorize access="hasRole('ROLE_ADMIN')">
-			  	<spring:url value="/post/${post.ID}/delete" var="deleteUrl" />
-			  	<form action="${deleteUrl}" method="POST">
-					<button class="btn btn-danger">Delete</button>
-					<input type="hidden" name="${_csrf.parameterName}"   value="${_csrf.token}" />
-				</form>
-			</sec:authorize> --%>
     		<hr></hr>
     	</c:forEach>
 	</div>
