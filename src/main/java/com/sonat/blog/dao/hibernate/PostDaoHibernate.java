@@ -5,32 +5,22 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.xmlbeans.impl.common.ResolverUtil;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.omg.CORBA.UnknownUserException;
-import org.springframework.aop.ThrowsAdvice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.session.SessionInformation;
 import org.springframework.stereotype.Repository;
-import org.springframework.test.context.transaction.AfterTransaction;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.webflow.action.ResultEventFactory;
 
-import com.sonat.blog.dao.CategoryDao;
 import com.sonat.blog.dao.PostDao;
-import com.sonat.blog.dao.UserDao;
+import com.sonat.blog.domain.BlogUser;
 import com.sonat.blog.domain.Category;
 import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.Post;
-import com.sonat.blog.domain.BlogUser;
-//import com.sonat.blog.util.database.HibernateUtil;
-import com.sonat.blog.domain.repository.CommentRepository;
 import com.sonat.blog.exception.PostNotFoundException;
 import com.sonat.blog.service.UserService;
 import com.sonat.blog.util.security.SecurityUtilInterface;
@@ -71,7 +61,6 @@ public class PostDaoHibernate extends GenericDaoHibernate<Post> implements PostD
 	}
 
 	@SuppressWarnings("unchecked")
-	@Override
 	public void deleteById(int ID) {
 		Session session=this.getHibernateTemplate().getSessionFactory().openSession();
 		Query query	= session.createQuery("FROM Post WHERE ID= :ID");
@@ -93,7 +82,6 @@ public class PostDaoHibernate extends GenericDaoHibernate<Post> implements PostD
 	}
 
 	@SuppressWarnings("unchecked")
-	@Override
 	public List<Post> getAllByDate(Date dateFrom, Date dateTo) {
 		List<Post> result= (List<Post>)this.getHibernateTemplate().findByNamedParam("FROM Post WHERE date <=:dateTo AND date >= :dateFrom",
 				new String[]{"dateFrom","dateTo"},new java.sql.Date[]{new java.sql.Date(dateFrom.getTime()),new java.sql.Date(dateTo.getTime())});
@@ -105,7 +93,7 @@ public class PostDaoHibernate extends GenericDaoHibernate<Post> implements PostD
 		return (List<Post>)result;
 	}
 	@SuppressWarnings("unchecked")
-	@Override
+	
 	public List<Post> getPostsByCategory(int categoryID) {
 		List<Post> result=(List<Post>)this.getHibernateTemplate().findByNamedParam("FROM Post P WHERE P.category.ID= :categoryID order by date asc",
 				"categoryID",categoryID);
@@ -116,7 +104,7 @@ public class PostDaoHibernate extends GenericDaoHibernate<Post> implements PostD
 		return result;
 	}
 	@SuppressWarnings("unchecked")
-	@Override
+	
 	public List<Post> getPostsByUsername(String username) {
 		List<Post> result=(List<Post>)this.getHibernateTemplate().findByNamedParam("FROM Post P WHERE P.user.username= :username order by date asc",
 				"username",username);

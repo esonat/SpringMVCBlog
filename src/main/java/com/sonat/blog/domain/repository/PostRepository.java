@@ -2,6 +2,7 @@ package com.sonat.blog.domain.repository;
 
 import java.util.Date;
 import java.util.List;
+
 import com.sonat.blog.domain.Category;
 import com.sonat.blog.domain.Post;
 

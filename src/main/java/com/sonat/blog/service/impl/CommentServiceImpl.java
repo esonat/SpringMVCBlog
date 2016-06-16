@@ -2,15 +2,14 @@ package com.sonat.blog.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.sonat.blog.dao.CommentDao;
-import com.sonat.blog.dao.PostDao;
 import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.Post;
-import com.sonat.blog.domain.repository.CommentRepository;
 import com.sonat.blog.exception.CommentNotFoundException;
 import com.sonat.blog.exception.PostNotFoundException;
 import com.sonat.blog.service.CommentService;
@@ -18,12 +17,7 @@ import com.sonat.blog.service.PostService;
 
 @Service(value = "commentService")
 public class CommentServiceImpl implements CommentService {
-
-	/*@Autowired
-	private CommentRepository commentRepository;
-	@Autowired
-	private PostService postService;*/
-
+	
 	@Autowired
 	private CommentDao commentDao;
 	@Autowired
@@ -42,23 +36,16 @@ public class CommentServiceImpl implements CommentService {
 	public void addPostComment(int postID, Comment comment) 
 	throws PostNotFoundException{
 		Post post=postService.getPostById(postID);
-//		if(post==null) return;
 
 		commentDao.addPostComment(post,comment);
 	}
 
 	public void deleteChildComment(int postID,int commentID,int childCommentID){
-//		Post post			=	postService.getPostById(postID);
-//		if(post==null) return;
-
 		Comment parentComment=getCommentById(commentID);
 		commentDao.deleteChildComment(parentComment,childCommentID);
 	}
 
 	public void deleteComment(int postID, int commentID) {
-		/*Post post=postService.getPostById(postID);
-		if(post==null) return;
-		*/
 		Comment comment=commentDao.get(commentID);
 		commentDao.delete(comment);
 	}
@@ -76,7 +63,6 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	public List<Comment> getAllComments(){
-		//CommentRepository commentRepository=new CommentRepositoryImpl();
 		return commentDao.getAll();
 	}
 
@@ -86,8 +72,6 @@ public class CommentServiceImpl implements CommentService {
 	}
 	public Comment getChildCommentById(int postID,int commentID,int childCommentID)
 	throws PostNotFoundException,CommentNotFoundException{
-		Post 	post		=	postService.getPostById(postID);
-		//		return commentDao.getChildCommentById(postID,commentID,childCommentID);
 		return commentDao.get(childCommentID);
 	}
 	public List<Comment>   getChildComments	(int postID,int commentID){
@@ -100,7 +84,6 @@ public class CommentServiceImpl implements CommentService {
 		return commentDao.getChildCommentsByDepth(commentID,depth);
 	}
 	public List<Comment> getChildCommentTree(Comment comment){
-		//int postID=comment.getPost().getID();
 		visited=new ArrayList<Comment>();
 		visited.add(comment);
 
@@ -130,7 +113,7 @@ public class CommentServiceImpl implements CommentService {
 		for(Comment comment:commentList){
 			findNext(comment,0);
 		}
-		//for(Comment comment:visited) result.add(comment);
+		
 		return visited;
 	}
 
@@ -148,8 +131,4 @@ public class CommentServiceImpl implements CommentService {
 
 		return commentDao.getPostComments(postID);
 	}
-	/*
-	public Post getPostOfComment(int commentID){
-		return
-	}*/
 }

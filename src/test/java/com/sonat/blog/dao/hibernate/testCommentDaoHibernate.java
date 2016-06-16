@@ -1,42 +1,28 @@
 package com.sonat.blog.dao.hibernate;
 
-import java.security.KeyStore.PrivateKeyEntry;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import javax.ejb.Init;
-import javax.resource.spi.RetryableUnavailableException;
-import javax.security.auth.Destroyable;
-import javax.sound.sampled.LineListener;
-
-import org.hibernate.stat.SecondLevelCacheStatistics;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.omg.PortableServer.THREAD_POLICY_ID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.sonat.blog.dao.CommentDao;
-import com.sonat.blog.dao.CategoryDao;
 import com.sonat.blog.dao.PostDao;
-import com.sonat.blog.dao.UserDao;
-import com.sonat.blog.domain.Category;
+import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.Post;
-import com.sonat.blog.domain.BlogUser;
 import com.sonat.blog.exception.CommentNotFoundException;
 
 import junit.framework.Assert;
-
-import com.sonat.blog.domain.Comment;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"classpath:/META-INF/spring/spring-master.xml",

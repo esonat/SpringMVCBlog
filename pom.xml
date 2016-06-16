@@ -14,7 +14,7 @@
    <id>repository.springframework.maven.release</id>
    <name>Spring Framework Maven Release Repository</name>
    <url>http://maven.springframework.org/release</url>
-</repository> 
+</repository>
  <repository>
     <id>MavenCentral</id>
     <name>Maven repository</name>
@@ -99,7 +99,7 @@
             <id>JBoss Repo</id>
             <url>http://repository.jboss.com/maven2</url>
             <name>JBoss Repo</name>
-        </repository> 
+        </repository>
 		 <repository>
             <id>ibiblio mirror</id>
             <url>http://mirrors.ibiblio.org/pub/mirrors/maven2/</url>
@@ -141,15 +141,15 @@
 	<artifactId>dom4j</artifactId>
 	<version>2.0.0-RC1</version>
 </dependency>
- 
+
 <!-- SERVLET -->
-	  	
+
         <!-- <dependency>
 		    <groupId>javax.servlet.jsp</groupId>
 		    <artifactId>javax.servlet.jsp-api</artifactId>
 		    <version>2.3.1</version>
 		</dependency> -->
-        
+
 <dependency>
     <groupId>log4j</groupId>
     <artifactId>log4j</artifactId>
@@ -270,17 +270,17 @@
             </exclusion>
         </exclusions>
     </dependency>
-    
+
     <dependency>
 		<groupId>org.springframework</groupId>
 		<artifactId>spring-expression</artifactId>
 		<version>4.2.4.RELEASE</version>
-	</dependency>	    
-        <dependency>
+	</dependency>
+    <!--     <dependency>
 		    <groupId>org.springframework</groupId>
 		    <artifactId>spring-dao</artifactId>
 		    <version>2.0.8</version>
-	</dependency>
+	</dependency> -->
         <dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-oxm</artifactId>
@@ -291,6 +291,12 @@
 			<artifactId>spring-beans</artifactId>
 			<version>4.2.4.RELEASE</version>
 		</dependency>
+		<dependency>
+			<groupId>aopalliance</groupId>
+			<artifactId>aopalliance</artifactId>
+			<version>1.0</version>
+		</dependency>
+
         <!--Spring OXM-->
        <!--  <dependency>
 		    <groupId>org.springframework.ws</groupId>
@@ -303,13 +309,13 @@
 			<version>1.5.10</version>
 		</dependency> -->
         <!-- JSP dependencies -->
-        
+
 <!-- H2 dependencies -->
 <!--         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>1.2.131</version>
-        </dependency> 
+        </dependency>
  -->
         <!-- ehcache dependencies -->
 <!--         <dependency>
@@ -319,11 +325,6 @@
         </dependency>
  -->
  <dependency>
-	<groupId>net.sf.ehcache</groupId>
-	<artifactId>ehcache</artifactId>
-	<version>2.10.1</version>
-</dependency>
-<dependency>
 	<groupId>net.sf.ehcache</groupId>
 	<artifactId>ehcache</artifactId>
 	<version>2.10.1</version>
@@ -363,7 +364,7 @@
                     <groupId>javax.transaction</groupId>
                     <artifactId>jta</artifactId>
                 </exclusion>
-                <exclusion>  
+                <exclusion>
 	            <groupId>org.hibernate.common</groupId>
 	            <artifactId>hibernate-commons-annotations</artifactId>
 	        </exclusion>
@@ -462,13 +463,13 @@
 			<artifactId>commons-collections</artifactId>
 			<version>3.2.2</version>
 		</dependency>
-        
+
         	<dependency>
   		<groupId>org.springframework.webflow</groupId>
   		<artifactId>spring-webflow</artifactId>
   		<version>2.3.3.RELEASE</version>
   	</dependency>
-  
+
 
         <!--Hibernate Search-->
         <!-- <dependency>
@@ -482,8 +483,8 @@
 			<artifactId>hibernate-search-orm</artifactId>
 			<version>5.5.1.Final</version>
 		</dependency> -->
-		
-				
+
+
 		<!-- <dependency>
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-core</artifactId>
@@ -519,8 +520,8 @@
 			<artifactId>spring-security-core</artifactId>
 			<version>4.0.3.RELEASE</version>
 		</dependency>
-		        
-        
+
+
         	<dependency>
   		<groupId>org.springframework.security</groupId>
   		<artifactId>spring-security-config</artifactId>
@@ -552,6 +553,11 @@
   		<artifactId>jackson-mapper-asl</artifactId>
   		<version>1.9.10</version>
   	</dependency>
+ 	 <dependency>
+	    <groupId>org.codehaus.jackson</groupId>
+	    <artifactId>jackson-core-asl</artifactId>
+	    <version>1.9.13</version>
+	</dependency>
   	<!--  Rest easy -->
   		  <dependency>
             <groupId>org.jboss.resteasy</groupId>
@@ -620,7 +626,7 @@
 		<version>2.2</version>
 	</dependency>
 	 -->
-	
+
 	<dependency>
   		<groupId>javax.servlet</groupId>
   		<artifactId>jstl</artifactId>
@@ -654,11 +660,6 @@
   		<scope>provided</scope>
   	</dependency>
   	<dependency>
-  		<groupId>org.codehaus.jackson</groupId>
-  		<artifactId>jackson-core-asl</artifactId>
-  		<version>1.9.10</version>
-  	</dependency>
-  	<dependency>
   		<groupId>org.jboss.resteasy</groupId>
   		<artifactId>resteasy-multipart-provider</artifactId>
   		<version>3.0.5.Final</version>
@@ -681,14 +682,28 @@
   		<scope>test</scope>
   	</dependency>
  </dependencies>
-    <build>
+ <build>
+    <plugins>
+        <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.1</version>
+        <configuration>
+            <source>1.8</source>
+            <target>1.8</target>
+        </configuration>
+    </plugin>
+    </plugins>
+</build>
+    <!--
+     <build>
         <plugins>
-            <plugin>
+		 <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.1-beta-1</version>
-            </plugin>
-            <plugin>
+            </plugin> -->
+            <!-- <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.1</version>
@@ -696,8 +711,8 @@
                     <source>1.6</source>
                     <target>1.6</target>
                 </configuration>
-            </plugin>
-            <plugin>
+            </plugin> -->
+			<!-- <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>2.2-beta-5</version>
@@ -706,22 +721,23 @@
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
                 </configuration>
-            </plugin>
-            <plugin>
+            </plugin> -->
+            <!-- <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
                 <version>2.5</version>
-            </plugin>
-            <plugin>
+            </plugin> -->
+            <!-- <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>tomcat-maven-plugin</artifactId>
                 <version>1.0</version>
-            </plugin>
-            <plugin>
+            </plugin> -->
+            <!-- <plugin>
                 <groupId>org.mortbay.jetty</groupId>
                 <artifactId>maven-jetty-plugin</artifactId>
                 <version>6.1.22</version>
-            </plugin>
+            </plugin> 
         </plugins>
     </build>
+  -->
 </project>

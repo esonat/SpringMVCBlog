@@ -8,11 +8,6 @@
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
 		http://www.springframework.org/schema/webflow-config http://www.springframework.org/schema/webflow-config/spring-webflow-config-2.3.xsd">
 
-			<!-- <bean id="userDao" class="com.sonat.blog.dao.hibernate.UserDaoHibernate"/> --><!-- <bean id="myUserDetailsService" class="com.sonat.blog.users.service.MyUserDetailsService"> 
-		<property name="userDao" ref="userDao" /> </bean> -->
-		<!-- <bean id="userService" 	class="com.sonat.blog.service.impl.UserServiceImpl">
-			<property name="userDao" ref="userDao"/>
-		</bean> -->
 		<bean id="userDao"		class="com.sonat.blog.dao.hibernate.UserDaoHibernate"/>
 		<bean id="categoryDao" class="com.sonat.blog.dao.hibernate.CategoryDaoHibernate"/>
 		<bean id="postDao" 	class="com.sonat.blog.dao.hibernate.PostDaoHibernate"/>

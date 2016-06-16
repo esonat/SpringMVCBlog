@@ -2,7 +2,6 @@ package com.sonat.blog.dao;
 
 import java.util.List;
 
-import com.sonat.blog.domain.Category;
 import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.Post;
 

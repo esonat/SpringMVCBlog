@@ -1,9 +1,11 @@
 package com.sonat.blog.web.controller;
 
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,14 +22,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.sonat.blog.domain.Category;
 import com.sonat.blog.domain.Comment;
-import com.sonat.blog.domain.Post;
 import com.sonat.blog.domain.validator.CommentValidator;
 import com.sonat.blog.exception.CommentNotFoundException;
 import com.sonat.blog.exception.PostNotFoundException;
 import com.sonat.blog.service.CategoryService;
 import com.sonat.blog.service.CommentService;
-import com.sonat.blog.service.PostService;
-import com.sonat.blog.util.security.SecurityUtil;
 import com.sonat.blog.util.security.SecurityUtilInterface;
 
 
@@ -155,8 +154,6 @@ public class CommentController {
 		
 		model.addAttribute("returnURL","/post/"+postId+"/comment/"+commentId+"/comment/"+childCommentId);
 		model.addAttribute("categories",categories);
-		//model.addAttribute("commentType","CHILD");
-	//	model.addAttribute("parentID",commentId);
 		model.addAttribute("depth",childComment.getDepth());
 		model.addAttribute("postID",postId);
 		model.addAttribute("commentList",commentList);

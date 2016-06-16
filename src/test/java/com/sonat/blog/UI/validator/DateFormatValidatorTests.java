@@ -1,7 +1,5 @@
 package com.sonat.blog.UI.validator;
 
-import java.text.ParseException;
-
 import org.junit.Test;
 
 import com.sonat.blog.util.datetime.DateFormatValidator;

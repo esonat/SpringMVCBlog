@@ -13,11 +13,13 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.sonat.blog.dao.CategoryDao;
 import com.sonat.blog.domain.Post;
 import com.sonat.blog.exception.CategoryNotFoundException;
 import com.sonat.blog.exception.PostNotFoundException;
 import com.sonat.blog.exception.UserNotFoundException;
+
 import junit.framework.Assert;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -51,25 +53,6 @@ public class testPostService {
 	public void destroy(){
 		sequential.unlock();
 	}
-
-	/*@Test
-	@Transactional
-	@Rollback(true)
-	public void testAddValidPost(){
-		Category category=categoryDao.get(VALID_CATEGORY_ID);
-		Post post=new Post();
-		post.setText("Test Post");
-
-		postService.addPost(post, category);
-		Assert.assertEquals(post.getCategory(),category);
-	}
-
-	/*@Test
-	@Transactional
-	@Rollback(true)
-	public void testDeleteValidPost(){
-		postService.deletePost(VALID_POST_ID);
-	}*/
 
 	@Test(expected=PostNotFoundException.class)
 	@Transactional

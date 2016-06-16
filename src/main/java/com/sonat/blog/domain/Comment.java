@@ -1,8 +1,10 @@
 package com.sonat.blog.domain;
 
 import static javax.persistence.GenerationType.IDENTITY;
+
 import java.util.Date;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,14 +16,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Version;
+
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.Cascade;
-
-import org.hibernate.annotations.IndexColumn;
-import org.hibernate.annotations.Index;
-
-import org.hibernate.search.*;
 /*import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.DateBridge;
 import org.hibernate.search.annotations.DocumentId;

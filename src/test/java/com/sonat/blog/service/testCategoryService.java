@@ -2,8 +2,6 @@ package com.sonat.blog.service;
 
 import java.util.List;
 
-import javax.enterprise.inject.TransientReference;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +11,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.sonat.blog.dao.CategoryDao;
 import com.sonat.blog.domain.Category;
 import com.sonat.blog.exception.CategoryNotFoundException;
 

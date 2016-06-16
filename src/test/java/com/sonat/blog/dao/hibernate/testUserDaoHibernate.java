@@ -2,6 +2,7 @@ package com.sonat.blog.dao.hibernate;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,6 +13,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.sonat.blog.dao.UserDao;
 import com.sonat.blog.domain.BlogUser;
 import com.sonat.blog.domain.UserRole;

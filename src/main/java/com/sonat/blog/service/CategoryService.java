@@ -1,6 +1,7 @@
 package com.sonat.blog.service;
 
 import java.util.List;
+
 import com.sonat.blog.domain.Category;
 
 public interface CategoryService {

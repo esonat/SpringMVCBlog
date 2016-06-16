@@ -1,7 +1,5 @@
 package com.sonat.blog.web.model;
 
-import javax.validation.constraints.NotNull;
-
 public class DateQueryModel {
 	private String dateFrom;
 	private String dateTo;

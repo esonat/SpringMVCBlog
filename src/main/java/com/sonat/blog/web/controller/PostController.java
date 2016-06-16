@@ -1,14 +1,13 @@
 package com.sonat.blog.web.controller;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import javax.ws.rs.QueryParam;
 
 //import org.hibernate.loader.custom.Return;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import com.sonat.blog.domain.Category;
 import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.Post;
@@ -33,9 +33,8 @@ import com.sonat.blog.exception.UserNotFoundException;
 import com.sonat.blog.service.CategoryService;
 import com.sonat.blog.service.CommentService;
 import com.sonat.blog.service.PostService;
-import com.sonat.blog.util.security.SecurityUtil;
 import com.sonat.blog.util.security.SecurityUtilInterface;
-import com.sonat.blog.web.model.*;
+import com.sonat.blog.web.model.DateQueryEnum;
 import com.sonat.blog.web.validator.DateQueryValidator;
 
 @Controller

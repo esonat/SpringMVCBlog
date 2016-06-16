@@ -24,7 +24,7 @@
 	<bean
 		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 	<import resource="spring-datasource.xml" />
-	<import resource="spring-hibernate.xml" />
+	<import resource="classpath:META-INF/spring/spring-hibernate.xml" />
 	<import resource="spring-jpa.xml" />
 
 	<bean class="org.dozer.spring.DozerBeanMapperFactoryBean">

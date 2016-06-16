@@ -4,27 +4,21 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import org.hibernate.event.PostCollectionRecreateEvent;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.orm.hibernate3.HibernateTemplate;
-import org.springframework.security.access.prepost.PreInvocationAttribute;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.transaction.TransactionConfiguration;
-import org.springframework.transaction.annotation.Transactional;
+
 import com.sonat.blog.dao.CategoryDao;
 import com.sonat.blog.dao.PostDao;
 import com.sonat.blog.dao.UserDao;
-import com.sonat.blog.domain.Category;
-import com.sonat.blog.domain.Comment;
-import com.sonat.blog.domain.Post;
 import com.sonat.blog.domain.BlogUser;
-import com.sonat.blog.service.CategoryService;
-import com.sonat.blog.service.UserService;
+import com.sonat.blog.domain.Category;
+import com.sonat.blog.domain.Post;
+
 import junit.framework.Assert;
 
 @RunWith(SpringJUnit4ClassRunner.class)

@@ -1,11 +1,5 @@
 package com.sonat.blog.dao.hibernate;
 
-import com.sonat.blog.domain.Category;
-import com.sonat.blog.exception.CategoryNotFoundException;
-
-import junit.framework.Assert;
-import org.apache.taglibs.standard.lang.jstl.test.beans.PublicInterface2;
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,8 +11,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sonat.blog.dao.CategoryDao;
-import com.sonat.blog.dao.PostDao;
-import com.sonat.blog.dao.UserDao;
+import com.sonat.blog.domain.Category;
+import com.sonat.blog.exception.CategoryNotFoundException;
+
+import junit.framework.Assert;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"classpath:/META-INF/spring/spring-master.xml",

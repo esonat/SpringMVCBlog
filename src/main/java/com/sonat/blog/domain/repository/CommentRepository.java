@@ -1,6 +1,7 @@
 package com.sonat.blog.domain.repository;
 
 import java.util.List;
+
 import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.Post;
 

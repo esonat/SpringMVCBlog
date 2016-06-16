@@ -9,11 +9,5 @@
 	http://www.springframework.org/schema/tx
     http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 
-	<!-- <bean id="userDao" class="com.sonat.blog.dao.hibernate.UserDaoHibernate"/> --><!-- <bean id="myUserDetailsService" class="com.sonat.blog.users.service.MyUserDetailsService"> 
-		<property name="userDao" ref="userDao" /> </bean> -->
-	<!-- <context:annotation-config /> -->
-	<!-- <context:component-scan base-package="com.sonat.blog"/> -->
 	<bean id="myUserDetailsService" class="com.sonat.blog.users.service.MyUserDetailsService" />
-
-	<!-- <bean id="userDao" class="com.sonat.blog.dao.hibernate.UserDaoHibernate"/> -->
 </beans>

@@ -1,5 +1,12 @@
 package com.sonat.blog.domain;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
+import java.util.Date;
+import java.util.Set;
+//uniqueConstraints={@UniqueConstraint(columnNames="TEXT")})
+//@Size(min=5,max=500,message="{Size.Post.text.validation}"
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,24 +18,17 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Version;
 import javax.validation.constraints.Size;
+
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 /*import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.Store;
 */
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import static javax.persistence.GenerationType.IDENTITY;
-
-import java.util.Date;
-import java.util.Set;
-//uniqueConstraints={@UniqueConstraint(columnNames="TEXT")})
-//@Size(min=5,max=500,message="{Size.Post.text.validation}"
+import org.hibernate.annotations.Cascade;
 
 @SuppressWarnings("serial")
 @Entity

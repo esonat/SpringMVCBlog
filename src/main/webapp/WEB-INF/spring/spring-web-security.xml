@@ -23,9 +23,17 @@
 		<!-- enable csrf protection -->
 		<!-- <csrf /> -->
 	</http>
+	
+	<beans:bean id='bCryptPasswordEncoder' class='org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder'>
+		  <beans:constructor-arg name="strength" value="11"/>
+	</beans:bean>
+	
 	<authentication-manager>
 		<authentication-provider user-service-ref="myUserDetailsService">
-			<password-encoder hash="bcrypt" />
+		  <!-- <password-encoder ref="bCryptPasswordEncoder"/>
+			 -->
+			<password-encoder hash='bcrypt' ref="bCryptPasswordEncoder"/>
+			<!-- <password-encoder hash="bcrypt" /> -->
 		</authentication-provider>
 	</authentication-manager>
 </beans:beans>
