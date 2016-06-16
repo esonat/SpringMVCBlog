@@ -1,18 +1,14 @@
 package com.sonat.blog.domain.validator;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import com.sonat.blog.domain.Comment;
-import com.sonat.blog.service.CommentService;
 
 @Component
 public class CommentValidator implements Validator{
-	@Autowired
-	private CommentService commentService;
 	
 	@SuppressWarnings("rawtypes")
 	public boolean supports(Class clazz){

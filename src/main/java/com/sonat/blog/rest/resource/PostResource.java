@@ -12,14 +12,12 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.jboss.resteasy.spi.ResteasyProviderFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -31,8 +29,6 @@ import com.sonat.blog.exception.UserNotFoundException;
 import com.sonat.blog.rest.util.MaxAge;
 import com.sonat.blog.service.CategoryService;
 import com.sonat.blog.service.PostService;
-import com.sonat.blog.service.UserService;
-
 
 @Resource
 @Controller
@@ -42,10 +38,7 @@ public class PostResource {
 	private PostService postService;
 	@Autowired
 	private CategoryService categoryService;
-	@Autowired
-	private UserService userService;
-
-	
+		
 	@POST
 	@Path("/post/add")
 	@Consumes("application/json")
@@ -82,7 +75,7 @@ public class PostResource {
 	@Produces("application/json")
 	public String getAllPosts(){
 		List<Post> allPosts=postService.getAll();
-		ContainerRequestContext requestContext=ResteasyProviderFactory.getContextData(ContainerRequestContext.class);
+		//ContainerRequestContext requestContext=ResteasyProviderFactory.getContextData(ContainerRequestContext.class);
 				
 		ObjectMapper mapper = new ObjectMapper();
 		String result;

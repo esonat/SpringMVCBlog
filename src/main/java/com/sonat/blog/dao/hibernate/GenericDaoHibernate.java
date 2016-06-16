@@ -38,12 +38,14 @@ public class GenericDaoHibernate<T extends DomainObject> extends HibernateDaoSup
         getHibernateTemplate().delete(object);
     }
 
-
-    public void indexEntity(T object) {
+    
+    @SuppressWarnings("deprecation")
+	public void indexEntity(T object) {
     	FullTextSession fullTextSession = Search.getFullTextSession(this.getSession()); 
     	fullTextSession.index(object);
     }
-
+    
+    @SuppressWarnings("deprecation")
     public void indexAllItems() {
         FullTextSession fullTextSession = Search.getFullTextSession(this.getSession());
         ScrollableResults results = fullTextSession.createCriteria(this.type).scroll(ScrollMode.FORWARD_ONLY);

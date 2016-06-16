@@ -15,7 +15,6 @@ import com.sonat.blog.exception.UserNotFoundException;
 import com.sonat.blog.service.CategoryService;
 import com.sonat.blog.service.PostService;
 import com.sonat.blog.service.UserService;
-import com.sonat.blog.util.security.SecurityUtilInterface;
 
 @Service(value = "postService")
 public class PostServiceImpl implements PostService{
@@ -25,8 +24,6 @@ public class PostServiceImpl implements PostService{
 	private CategoryService categoryService;
 	@Autowired
 	private UserService userService;
-	@Autowired
-	private SecurityUtilInterface securityUtil;
 
 	public List<Post> getAll() {
 		List<Post> list;

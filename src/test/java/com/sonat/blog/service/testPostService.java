@@ -14,7 +14,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.sonat.blog.dao.CategoryDao;
 import com.sonat.blog.domain.Post;
 import com.sonat.blog.exception.CategoryNotFoundException;
 import com.sonat.blog.exception.PostNotFoundException;
@@ -31,14 +30,12 @@ import junit.framework.Assert;
 public class testPostService {
 	@Autowired
 	private PostService postService;
-	@Autowired
-	private CategoryDao categoryDao;
-
+	
 	private static final int VALID_POST_ID=3;
 	private static final int INVALID_POST_ID=1000;
-	private static final int POST_COUNT=3;
+//	private static final int POST_COUNT=3;
 	private static final int VALID_CATEGORY_ID=1;
-	private static final int VALID_CATEGORY_COUNT=3;
+//	private static final int VALID_CATEGORY_COUNT=3;
 	private static final int INVALID_CATEGORY_ID=1000;
 	private static final String VALID_USER_USERNAME="engin";
 	private static final String INVALID_USER_USERNAME="invalidUser";

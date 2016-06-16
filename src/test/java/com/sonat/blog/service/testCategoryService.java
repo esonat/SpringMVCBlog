@@ -23,8 +23,7 @@ import junit.framework.Assert;
 @Transactional
 @Rollback(true)
 public class testCategoryService {
-	@Autowired
-	private PostService postService;
+
 	@Autowired
 	private CategoryService categoryService;
 

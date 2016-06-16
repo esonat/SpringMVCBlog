@@ -23,14 +23,11 @@ import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.Post;
 import com.sonat.blog.exception.PostNotFoundException;
 import com.sonat.blog.service.UserService;
-import com.sonat.blog.util.security.SecurityUtilInterface;
 
 @Repository("postDao")
 @Transactional
 public class PostDaoHibernate extends GenericDaoHibernate<Post> implements PostDao{
 
-	@Autowired
-	private SecurityUtilInterface securityUtil;
 	@Autowired
 	private UserService userService;
 
@@ -60,7 +57,6 @@ public class PostDaoHibernate extends GenericDaoHibernate<Post> implements PostD
 		session.close();
 	}
 
-	@SuppressWarnings("unchecked")
 	public void deleteById(int ID) {
 		Session session=this.getHibernateTemplate().getSessionFactory().openSession();
 		Query query	= session.createQuery("FROM Post WHERE ID= :ID");

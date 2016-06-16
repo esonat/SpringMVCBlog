@@ -42,8 +42,8 @@ public class testCommentDaoHibernate {
 	private static final int INVALID_POST_ID=1000;
 	private static final int VALID_PARENT_COMMENT_ID=7;
 	private static final int INVALID_PARENT_COMMENT_ID=1000;
-	private static final int VALID_CHILD_COMMENT_ID=17;
-	private static final int INVALID_CHILD_COMMENT_ID=1000;
+//	private static final int VALID_CHILD_COMMENT_ID=17;
+//	private static final int INVALID_CHILD_COMMENT_ID=1000;
 	private static final int VALID_DEPTH=1;
 	private static final int INVALID_DEPTH=1000;
 	private static final int VALID_POST_COMMENT_SIZE=11;

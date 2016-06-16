@@ -38,11 +38,11 @@ private BlogUser user;
 private Category category;
 private Post post;
 
-private static final int 	VALID_POST_ID=8;
+//private static final int 	VALID_POST_ID=8;
 private static final int 	INVALID_POST_ID=1000;
 private static final int 	VALID_CATEGORY_ID=1;
 private static final int 	INVALID_CATEGORY_ID=1000;
-private static final String VALID_CATEGORY_NAME	="java";
+//private static final String VALID_CATEGORY_NAME	="java";
 private static final String VALID_USERNAME		="engin";
 private static final String INVALID_USERNAME	="user";
 
