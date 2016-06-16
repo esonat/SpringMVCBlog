@@ -11,11 +11,7 @@
 	<context:annotation-config />
 	<context:component-scan base-package="com.sonat.blog" />
 	<context:property-placeholder location="classpath*:META-INF/spring/*.properties" />
-	<!-- <context:component-scan base-package="com.blog.sonat"> <context:exclude-filter 
-		expression="org.springframework.stereotype.Controller" type="annotation"/> 
-		<context:exclude-filter expression="org.springframework.stereotype.Repository" 
-		type="annotation"/> </context:component-scan> -->
-
+	
 	<bean id="userDao" class="com.sonat.blog.dao.hibernate.UserDaoHibernate" />
 	<bean id="myUserDetailsService" class="com.sonat.blog.users.service.MyUserDetailsService">
 		<property name="userDao" ref="userDao" />
