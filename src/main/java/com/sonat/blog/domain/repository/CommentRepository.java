@@ -20,7 +20,5 @@ public interface CommentRepository {
 	List<Comment> 	getPostComments			(int postID);
 	Post 			getPostOfComment		(int commentID);
 	Comment getChildCommentById				(int postID,int commentID,int childCommentID);
-	//List<Comment> 	searchComments			(String keyword);
-	//void 			doIndex() throws InterruptedException;
 }
 

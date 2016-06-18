@@ -15,6 +15,4 @@ public interface CommentDao extends GenericDao<Comment> {
 	List<Comment>	getCommentsByDepth		(int postID,int depth);
 	Comment 		getPostCommentById		(int postID,int commentID);
 	List<Comment> 	getPostComments			(int postID);
-	//Post 			getPostOfComment		(int commentID);
-	//List<Comment> 	searchComments			(String keyword);
 }

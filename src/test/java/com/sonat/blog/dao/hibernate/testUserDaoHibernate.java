@@ -33,8 +33,8 @@ public class testUserDaoHibernate {
 	private UserDao userDao;
 
 	private static final int	VALID_USER_ID=1;
-	private static final String VALID_NAME="engin";
-	private static final String VALID_USERNAME="engin";
+	private static final String VALID_NAME="admin";
+	private static final String VALID_USERNAME="admin";
 	private static final int 	INVALID_USER_ID=1000;
 	private static final String INVALID_NAME="invalidName";
 	private static final String INVALID_USERNAME="invalidUsername";

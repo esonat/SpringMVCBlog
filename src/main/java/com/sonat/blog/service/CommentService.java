@@ -21,5 +21,4 @@ public interface CommentService {
 	public List<Comment> getCommentTree(Post post);
 	Comment 		getPostCommentById	(int postID,int commentID);
 	List<Comment> 	getPostComments		(int postID);
-	//Post 			getPostOfComment(int commentID);
 }

@@ -32,19 +32,21 @@ import org.hibernate.annotations.Cascade;
 
 @SuppressWarnings("serial")
 @Entity
-//@Indexed
 @Table(name="post",catalog="blogDB")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Post extends ContentObject implements DomainObject {
 	private Category category;
+	
 	private Set<Comment> comments;
+	
 	private Date date;
+	
 	private int ID;
+	
 	@Size(min=5,max=1000000,message="{Size.Post.text.validation}")
 	private String text;
 	private BlogUser user;
-    //private Integer version;
-	
+ 
 	public Post(){
 		super();
 	}
@@ -84,7 +86,6 @@ public class Post extends ContentObject implements DomainObject {
 		return ID;
 	}
 	
-	//@Field(index = Index.TOKENIZED,store = Store.NO)
 	@Column(name="TEXT",length=10000,nullable=false)
 	public String getText() {
 		return text;
@@ -118,14 +119,6 @@ public class Post extends ContentObject implements DomainObject {
 		this.user = user;
 	}	
 	
-/*	@Version
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
-    }*/
 	 @Override
      public String toString() {
         StringBuilder stringBuilder = new StringBuilder("Id: ").append(this.getID()).append(" | Text:").append(this.getText()).append(" | Date:").append(this.getDate().toString());

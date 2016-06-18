@@ -2,17 +2,13 @@ package com.sonat.blog.dao.hibernate;
 
 import java.util.Date;
 import java.util.List;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-//import org.hibernate.search.SearchException;
 import org.springframework.stereotype.Repository;
-
 import com.sonat.blog.dao.CommentDao;
 import com.sonat.blog.domain.Comment;
 import com.sonat.blog.domain.Post;
 import com.sonat.blog.exception.CommentNotFoundException;
-//import com.sonat.blog.util.database.HibernateUtil;
 
 @Repository("commentDao")
 public class CommentDaoHibernate extends GenericDaoHibernate<Comment> implements CommentDao{
@@ -22,19 +18,7 @@ public class CommentDaoHibernate extends GenericDaoHibernate<Comment> implements
 	 }
 
 	public void addChildComment(Comment parentComment, Comment childComment) {
-	/*	Session session=this.getHibernateTemplate().getSessionFactory().getCurrentSession();
-		session.beginTransaction();
-
-		Date date = new Date();
-		Post post =parentComment.getPost();
-
-		childComment.setDatetime(date);
-		childComment.setDepth(parentComment.getDepth()+1);
-		childComment.setPost(post);
-		childComment.setParent(parentComment);
-
-		session.save(childComment);
-		session.getTransaction().commit();*/
+	
 		Date date = new Date();
 		Post post =parentComment.getPost();
 
@@ -130,33 +114,4 @@ public class CommentDaoHibernate extends GenericDaoHibernate<Comment> implements
 
 		return result;
 	}
-//	@SuppressWarnings("unchecked")
-//	@Override
-//	public Post getPostOfComment(int commentID) {
-//		List<Post> result=(List<Post>)this.getHibernateTemplate().findByNamedParam("FROM Post P WHERE P.ID= :commentID",
-//				"commentID",commentID);
-//		if(result==null
-//		|| result.size()==0) return null;
-//
-//		return result.get(0);
-//	}
-
-
-
-	/*@Override
-	public List<Comment> searchComments(String keyword) {
-		Session session=this.getHibernateTemplate().getSessionFactory().getCurrentSession();
-		FullTextSession fullTextSession = Search.getFullTextSession(session);
-
-        org.hibernate.search.query.dsl.v2.QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(Comment.class).get();
-        org.apache.lucene.search.Query luceneQuery = queryBuilder.keyword().onFields("text").matching(keyword).createQuery();
-
-        // wrap Lucene query in a javax.persistence.Query
-        org.hibernate.Query fullTextQuery = fullTextSession.createFullTextQuery(luceneQuery, Comment.class);
-
-        List<Comment> list = fullTextQuery.list();
-
-        fullTextSession.close();
-        return list;
-	}	   */
 }

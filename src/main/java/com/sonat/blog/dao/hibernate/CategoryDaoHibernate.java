@@ -11,8 +11,7 @@ import com.sonat.blog.exception.CategoryNotFoundException;
 
 @Repository("categoryDao")
 public class CategoryDaoHibernate extends GenericDaoHibernate<Category> implements CategoryDao{
-    //protected Log log = LogFactory.getLog(CategoryDaoHibernate.class);
-
+ 
     public CategoryDaoHibernate() {
        super(Category.class);
     }

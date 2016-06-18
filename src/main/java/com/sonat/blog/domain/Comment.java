@@ -19,15 +19,7 @@ import javax.persistence.TemporalType;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.Cascade;
-/*import org.hibernate.search.annotations.ContainedIn;
-import org.hibernate.search.annotations.DateBridge;
-import org.hibernate.search.annotations.DocumentId;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Index;
-import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.Resolution;
-import org.hibernate.search.annotations.Store;
-*/
+
 @SuppressWarnings("serial")
 @Entity
 @Table(name="comment",catalog="blogDB")
@@ -40,8 +32,7 @@ public class Comment  extends ContentObject implements DomainObject{
 	private Comment parent;
 	private Post post;
 	private String text;
-    //private Integer version;
-
+  
 	public Comment(){
 		super();
 	}
@@ -97,11 +88,6 @@ public class Comment  extends ContentObject implements DomainObject{
 		return post;
 	}
 	
-	//, insertable = false, updatable = false
-	 //@JoinColumn(name="PARENT_ID", insertable = false, updatable = false)
-	//@ManyToOne(cascade={CascadeType.ALL})
-	
-	//@Field(index = Index.TOKENIZED, store = Store.NO)
 	@Column(name="TEXT",nullable=false)
 	public String getText() {
 		return text;
@@ -109,26 +95,13 @@ public class Comment  extends ContentObject implements DomainObject{
 	public void setChildren(Set<Comment> children) {
 		this.children = children;
 	}
-	
-//	@Column(name = "PARENT_ID",nullable=true)
-//	public int getParentId() {
-//		return parentId;
-//	}
-//	public void setParentId(int parentId) {
-//		this.parentId = parentId;
-//	}
-//	
-//	@JoinColumn(name="parent", nullable=false)
-//	@OneToMany(mappedBy="parent",fetch=FetchType.LAZY,cascade={CascadeType.ALL})
-	
+		
 	public void setDatetime(Date datetime) {
 		this.datetime = datetime;
 	}
 	public void setDepth(int depth) {
 		this.depth = depth;
 	}
-
-	//@Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
 
 	public void setID(int iD) {
 		ID = iD;
@@ -143,12 +116,4 @@ public class Comment  extends ContentObject implements DomainObject{
 	public void setText(String text) {
 		this.text = text;
 	}
-/*	@Version
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
-    }*/
 }

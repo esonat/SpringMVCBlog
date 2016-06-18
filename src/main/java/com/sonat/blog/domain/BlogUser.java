@@ -27,19 +27,22 @@ import com.sonat.blog.validator.Username;
 @Table(name="user",catalog="blogDB")
 public class BlogUser implements DomainObject{
 	private int ID;
+	
 	@Pattern(regexp="[a-zA-Z]+",message="{Pattern.User.Name.validation}")
 	@Name
 	private String name;
 	private Set<Post> posts=new HashSet<Post>(0);
+	
 	@Pattern(regexp="[a-zA-Z]+",message="{Pattern.User.username.validation}")
 	@Username
 	private String username;
-	//@Pattern(regexp="^[A-Za-z0-9_.]+$",message="{Pattern.User.password.validation}")
+	
 	@Size(min=5,max=150,message="{Size.User.password.validation}")
 	private String password;
+	
 	private boolean enabled;
+
 	private Set<UserRole> 	userRole = new HashSet<UserRole>(0);
-    //private Integer version;
 
     public BlogUser() {
 		super();
@@ -125,15 +128,4 @@ public class BlogUser implements DomainObject{
 	public void setID(int iD) {
 		ID = iD;
 	}
-
-/*	@Version
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
-    }*/
-
-
 }

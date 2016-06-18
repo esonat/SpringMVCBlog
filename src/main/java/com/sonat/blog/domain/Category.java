@@ -19,13 +19,11 @@ import org.hibernate.annotations.Cascade;
 @SuppressWarnings("serial")
 @Entity
 @Table(name="category",catalog="blogDB")
-//uniqueConstraints={@UniqueConstraint(columnNames="NAME")})
 public class Category implements DomainObject{
 	
 	private int ID;
 	private String name;
 	private Set<Post> posts=new HashSet<Post>();
-    //private Integer version;
 
 	public Category(){
 		super();
@@ -66,12 +64,4 @@ public class Category implements DomainObject{
 	public void setPosts(Set<Post> posts) {
 		this.posts = posts;
 	}
-/*	@Version
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
-    }*/
 }

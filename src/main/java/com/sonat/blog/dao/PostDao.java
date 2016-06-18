@@ -12,6 +12,4 @@ public interface PostDao extends GenericDao<Post>  {
 	List<Post> 	getAllByDate(Date dateFrom, Date dateTo);
 	List<Post> 	getPostsByCategory(int categoryID);
 	List<Post> 	getPostsByUsername(String username);
-	
-	//List<Post> searchPosts(String keyword);
 }

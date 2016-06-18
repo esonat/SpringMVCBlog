@@ -30,7 +30,6 @@ public class CommentServiceImpl implements CommentService {
 	}
 	public void addChildComment(int postID,Comment parentComment,Comment childComment)
 	throws DataAccessException{
-		//Post post			=	postService.getPostById(postID);
 		commentDao.addChildComment(parentComment, childComment);
 	}
 	public void addPostComment(int postID, Comment comment) 
